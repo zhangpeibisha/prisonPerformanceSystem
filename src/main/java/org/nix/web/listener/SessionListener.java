@@ -1,5 +1,7 @@
 package org.nix.web.listener;
 
+import org.apache.log4j.Logger;
+
 import javax.servlet.http.HttpSessionAttributeListener;
 import javax.servlet.http.HttpSessionBindingEvent;
 import javax.servlet.http.HttpSessionEvent;
@@ -15,6 +17,8 @@ import java.util.Map;
 public class SessionListener implements HttpSessionListener , HttpSessionAttributeListener {
 
     private static Map<Object,Object> loginUsers = new HashMap<>();//保存用户名对应的session
+
+    private static Logger logger = Logger.getLogger(SessionListener.class);
 
     /**
      * session添加用户信息的时候触发

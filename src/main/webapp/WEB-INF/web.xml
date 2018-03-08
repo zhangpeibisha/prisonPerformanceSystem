@@ -128,8 +128,15 @@
       org.springframework.web.util.Log4jConfigListener
     </listener-class>
   </listener>
-
-
+  
+  <!--配置监听器-->
+  <listener>
+    <listener-class>org.nix.web.listener.RequestListener</listener-class>
+  </listener>
+  <listener>
+    <listener-class>org.nix.web.listener.SessionListener</listener-class>
+  </listener>
+  
   <!-- 配置session超时时间，单位分钟 -->
   <session-config>
     <session-timeout>30</session-timeout>
