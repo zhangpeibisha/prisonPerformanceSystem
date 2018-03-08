@@ -10,7 +10,7 @@
             http://www.springframework.org/schema/mvc/spring-mvc-4.3.xsd">
 
     <!-- 自动扫描@Controller注入为bean -->
-    <context:component-scan base-package="org.nix.web.controller" />
+    <context:component-scan base-package="org.nix.web.controller"/>
 
     <mvc:interceptors>
 
@@ -21,6 +21,14 @@
             <bean class="org.nix.web.interceptor.SecurityInterceptor">
             </bean>
         </mvc:interceptor>
+
+        <!--拦截所有请求为日志文件加入用户id-->
+        <mvc:interceptor>
+            <mvc:mapping path="/**"/><!-- 拦截后缀为 .do的请求 -->
+            <bean class="org.nix.web.interceptor.Log4jInterceptor">
+            </bean>
+        </mvc:interceptor>
+
     </mvc:interceptors>
 
     <!-- 以下为SpringMVC配置 -->
@@ -32,6 +40,7 @@
                 <property name="supportedMediaTypes">
                     <list>
                         <value>text/html;charset=UTF-8</value>
+                        <value>text/json;charset=UTF-8</value>
                         <value>application/json;charset=UTF-8</value>
                     </list>
                 </property>
@@ -58,8 +67,8 @@
     <bean
             class="org.springframework.web.servlet.view.InternalResourceViewResolver">
         <property name="viewClass"
-                  value="org.springframework.web.servlet.view.JstlView" />
-        <property name="suffix" value=".html" />
+                  value="org.springframework.web.servlet.view.JstlView"/>
+        <property name="suffix" value=".html"/>
     </bean>
 
 </beans>

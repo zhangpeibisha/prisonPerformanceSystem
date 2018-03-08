@@ -22,7 +22,7 @@ public class SecurityInterceptor implements HandlerInterceptor {
                 + httpServletRequest.getMethod();
 
 
-        return false;
+        return true;
     }
 
     @Override

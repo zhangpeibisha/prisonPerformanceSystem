@@ -7,5 +7,6 @@ package org.nix.utils;
  */
 public class SessionKey {
 
+    //保存用户信息
     public static final String USER = "user";
 }
