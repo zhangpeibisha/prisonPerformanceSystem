@@ -12,6 +12,17 @@
     <!-- 自动扫描@Controller注入为bean -->
     <context:component-scan base-package="org.nix.web.controller" />
 
+    <mvc:interceptors>
+
+        <!--拦截用户请求-->
+        <mvc:interceptor>
+            <mvc:mapping path="/*"/>  <!-- 拦截/  /test  /login  等等单层结构的请求  -->
+            <mvc:mapping path="/**/*.do"/><!-- 拦截后缀为 .do的请求 -->
+            <bean class="org.nix.web.interceptor.SecurityInterceptor">
+            </bean>
+        </mvc:interceptor>
+    </mvc:interceptors>
+
     <!-- 以下为SpringMVC配置 -->
     <mvc:annotation-driven>
         <!-- 返回json数据，@response使用 -->
