@@ -1,12 +1,9 @@
-package org.nix.web.controller.system;
+package org.nix.web.controller.result;
 
-import com.alibaba.fastjson.JSON;
 import org.apache.log4j.Logger;
 import org.nix.exception.LuoErrorCode;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import java.util.HashMap;
@@ -27,15 +24,11 @@ public class SystemController {
      *
      * @return
      */
-
     @RequestMapping(value = "/accessDenied")
     @ResponseBody
     public Map<String, Object> accessDenied() {
-
         Map<String, Object> map = new HashMap<>();
-        logger.info("进入权限反馈---");
-        String json = JSON.toJSONString(LuoErrorCode.PERMISSION_DENIED);
-        logger.info("转换值为 " + json);
+        logger.info("权限不足，访问被拒绝");
         map.put("result", LuoErrorCode.PERMISSION_DENIED.getValue());
         return map;
     }
