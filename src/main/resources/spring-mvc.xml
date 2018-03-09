@@ -2,25 +2,18 @@
 <beans xmlns="http://www.springframework.org/schema/beans"
        xmlns:mvc="http://www.springframework.org/schema/mvc" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
        xmlns:p="http://www.springframework.org/schema/p" xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:aop="http://www.springframework.org/schema/aop"
        xsi:schemaLocation="http://www.springframework.org/schema/beans
             http://www.springframework.org/schema/beans/spring-beans-4.3.xsd
             http://www.springframework.org/schema/context
             http://www.springframework.org/schema/context/spring-context-4.3.xsd
             http://www.springframework.org/schema/mvc
-            http://www.springframework.org/schema/mvc/spring-mvc-4.3.xsd">
+            http://www.springframework.org/schema/mvc/spring-mvc-4.3.xsd http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop.xsd">
 
     <!-- 自动扫描@Controller注入为bean -->
     <context:component-scan base-package="org.nix.web.controller"/>
 
     <mvc:interceptors>
-
-        <!--拦截用户请求-->
-        <mvc:interceptor>
-            <mvc:mapping path="/*"/>  <!-- 拦截/  /test  /login  等等单层结构的请求  -->
-            <mvc:mapping path="/**/*.do"/><!-- 拦截后缀为 .do的请求 -->
-            <bean class="org.nix.web.interceptor.SecurityInterceptor">
-            </bean>
-        </mvc:interceptor>
 
         <!--拦截所有请求为日志文件加入用户id-->
         <mvc:interceptor>
@@ -48,6 +41,29 @@
             </bean>
         </mvc:message-converters>
     </mvc:annotation-driven>
+
+
+    <bean class="org.springframework.web.servlet.handler.SimpleMappingExceptionResolver">
+        <!-- <property name="defaultErrorView" value="rediret:/error"></property>   -->
+        <property name="exceptionMappings">
+            <props>
+                <!--<prop key="org.nix.exception.AuthorizationException">redirect:/login</prop>-->
+                <prop key="org.nix.exception.AuthorizationException">forward:/index</prop>
+            </props>
+        </property>
+    </bean>
+    <bean id="aspectPermission" class="org.nix.web.aspect.PermissionAspect"/>
+
+    <!-- 对带有@ValidatePermission和ResponseBody注解的controller包及其子包所有方法执行功能权限校验  -->
+    <aop:config proxy-target-class="true">
+        <aop:aspect ref="aspectPermission">
+            <aop:pointcut id="pc"
+                          expression="@annotation(org.nix.annotation.ValidatePermission)
+                and @annotation(org.springframework.web.bind.annotation.ResponseBody)
+                and execution(* org.nix.web.controller..*.*(..)) " />
+            <aop:before pointcut-ref="pc" method="doBefore"/>
+        </aop:aspect>
+    </aop:config>
 
 
     <bean id="multipartResolver"

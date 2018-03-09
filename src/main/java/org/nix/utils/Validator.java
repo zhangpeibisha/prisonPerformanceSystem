@@ -11,47 +11,80 @@ public class Validator {
     /**
      * 正则表达式：验证用户名
      */
-    public static final String REGEX_USERNAME = "^[a-zA-Z]\\w{5,17}$";
+    private static final String REGEX_USERNAME = "^[a-zA-Z]\\w{5,17}$";
 
     /**
      * 正则表达式：验证密码
      */
-    public static final String REGEX_PASSWORD = "^[a-zA-Z0-9]{6,16}$";
+    private static final String REGEX_PASSWORD = "^[a-zA-Z0-9]{6,18}$";
 
     /**
      * 正则表达式：验证手机号
      */
-    public static final String REGEX_MOBILE = "^((13[0-9])|(15[^4,\\D])|(18[0,2,5-9])|(17[0-9])|(147))\\d{8}$";
+    private static final String REGEX_MOBILE = "^((13[0-9])|(15[^4,\\D])|(18[0,2,5-9])|(17[0-9])|(147))\\d{8}$";
 
     /**
      * 正则表达式：验证邮箱
      */
-    public static final String REGEX_EMAIL = "^([a-z0-9A-Z]+[-|\\.]?)+[a-z0-9A-Z]@([a-z0-9A-Z]+(-[a-z0-9A-Z]+)?\\.)+[a-zA-Z]{2,}$";
+    private static final String REGEX_EMAIL = "^([a-z0-9A-Z]+[-|\\.]?)+[a-z0-9A-Z]@([a-z0-9A-Z]+(-[a-z0-9A-Z]+)?\\.)+[a-zA-Z]{2,}$";
 
     /**
      * 正则表达式：验证汉字
      */
-    public static final String REGEX_CHINESE = "^[\u4e00-\u9fa5],{0,}$";
+    private static final String REGEX_CHINESE = "^[\u4e00-\u9fa5],{0,}$";
 
     /**
      * 正则表达式：验证身份证
      */
-    public static final String REGEX_ID_CARD = "(^\\d{18}$)|(^\\d{15}$)";
+    private static final String REGEX_ID_CARD = "(^\\d{18}$)|(^\\d{15}$)";
 
     /**
-     * 正则表达式：验证字符串是否数字
+     * 正则表达式：验证字符串是否数字,包括正负小数
      */
-    public static final String REGEX_NUMBER = "-?[0-9]+.*[0-9]*";
+    private static final String REGEX_NUMBER = "-?[0-9]+.*[0-9]*";
+
+    /**
+     * 校验0-9整数
+     */
+    private static final String REGEX_NUMBERIC = "^[0-9]*$";
+
+    /**
+     * 验证姓名
+     */
+    private static final String REGEX_PERSONNAME = "^[\u4e00-\u9fa5]{2,4}$";
 
     /**
      * 正则表达式：验证URL
      */
-    public static final String REGEX_URL = "http(s)?://([\\w-]+\\.)+[\\w-]+(/[\\w- ./?%&=]*)?";
+    private static final String REGEX_URL = "http(s)?://([\\w-]+\\.)+[\\w-]+(/[\\w- ./?%&=]*)?";
 
     /**
      * 正则表达式：验证IP地址
      */
-    public static final String REGEX_IP_ADDR = "(25[0-5]|2[0-4]\\d|[0-1]\\d{2}|[1-9]?\\d)";
+    private static final String REGEX_IP_ADDR = "(25[0-5]|2[0-4]\\d|[0-1]\\d{2}|[1-9]?\\d)";
+
+    /**
+     * 验证字符是否为0-9的值
+     * @param value
+     * @return
+     */
+    public static boolean isNumeric(String value){
+        return Pattern.matches(REGEX_NUMBERIC, value);
+    }
+
+
+    public static boolean isPersonName(String personName){
+        return Pattern.matches(REGEX_PERSONNAME, personName);
+    }
+
+    /**
+     * 获取字符长度
+     *
+     * @return 长度
+     */
+    public static int getLength(String vaule) {
+        return vaule.length();
+    }
 
     /**
      * 校验用户名
