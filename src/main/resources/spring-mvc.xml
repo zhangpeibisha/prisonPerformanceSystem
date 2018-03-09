@@ -48,7 +48,7 @@
         <property name="exceptionMappings">
             <props>
                 <!--<prop key="org.nix.exception.AuthorizationException">redirect:/login</prop>-->
-                <prop key="org.nix.exception.AuthorizationException">forward:/index</prop>
+                <prop key="org.nix.exception.AuthorizationException">forward:/accessDenied.do</prop>
             </props>
         </property>
     </bean>

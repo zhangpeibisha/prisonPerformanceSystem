@@ -7,7 +7,7 @@ import org.apache.log4j.Logger;
  *
  * 基础错误类
  */
-public class BaseException extends Exception{
+public class BaseException extends RuntimeException{
     //日志记录
     private static Logger logger = Logger.getLogger(BaseException.class);
 

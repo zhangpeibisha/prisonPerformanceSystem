@@ -2,13 +2,13 @@ package org.nix.web.aspect;
 
 import org.apache.log4j.Logger;
 
-import java.io.IOException;
+
 import java.lang.reflect.Method;
+import java.nio.file.AccessDeniedException;
 
 import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.reflect.MethodSignature;
 import org.nix.exception.AuthorizationException;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 /**
@@ -22,11 +22,11 @@ public class PermissionAspect {
     //日志记录
     private static Logger logger = Logger.getLogger(PermissionAspect.class);
 
-    public void doBefore(JoinPoint jp) throws IOException, AuthorizationException {
+    public void doBefore(JoinPoint jp) throws AuthorizationException {
 
-       String str =  "log PermissionAspect Before method: "
-               + jp.getTarget().getClass().getName() + "."
-               + jp.getSignature().getName();
+        String str = "log PermissionAspect Before method: "
+                + jp.getTarget().getClass().getName() + "."
+                + jp.getSignature().getName();
 
         logger.info(str);
 
@@ -35,7 +35,8 @@ public class PermissionAspect {
             //进行权限检验
 //            return;
         }
-        throw new AuthorizationException();
+
+        throw new AuthorizationException ();
     }
 
     private Method getSourceMethod(JoinPoint jp) {
