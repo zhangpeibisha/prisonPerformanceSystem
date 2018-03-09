@@ -1,16 +1,20 @@
 package org.nix.domain.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import org.nix.domain.entity.base.BaseEntity;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.Table;
 
 /**
  * Create by zhangpe0312@qq.com on 2018/3/8.
- *
+ *-
  * 用户实体
  */
-@Entity(name = "User")
+@Entity
+@Table(name = "User")
+@JsonIgnoreProperties(value={"handler","hibernateLazyInitializer"})
 public class User extends BaseEntity{
 
     //警号 司法警号为 7位
@@ -21,6 +25,9 @@ public class User extends BaseEntity{
     private String name;
     //基础工资
     private double basicWage;
+
+    //一个用户有多条加班信息，一条加班信息只有一个用户
+
 
     @Column(name = "siren" , nullable = false , length = 7 , unique = true)
     public String getSiren() {

@@ -19,8 +19,13 @@ import org.nix.utils.datetime.DateEnums.*;
  */
 public class DateUtil {
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws InterruptedException {
+
+
+
         Date now = new Date();
+
+
         System.out.println(format(now, "yyyyMMdd"));
         System.out.println(format(now, "yyyy-MM-dd"));
         System.out.println(format(now, "yyyyMMddHHmmss"));
