@@ -55,6 +55,15 @@ public class UserController extends UserExceptionResult {
         return new ResultMap().resultSuccess().send();
     }
 
+    /**
+     * 用户注册接口
+     * @param serialNumber 警号
+     * @param password 用户密码
+     * @return 返回结果
+     * @throws NullPointerException 空指针异常
+     * @throws PropertyValueException 数据字段为空
+     * @throws ConstraintViolationException 数据插入违反唯一约束
+     */
     @RequestMapping(value = "/register", method = RequestMethod.POST)
     public @ResponseBody
     Map<String, Object> register(@RequestParam("serialNumber") String serialNumber,
