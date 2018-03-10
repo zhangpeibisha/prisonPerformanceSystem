@@ -51,6 +51,7 @@
 }
 * 返回参数{
     result:返回列表,
+    total:总条数,
     data:{
     overtimeRecordsId: 加班记录id,
     duration:加班时长,
@@ -58,6 +59,7 @@
     stopTime:加班结束时间,
     overtimeSalary: 加班工资，
     }
+    
 }
 
 5. 用户月度个人加班信息模块
@@ -70,6 +72,7 @@
 }
 * 返回参数{
     result:返回列表,
+    total:总条数,
     data:{
     month:月份,
     overtimeRecordsId: 加班记录id,
@@ -88,9 +91,11 @@
 }
 * 返回参数{
     result:返回列表,
+    total:总条数,
     data:{
     userId:id
     serialNumber: 警号,
+    name:姓名,
     password:密码,
     salary:工资
     }
