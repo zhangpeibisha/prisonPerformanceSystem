@@ -2,9 +2,26 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <title>用户列表</title>
+    <link rel="stylesheet" href="../resource/bootstrap-3.3.7-dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="../css/common.css">
+    <script src="../resource/js/jquery.min.js"></script>
+    <script src="../resource/js/bootstrap-paginator.js"></script>
+    <script src="../js/overtimeStatistics.js"></script>
 </head>
-<body>
-
+<body class="common-bac">
+<div class="container" style="padding-top: 20px;">
+    <ul class="nav nav-pills">
+        <li role="presentation"><a href="welcomeAdmin.html">主页</a></li>
+        <li role="presentation" class="active"><a href="#">用户列表</a></li>
+        <li role="presentation"><a href="overtimeAdmin.html">加班信息</a></li>
+        <li role="presentation"><a href="statistics.html">加班信息统计</a></li>
+        <li style="float:right"><a href="login.html">退出账号</a></li>
+    </ul>
+    <div id="list" style="min-height: 410px;"></div>
+    <div style="text-align:center;">
+        <ul id="page"></ul>
+    </div>
+</div>
 </body>
 </html>

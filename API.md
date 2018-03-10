@@ -95,6 +95,7 @@
     data:{
     userId:id
     serialNumber: 警号,
+    name:姓名,
     password:密码,
     salary:工资
     }

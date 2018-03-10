@@ -46,7 +46,7 @@ $(document).ready(function () {
                                 success: function (data) {
                                     console.info(data);
                                     if(data.data==0){
-                                        var listData = data.basketballs;
+                                        var listData = data.data;
                                         showData(listData);
                                     }
                                     else if(data.data==1){

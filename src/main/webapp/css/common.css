@@ -1,0 +1,10 @@
+.common-bac{
+    background: url("../img/welcome.jpg") no-repeat;
+    background-size: cover;
+}
+.container{
+    background-color: #ffffff;
+    margin-top: 44px;
+    border-radius: 20px;
+    height: 560px;
+}
