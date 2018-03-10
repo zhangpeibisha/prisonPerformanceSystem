@@ -3,9 +3,7 @@ package org.nix.domain.entity;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import org.nix.domain.entity.base.BaseEntity;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Table;
+import javax.persistence.*;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -16,7 +14,7 @@ import java.util.Set;
  */
 @Entity
 @Table(name = "OvertimeRules")
-@JsonIgnoreProperties(value={"handler","hibernateLazyInitializer"})
+@JsonIgnoreProperties(value={"handler","hibernateLazyInitializer" , "overtimeRecords"})
 public class OvertimeRules extends BaseEntity{
 
     //计费名字
@@ -51,6 +49,7 @@ public class OvertimeRules extends BaseEntity{
         return note;
     }
 
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "rules")
     public Set<OvertimeRecord> getOvertimeRecords() {
         return overtimeRecords;
     }

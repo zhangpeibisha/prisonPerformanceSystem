@@ -3,9 +3,7 @@ package org.nix.domain.entity;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import org.nix.domain.entity.base.BaseEntity;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Table;
+import javax.persistence.*;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -16,7 +14,7 @@ import java.util.Set;
  */
 @Entity
 @Table(name = "Resources")
-@JsonIgnoreProperties(value={"handler","hibernateLazyInitializer"})
+@JsonIgnoreProperties(value={"handler","hibernateLazyInitializer" , "roles"})
 public class Resources extends BaseEntity{
 
     //资源名字
@@ -37,6 +35,9 @@ public class Resources extends BaseEntity{
         return url;
     }
 
+    @ManyToMany(cascade= CascadeType.ALL,fetch=FetchType.LAZY)
+    @JoinTable(name="permission_role",joinColumns = {@JoinColumn(name="resources")},
+            inverseJoinColumns =@JoinColumn(name = "role"))
     public Set<Role> getRoles() {
         return roles;
     }

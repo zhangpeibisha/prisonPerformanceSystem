@@ -3,9 +3,9 @@ package org.nix.domain.entity;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import org.nix.domain.entity.base.BaseEntity;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Table;
+import javax.persistence.*;
+import java.util.HashSet;
+import java.util.Set;
 
 /**
  * Create by zhangpe0312@qq.com on 2018/3/8.
@@ -26,8 +26,11 @@ public class User extends BaseEntity{
     //基础工资
     private double basicWage;
 
-    //一个用户有多条加班信息，一条加班信息只有一个用户
+    //一个用户有一个角色，一个角色有多个用户
+    private Role role;
 
+    //一个用户有多条加班信息，一条加班信息只有一个用户
+    private Set<OvertimeRecord> overtimeRecords = new HashSet<>();
 
     @Column(name = "siren" , nullable = false , length = 7 , unique = true)
     public String getSiren() {
@@ -63,5 +66,24 @@ public class User extends BaseEntity{
 
     public void setBasicWage(double basicWage) {
         this.basicWage = basicWage;
+    }
+
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "user")
+    public Set<OvertimeRecord> getOvertimeRecords() {
+        return overtimeRecords;
+    }
+
+    public void setOvertimeRecords(Set<OvertimeRecord> overtimeRecords) {
+        this.overtimeRecords = overtimeRecords;
+    }
+
+    @ManyToOne(targetEntity = Role.class , fetch = FetchType.LAZY)
+    @JoinColumn(name = "role")
+    public Role getRole() {
+        return role;
+    }
+
+    public void setRole(Role role) {
+        this.role = role;
     }
 }

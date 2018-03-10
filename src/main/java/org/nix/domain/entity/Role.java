@@ -3,9 +3,7 @@ package org.nix.domain.entity;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import org.nix.domain.entity.base.BaseEntity;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Table;
+import javax.persistence.*;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -16,7 +14,7 @@ import java.util.Set;
  */
 @Entity
 @Table(name = "Role")
-@JsonIgnoreProperties(value={"handler","hibernateLazyInitializer"})
+@JsonIgnoreProperties(value={"handler","hibernateLazyInitializer" , "users"})
 public class Role extends BaseEntity{
 
     //角色名字
@@ -26,6 +24,9 @@ public class Role extends BaseEntity{
 
     //一个角色有多个权限，一个权限有多个角色
     private Set<Resources> resources = new HashSet<>();
+
+    //一个角色有多个用户，一个用户只有一个角色
+    private Set<User> users = new HashSet<>();
 
     @Column(name = "name" , nullable = false , length = 20 , unique = true)
     public String getName() {
@@ -37,8 +38,16 @@ public class Role extends BaseEntity{
         return description;
     }
 
+    @ManyToMany(cascade= CascadeType.ALL,fetch=FetchType.LAZY)
+    @JoinTable(name="permission_role",joinColumns = {@JoinColumn(name="role")},
+            inverseJoinColumns =@JoinColumn(name = "resources"))
     public Set<Resources> getResources() {
         return resources;
+    }
+
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "role")
+    public Set<User> getUsers() {
+        return users;
     }
 
     public void setName(String name) {
@@ -51,5 +60,9 @@ public class Role extends BaseEntity{
 
     public void setResources(Set<Resources> resources) {
         this.resources = resources;
+    }
+
+    public void setUsers(Set<User> users) {
+        this.users = users;
     }
 }

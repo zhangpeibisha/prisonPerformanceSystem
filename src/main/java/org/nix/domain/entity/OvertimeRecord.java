@@ -13,7 +13,7 @@ import java.util.Date;
  */
 @Entity
 @Table(name = "OvertimeRecord")
-@JsonIgnoreProperties(value={"handler","hibernateLazyInitializer"})
+@JsonIgnoreProperties(value={"handler","hibernateLazyInitializer" , "user"})
 public class OvertimeRecord extends BaseEntity{
 
     //加班时长 以天数保存
@@ -53,10 +53,14 @@ public class OvertimeRecord extends BaseEntity{
         return overtimeMoney;
     }
 
+    @ManyToOne(targetEntity = Role.class , fetch = FetchType.LAZY)
+    @JoinColumn(name = "rules")
     public OvertimeRules getRules() {
         return rules;
     }
 
+    @ManyToOne(targetEntity = Role.class , fetch = FetchType.LAZY)
+    @JoinColumn(name = "user")
     public User getUser() {
         return user;
     }
