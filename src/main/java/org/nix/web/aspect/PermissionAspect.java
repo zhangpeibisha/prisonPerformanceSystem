@@ -10,6 +10,7 @@ import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.reflect.MethodSignature;
 import org.nix.exception.AuthorizationException;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.RequestMapping;
 
 /**
  * Create by zhangpe0312@qq.com on 2018/3/9.
@@ -31,11 +32,13 @@ public class PermissionAspect {
         logger.info(str);
 
         Method soruceMethod = getSourceMethod(jp);
+        RequestMapping re = soruceMethod.getAnnotation(RequestMapping.class);
+        re.value();
         if (soruceMethod != null) {
             //进行权限检验
 //            return;
         }
-
+        logger.info("访问权限 value "+re.value() +" name " + re.name());
         throw new AuthorizationException ();
     }
 

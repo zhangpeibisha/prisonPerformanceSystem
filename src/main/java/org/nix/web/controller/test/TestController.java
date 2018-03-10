@@ -2,6 +2,7 @@ package org.nix.web.controller.test;
 
 import org.apache.log4j.Logger;
 import org.nix.annotation.ValidatePermission;
+import org.nix.web.controller.utils.ResultMap;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -27,5 +28,12 @@ public class TestController {
         Map<String, Object> map = new HashMap<>();
         map.put("data", "请求成功");
         return map;
+    }
+
+    @RequestMapping(value = "/model" , method = RequestMethod.GET)
+    public @ResponseBody
+    Map<String, Object> model()  {
+
+        return new ResultMap().resultSuccess().send();
     }
 }
