@@ -29,7 +29,7 @@ public class SystemController {
     @RequestMapping(value = "/accessDenied")
     @ResponseBody
     public Map<String, Object> accessDenied() {
-        logger.info("权限不足，访问被拒绝");
+        logger.error("权限不足，访问被拒绝");
         return new ResultMap()
                 .setResult(LuoErrorCode.PERMISSION_DENIED.getValue())
                 .appendParameter(LuoErrorCode.PERMISSION_DENIED.getValue(),LuoErrorCode.PERMISSION_DENIED.getDesc())

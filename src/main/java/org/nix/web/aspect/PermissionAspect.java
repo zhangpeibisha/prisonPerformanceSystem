@@ -29,16 +29,15 @@ public class PermissionAspect {
                 + jp.getTarget().getClass().getName() + "."
                 + jp.getSignature().getName();
 
-        logger.info(str);
-
         Method soruceMethod = getSourceMethod(jp);
-        RequestMapping re = soruceMethod.getAnnotation(RequestMapping.class);
-        re.value();
+
         if (soruceMethod != null) {
+
+            logger.info("访问成功 " + str);
+
             //进行权限检验
 //            return;
         }
-        logger.info("访问权限 value "+re.value() +" name " + re.name());
         throw new AuthorizationException ();
     }
 

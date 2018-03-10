@@ -66,6 +66,6 @@ public class UserService extends SupperBaseDAOImp<User> {
             throw new NullPointerException();
         }
         Object result = save(user);
-        logger.info("save add result:" + result);
+        logger.info(result + " 用户执行了注册操作");
     }
 }
