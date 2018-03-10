@@ -1,12 +1,12 @@
 $(document).ready(function () {
-    var overtimeUserUrl = "http://localhost:8080/personalOvertime.do";
+    var overtimeUserMonthUrl = "http://localhost:8080/personalMonthOvertime.do";
     var pageLimit = 10;
     var currentPage = 1;
 
     function init() {
         $.ajax({
             type: 'POST',
-            url: overtimeUserUrl,
+            url: overtimeUserMonthUrl,
             data: {
                 limit: pageLimit,
                 currentPage: currentPage
@@ -36,7 +36,7 @@ $(document).ready(function () {
                         },
                         onPageClicked: function (event, originalEvent, type, page) {
                             $.ajax({
-                                url: overtimeUserUrl,
+                                url: overtimeUserMonthUrl,
                                 type: 'POST',
                                 data: {
                                     limit: pageLimit,
@@ -74,12 +74,11 @@ $(document).ready(function () {
         var temp = [], showNum = listData.length;
 
         temp.push('<table class="table table-hover">');
-        temp.push('<thead><tr><th>记录编号</th><th>加班开始时间</th><th>加班结束时间</th>' +
-            '<th>加班时长</th><th>加班工资</th></tr><tbody>');
+        temp.push('<thead><tr><th>月份</th><th>记录编号</th><th>加班时长</th>' +
+            '<th>加班工资</th></tr><tbody>');
         for (var i = 0; i < showNum; i++) {
-            temp.push("<tr><td>" + listData[i].overtimeRecordsId + "</td><td>" + listData[i].startTime + "</td><td>"
-                + listData[i].stopTime+ "</td><td>" + listData[i].duration + "</td><td>"
-                + listData[i].overtimeSalary + "</td>");
+            temp.push("<tr><td>" + listData[i].month + "</td><td>" + listData[i].overtimeRecordsId + "</td><td>"
+                + listData[i].duration+ "</td><td>" + listData[i].overtimeSalary + "</td>");
         }
         temp.push('</tbody></table>');
 
@@ -89,9 +88,9 @@ $(document).ready(function () {
     function noData() {
         var temp = [];
         temp.push('<table class="table table-hover">');
-        temp.push('<thead><tr><th>记录编号</th><th>加班开始时间</th><th>加班结束时间</th>' +
-            '<th>加班时长</th><th>加班工资</th></tr><tbody>');
-        temp.push("<tr><td colspan='5' style='text-align: center'>暂无数据</td></tr>");
+        temp.push('<thead><tr><th>月份</th><th>记录编号</th><th>加班时长</th>' +
+            '<th>加班工资</th></tr><tbody>');
+        temp.push("<tr><td colspan='4' style='text-align: center'>暂无数据</td></tr>");
         temp.push('</tbody></table>');
 
         $('#list').html(temp.join(''));
