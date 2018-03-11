@@ -36,7 +36,7 @@ public class PermissionAspect {
             logger.info("访问成功 " + str);
 
             //进行权限检验
-//            return;
+            return;
         }
         throw new AuthorizationException ();
     }

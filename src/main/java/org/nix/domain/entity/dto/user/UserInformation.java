@@ -6,6 +6,8 @@ import org.codehaus.jackson.annotate.JsonIgnoreProperties;
 import org.nix.dao.service.UserService;
 import org.nix.domain.entity.User;
 import org.nix.domain.entity.dto.ResultDto;
+import org.nix.exception.AuthorizationException;
+import org.nix.utils.SystemUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -36,7 +38,12 @@ public class UserInformation implements ResultDto<User>{
     private String siren;
 
     @Override
-    public ResultDto resultDto(User user) {
+    public ResultDto resultDto(User user) throws AuthorizationException{
+
+        if (SystemUtil.parameterNull(user)){
+            throw new AuthorizationException();
+        }
+
         user = userService.findById(user.getId());
         overtimeAllLenth = userService.overtimeAllTime(user);
         overtimeAllmoney = userService.overtimeAllMoney(user);

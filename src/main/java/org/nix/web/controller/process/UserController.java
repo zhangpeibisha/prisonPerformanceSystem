@@ -3,9 +3,11 @@ package org.nix.web.controller.process;
 import org.apache.log4j.Logger;
 import org.hibernate.PropertyValueException;
 import org.hibernate.exception.ConstraintViolationException;
+import org.nix.annotation.ValidatePermission;
 import org.nix.dao.service.UserService;
 import org.nix.domain.entity.User;
 import org.nix.domain.entity.dto.ResultDto;
+import org.nix.domain.entity.dto.user.PresonalOvertimeInformation;
 import org.nix.domain.entity.dto.user.UserInformation;
 import org.nix.domain.entity.entitybuild.UserBuild;
 import org.nix.exception.AccountNumberException;
@@ -90,25 +92,42 @@ public class UserController extends UserExceptionResult {
 
     /**
      * 显示用户的个人信息
+     *
      * @param session 用户进程
      * @return 返回用户个人信息
      * @throws AuthorizationException 未登录异常
      */
     @RequestMapping(value = "/information", method = RequestMethod.POST)
+    @ValidatePermission
     public @ResponseBody
-    Map<String, Object> information(HttpSession session) throws AuthorizationException{
+    Map<String, Object> information(HttpSession session) throws AuthorizationException {
 
         User user = (User) session.getAttribute(SessionKey.USER);
-
-        if (SystemUtil.parameterNull(user)){
-            throw new AuthorizationException();
-        }
 
         ResultDto resultDto = userInformation.resultDto(user);
 
         return new ResultMap()
                 .resultSuccess()
-                .appendParameter(ResultMap.DATA,resultDto)
+                .appendParameter(ResultMap.DATA, resultDto)
                 .send();
     }
+
+    @RequestMapping(value = "/personalOvertime", method = RequestMethod.POST)
+    @ValidatePermission
+    public @ResponseBody
+    Map<String, Object> personalOvertime(
+            @RequestParam("limit") int limit,
+            @RequestParam("currentPage") int currentPage,
+            HttpSession session) throws AuthorizationException {
+
+        User user = (User) session.getAttribute(SessionKey.USER);
+
+        ResultDto resultDto = new PresonalOvertimeInformation(limit,currentPage);
+
+        return new ResultMap()
+                .appendParameter(ResultMap.DATA,resultDto)
+                .resultSuccess()
+                .send();
+    }
+
 }

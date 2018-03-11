@@ -14,8 +14,11 @@ public class ResultMap {
     //日志记录
     private static Logger logger = Logger.getLogger(ResultMap.class);
 
-    //返回值的Key
+    //返回数据集合的Key
     public static final String DATA = "data";
+    //返回分页的总条数
+    public static final String TOTAL = "total";
+
 
     private Map<String,Object> result = new HashMap<>();
 

@@ -2,6 +2,8 @@ package org.nix.dao.service;
 
 import org.apache.log4j.Logger;
 import org.nix.dao.base.SupperBaseDAOImp;
+import org.nix.dao.service.utils.Page;
+import org.nix.domain.entity.OvertimeRecord;
 import org.nix.domain.entity.User;
 import org.nix.exception.AccountNumberException;
 import org.nix.utils.SystemUtil;
@@ -90,4 +92,17 @@ public class UserService extends SupperBaseDAOImp<User> {
         sql = sql.replaceAll("id", String.valueOf(user.getId()));
         return findBySqlCount(sql);
     }
+
+    /**
+     * 查询这个人的加班信息记录
+     * @param user
+     * @return
+     */
+    public Page findOvertimeRecordByUser(User user){
+        String sql = "SELECT * FROM overtimerecord WHERE `user` = ?";
+        List<OvertimeRecord> records = findBySql(sql,user.getId());
+        return new Page().setList(records);
+    }
+
+
 }
