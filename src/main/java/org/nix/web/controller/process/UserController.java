@@ -12,6 +12,7 @@ import org.nix.domain.entity.dto.user.UserInformation;
 import org.nix.domain.entity.entitybuild.UserBuild;
 import org.nix.exception.AccountNumberException;
 import org.nix.exception.AuthorizationException;
+import org.nix.exception.IdentityOverdueException;
 import org.nix.utils.SessionKey;
 import org.nix.utils.SystemUtil;
 import org.nix.web.controller.exception.UserExceptionResult;
@@ -39,6 +40,9 @@ public class UserController extends UserExceptionResult {
 
     @Autowired
     private UserInformation userInformation;
+
+    @Autowired
+    private PresonalOvertimeInformation presonalOvertimeInformation;
 
     //日志记录
     private static Logger logger = Logger.getLogger(UserController.class);
@@ -100,7 +104,7 @@ public class UserController extends UserExceptionResult {
     @RequestMapping(value = "/information", method = RequestMethod.POST)
     @ValidatePermission
     public @ResponseBody
-    Map<String, Object> information(HttpSession session) throws AuthorizationException {
+    Map<String, Object> information(HttpSession session) throws AuthorizationException , NullPointerException{
 
         User user = (User) session.getAttribute(SessionKey.USER);
 
@@ -112,18 +116,28 @@ public class UserController extends UserExceptionResult {
                 .send();
     }
 
+    /**
+     * 获取用户的加班信息条数
+     * @param limit 每页多少条
+     * @param currentPage 当前页
+     * @param session 与用户会话进程
+     * @return 返回查询结果
+     * @throws AuthorizationException 身份过期
+     */
     @RequestMapping(value = "/personalOvertime", method = RequestMethod.POST)
     @ValidatePermission
     public @ResponseBody
     Map<String, Object> personalOvertime(
             @RequestParam("limit") int limit,
             @RequestParam("currentPage") int currentPage,
-            HttpSession session) throws AuthorizationException {
+            HttpSession session) throws AuthorizationException ,IdentityOverdueException , NullPointerException{
 
         User user = (User) session.getAttribute(SessionKey.USER);
 
-        ResultDto resultDto = new PresonalOvertimeInformation(limit,currentPage);
-
+        ResultDto resultDto = presonalOvertimeInformation
+                .setLimit(limit)
+                .setCurrentPage(currentPage)
+                .resultDto(user);
         return new ResultMap()
                 .appendParameter(ResultMap.DATA,resultDto)
                 .resultSuccess()

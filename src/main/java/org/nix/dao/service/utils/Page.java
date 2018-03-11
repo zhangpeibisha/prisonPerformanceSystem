@@ -43,6 +43,16 @@ public class Page<T> {
         //获取结束坐标
         int indexEnd = indexStart + limit;
 
+        //如果开始坐标大于数量则返回空
+        if (indexStart>getTotal()){
+            return null;
+        }
+
+        //如果尾坐标大于数组长度，则尾坐标设置为数组数量
+        if (indexEnd>getTotal()){
+            indexEnd = getTotal();
+        }
+
         List<T> temp = new ArrayList<>();
         //获取指定坐标的值
         for (int i = indexStart; i < indexEnd; i++) {

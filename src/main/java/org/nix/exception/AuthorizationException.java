@@ -5,7 +5,7 @@ import org.apache.log4j.Logger;
 /**
  * Create by zhangpe0312@qq.com on 2018/3/9.
  *
- * 未登录异常
+ * 没有权限异常
  */
 public class AuthorizationException extends BaseException{
     //日志记录

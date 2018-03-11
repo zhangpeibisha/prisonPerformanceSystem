@@ -4,6 +4,7 @@ import org.apache.log4j.Logger;
 import org.hibernate.PropertyValueException;
 import org.hibernate.exception.ConstraintViolationException;
 import org.nix.exception.AccountNumberException;
+import org.nix.exception.IdentityOverdueException;
 import org.nix.exception.LuoErrorCode;
 import org.nix.web.controller.utils.ResultMap;
 import org.springframework.web.bind.annotation.ControllerAdvice;
@@ -67,5 +68,7 @@ public class SystemExceptionResult {
                         , LuoErrorCode.CONSTRAINT_VIOLATE_DATABASES.getDesc())
                 .send();
     }
+
+
 
 }
