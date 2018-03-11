@@ -79,4 +79,15 @@ public class UserController extends UserExceptionResult {
         userService.registered(user);
         return new ResultMap().resultSuccess().send();
     }
+
+    /**
+     * 显示用户的个人信息
+     * @return 用户信息
+     */
+    @RequestMapping(value = "/information" , method = RequestMethod.POST)
+    public @ResponseBody
+    Map<String, Object> information()  {
+
+        return new ResultMap().resultSuccess().send();
+    }
 }

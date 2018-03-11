@@ -68,4 +68,26 @@ public class UserService extends SupperBaseDAOImp<User> {
         Object result = save(user);
         logger.info(result + " 用户执行了注册操作");
     }
+
+    /**
+     * 获得加班时间总时长
+     * @param user 需要获取的用户
+     * @return 时长
+     */
+    public double overtimeAllTime(User user)  {
+        String sql = "SELECT COUNT(overtimeLength) FROM overtimerecord WHERE `user` = id";
+        sql = sql.replaceAll("id", String.valueOf(user.getId()));
+        return findBySqlCount(sql);
+    }
+
+    /**
+     * 查询员工加班获取的总工资
+     * @param user
+     * @return
+     */
+    public double overtimeAllMoney(User user)  {
+        String sql = "SELECT COUNT(overtimeMoney) FROM overtimerecord WHERE `user` = id";
+        sql = sql.replaceAll("id", String.valueOf(user.getId()));
+        return findBySqlCount(sql);
+    }
 }

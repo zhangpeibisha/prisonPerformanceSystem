@@ -30,7 +30,7 @@ public class TestController {
         return map;
     }
 
-    @RequestMapping(value = "/model" , method = RequestMethod.GET)
+    @RequestMapping(value = "/model" , method = RequestMethod.POST)
     public @ResponseBody
     Map<String, Object> model()  {
 
