@@ -5,7 +5,7 @@ import org.hibernate.PropertyValueException;
 import org.hibernate.exception.ConstraintViolationException;
 import org.nix.dao.service.UserService;
 import org.nix.domain.entity.User;
-import org.nix.domain.entity.build.UserBuild;
+import org.nix.domain.entity.entitybuild.UserBuild;
 import org.nix.exception.AccountNumberException;
 import org.nix.utils.SessionKey;
 import org.nix.web.controller.exception.UserExceptionResult;

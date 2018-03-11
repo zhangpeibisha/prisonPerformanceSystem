@@ -4,7 +4,7 @@ import org.apache.log4j.Logger;
 import org.nix.dao.service.UserService;
 import org.nix.domain.entity.User;
 import org.nix.domain.entity.base.BaseEntity;
-import org.nix.domain.entity.build.UserBuild;
+import org.nix.domain.entity.entitybuild.UserBuild;
 import org.nix.domain.entity.dto.ResultDto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
