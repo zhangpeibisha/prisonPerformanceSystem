@@ -19,7 +19,8 @@
 * URL: register.do
 * 请求参数{
     serialNumber：警号,
-    password:密码
+    password:密码,
+    userName:用户姓名
     }
 * 返回参数{
     result：返回列表
@@ -74,6 +75,7 @@
     result:返回列表,
     total:总条数,
     data:{
+    year:年份，
     month:月份,
     overtimeRecordsId: 加班记录id,
     duration:加班时长,

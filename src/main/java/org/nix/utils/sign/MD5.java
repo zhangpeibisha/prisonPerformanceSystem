@@ -110,4 +110,9 @@ public class MD5  {
         this.uppercase = uppercase;
     }
 
+    public static void main(String[] args) {
+        String str = "fasgfjkashgjjkashgfw";
+        System.out.println(new MD5().encryption(str));
+    }
+
 }

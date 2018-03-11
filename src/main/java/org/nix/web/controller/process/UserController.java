@@ -86,7 +86,7 @@ public class UserController extends UserExceptionResult {
         User user = new UserBuild()
                 .setSiren(serialNumber)
                 .setPassword(password)
-//                .setName("系统配置001")
+                .setName("系统配置002")
 //                .setBasicWage(4700)
                 .setCreateTime()
                 .build();
@@ -104,7 +104,7 @@ public class UserController extends UserExceptionResult {
     @RequestMapping(value = "/information", method = RequestMethod.POST)
     @ValidatePermission
     public @ResponseBody
-    Map<String, Object> information(HttpSession session) throws AuthorizationException , NullPointerException{
+    Map<String, Object> information(HttpSession session) throws AuthorizationException, NullPointerException {
 
         User user = (User) session.getAttribute(SessionKey.USER);
 
@@ -118,9 +118,10 @@ public class UserController extends UserExceptionResult {
 
     /**
      * 获取用户的加班信息条数
-     * @param limit 每页多少条
+     *
+     * @param limit       每页多少条
      * @param currentPage 当前页
-     * @param session 与用户会话进程
+     * @param session     与用户会话进程
      * @return 返回查询结果
      * @throws AuthorizationException 身份过期
      */
@@ -130,7 +131,7 @@ public class UserController extends UserExceptionResult {
     Map<String, Object> personalOvertime(
             @RequestParam("limit") int limit,
             @RequestParam("currentPage") int currentPage,
-            HttpSession session) throws AuthorizationException ,IdentityOverdueException , NullPointerException{
+            HttpSession session) throws AuthorizationException, IdentityOverdueException, NullPointerException {
 
         User user = (User) session.getAttribute(SessionKey.USER);
 
@@ -138,10 +139,23 @@ public class UserController extends UserExceptionResult {
                 .setLimit(limit)
                 .setCurrentPage(currentPage)
                 .resultDto(user);
+
         return new ResultMap()
-                .appendParameter(ResultMap.DATA,resultDto)
+                .appendParameter(ResultMap.DATA, resultDto)
                 .resultSuccess()
                 .send();
+    }
+
+    /**
+     * 显示用户每月加班信息汇总
+     *
+     * @return 统计出来的每个月的信息
+     */
+    @RequestMapping(value = "/personalMonthOvertime", method = RequestMethod.POST)
+    public @ResponseBody
+    Map<String, Object> personalMonthOvertime() {
+
+        return new ResultMap().resultSuccess().send();
     }
 
 }

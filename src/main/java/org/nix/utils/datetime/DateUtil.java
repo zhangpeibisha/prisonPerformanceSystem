@@ -25,6 +25,22 @@ public class DateUtil {
 
         Date now = new Date();
 
+        System.out.println(now.getTime());
+
+        long nowTime = now.getTime();
+        Thread.sleep(1000);
+        long newTime = new Date().getTime();
+        //获取年月的值
+        System.out.println(nowTime/1000/60/60/24/30.0);
+        System.out.println(newTime/1000/60/60/24/30.0);
+        //获取日
+        System.out.println(nowTime/1000/60/60/24);
+        System.out.println(newTime/1000/60/60/24);
+        //获取小时
+        System.out.println(nowTime/1000/60/60);
+        System.out.println(newTime/1000/60/60);
+
+
 
         System.out.println(format(now, "yyyyMMdd"));
         System.out.println(format(now, "yyyy-MM-dd"));
