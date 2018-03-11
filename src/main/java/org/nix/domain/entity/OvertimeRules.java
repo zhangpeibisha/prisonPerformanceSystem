@@ -1,6 +1,7 @@
 package org.nix.domain.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import org.codehaus.jackson.map.annotate.JsonSerialize;
 import org.nix.domain.entity.base.BaseEntity;
 
 import javax.persistence.*;
@@ -14,7 +15,8 @@ import java.util.Set;
  */
 @Entity
 @Table(name = "OvertimeRules")
-@JsonIgnoreProperties(value={"handler","hibernateLazyInitializer" , "overtimeRecords"})
+@JsonIgnoreProperties(value={"handler","hibernateLazyInitializer" , "overtimeRecords" , "overtimeRecords"})
+@JsonSerialize(include=JsonSerialize.Inclusion.NON_NULL)
 public class OvertimeRules extends BaseEntity{
 
     //计费名字

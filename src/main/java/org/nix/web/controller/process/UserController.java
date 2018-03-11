@@ -5,9 +5,13 @@ import org.hibernate.PropertyValueException;
 import org.hibernate.exception.ConstraintViolationException;
 import org.nix.dao.service.UserService;
 import org.nix.domain.entity.User;
+import org.nix.domain.entity.dto.ResultDto;
+import org.nix.domain.entity.dto.user.UserInformation;
 import org.nix.domain.entity.entitybuild.UserBuild;
 import org.nix.exception.AccountNumberException;
+import org.nix.exception.AuthorizationException;
 import org.nix.utils.SessionKey;
+import org.nix.utils.SystemUtil;
 import org.nix.web.controller.exception.UserExceptionResult;
 import org.nix.web.controller.utils.ResultMap;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,6 +34,9 @@ public class UserController extends UserExceptionResult {
 
     @Autowired
     private UserService userService;
+
+    @Autowired
+    private UserInformation userInformation;
 
     //日志记录
     private static Logger logger = Logger.getLogger(UserController.class);
@@ -57,11 +64,12 @@ public class UserController extends UserExceptionResult {
 
     /**
      * 用户注册接口
+     *
      * @param serialNumber 警号
-     * @param password 用户密码
+     * @param password     用户密码
      * @return 返回结果
-     * @throws NullPointerException 空指针异常
-     * @throws PropertyValueException 数据字段为空
+     * @throws NullPointerException         空指针异常
+     * @throws PropertyValueException       数据字段为空
      * @throws ConstraintViolationException 数据插入违反唯一约束
      */
     @RequestMapping(value = "/register", method = RequestMethod.POST)
@@ -82,12 +90,25 @@ public class UserController extends UserExceptionResult {
 
     /**
      * 显示用户的个人信息
-     * @return 用户信息
+     * @param session 用户进程
+     * @return 返回用户个人信息
+     * @throws AuthorizationException 未登录异常
      */
-    @RequestMapping(value = "/information" , method = RequestMethod.POST)
+    @RequestMapping(value = "/information", method = RequestMethod.POST)
     public @ResponseBody
-    Map<String, Object> information()  {
+    Map<String, Object> information(HttpSession session) throws AuthorizationException{
 
-        return new ResultMap().resultSuccess().send();
+        User user = (User) session.getAttribute(SessionKey.USER);
+
+        if (SystemUtil.parameterNull(user)){
+            throw new AuthorizationException();
+        }
+
+        ResultDto resultDto = userInformation.resultDto(user);
+
+        return new ResultMap()
+                .resultSuccess()
+                .appendParameter(ResultMap.DATA,resultDto)
+                .send();
     }
 }

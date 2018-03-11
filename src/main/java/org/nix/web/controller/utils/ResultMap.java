@@ -14,6 +14,9 @@ public class ResultMap {
     //日志记录
     private static Logger logger = Logger.getLogger(ResultMap.class);
 
+    //返回值的Key
+    public static final String DATA = "data";
+
     private Map<String,Object> result = new HashMap<>();
 
     public Map<String, Object> send() {

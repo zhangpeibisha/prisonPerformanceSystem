@@ -14,6 +14,7 @@ public enum LuoErrorCode {
     PARAMETER_NULL("LUO005","空指针异常"),
     CONSTRAINT_VIOLATE_DATABASES("LUO006","插入重复"),
     NULL_FIEID_DATABASES("LUO007","插入字段为空"),
+    IDENTITY_OVERDUE("LUO008","身份过期"),
     PERMISSION_DENIED("LUO003","访问拒绝，没有权限");
 
     private String value;
