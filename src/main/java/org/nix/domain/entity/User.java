@@ -43,7 +43,7 @@ public class User extends BaseEntity{
         this.siren = siren;
     }
 
-    @Column(name = "password" , nullable = false , length = 18 )
+    @Column(name = "password" , nullable = false , length = 32 )
     public String getPassword() {
         return password;
     }

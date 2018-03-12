@@ -1,13 +1,9 @@
 package org.nix.web.controller.exception;
 
 import org.apache.log4j.Logger;
-import org.nix.exception.AccountNumberException;
-import org.nix.exception.IdentityOverdueException;
-import org.nix.exception.LuoErrorCode;
+import org.nix.exception.ErrorCode;
 import org.nix.web.controller.utils.ResultMap;
-import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.Map;
@@ -31,9 +27,9 @@ public class UserExceptionResult{
     public Map<String, Object> accountNumberException() {
 
         return new ResultMap()
-                .setResult(LuoErrorCode.USERNAME_PASSWORD_ERROR.getValue())
-                .appendParameter(LuoErrorCode.USERNAME_PASSWORD_ERROR.getValue()
-                        , LuoErrorCode.USERNAME_PASSWORD_ERROR.getDesc())
+                .setResult(ErrorCode.USERNAME_PASSWORD_ERROR.getValue())
+                .appendParameter(ErrorCode.USERNAME_PASSWORD_ERROR.getValue()
+                        , ErrorCode.USERNAME_PASSWORD_ERROR.getDesc())
                 .send();
     }
 
@@ -44,8 +40,8 @@ public class UserExceptionResult{
     @RequestMapping(value = "/identityOverdueException")
     public Map<String,Object> identityOverdueException(){
         return new ResultMap()
-                .setResult(LuoErrorCode.IDENTITY_OVERDUE.getValue())
-                .appendParameter(LuoErrorCode.IDENTITY_OVERDUE.getValue(),LuoErrorCode.IDENTITY_OVERDUE.getDesc())
+                .setResult(ErrorCode.IDENTITY_OVERDUE.getValue())
+                .appendParameter(ErrorCode.IDENTITY_OVERDUE.getValue(), ErrorCode.IDENTITY_OVERDUE.getDesc())
                 .send();
     }
 }

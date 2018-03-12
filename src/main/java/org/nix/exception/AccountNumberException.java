@@ -12,6 +12,6 @@ public class AccountNumberException extends BaseException{
     private static Logger logger = Logger.getLogger(AccountNumberException.class);
 
     public AccountNumberException() {
-        super(LuoErrorCode.USERNAME_PASSWORD_ERROR);
+        super(ErrorCode.USERNAME_PASSWORD_ERROR);
     }
 }

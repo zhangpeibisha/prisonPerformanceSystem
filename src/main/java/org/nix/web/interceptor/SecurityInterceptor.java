@@ -8,7 +8,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import org.nix.exception.LuoErrorCode;
+import org.nix.exception.ErrorCode;
 import org.nix.utils.SessionKey;
 import org.nix.web.controller.utils.ResultMap;
 import org.springframework.web.servlet.HandlerInterceptor;
@@ -44,7 +44,7 @@ public class SecurityInterceptor implements HandlerInterceptor {
                 out.write(
                         JSON.toJSONString
                                 (new ResultMap()
-                                        .setResult(LuoErrorCode.IDENTITY_OVERDUE.getValue())
+                                        .setResult(ErrorCode.IDENTITY_OVERDUE.getValue())
                                         .send()));
                 out.flush();
                 out.close();

@@ -12,6 +12,6 @@ public class AuthorizationException extends BaseException{
     private static Logger logger = Logger.getLogger(AuthorizationException.class);
 
     public AuthorizationException() {
-        super(LuoErrorCode.PERMISSION_DENIED);
+        super(ErrorCode.PERMISSION_DENIED);
     }
 }

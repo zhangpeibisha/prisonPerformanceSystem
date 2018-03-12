@@ -1,9 +1,8 @@
 package org.nix.web.controller.exception;
 
 import org.apache.log4j.Logger;
-import org.nix.exception.LuoErrorCode;
+import org.nix.exception.ErrorCode;
 import org.nix.web.controller.utils.ResultMap;
-import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Map;
@@ -29,8 +28,8 @@ public class SystemExceptionResult {
     public Map<String, Object> accessDenied() {
         logger.error("权限不足，访问被拒绝");
         return new ResultMap()
-                .setResult(LuoErrorCode.PERMISSION_DENIED.getValue())
-                .appendParameter(LuoErrorCode.PERMISSION_DENIED.getValue(), LuoErrorCode.PERMISSION_DENIED.getDesc())
+                .setResult(ErrorCode.PERMISSION_DENIED.getValue())
+                .appendParameter(ErrorCode.PERMISSION_DENIED.getValue(), ErrorCode.PERMISSION_DENIED.getDesc())
                 .send();
     }
 
@@ -43,9 +42,9 @@ public class SystemExceptionResult {
     public Map<String, Object> parameterNullException() {
 
         return new ResultMap()
-                .setResult(LuoErrorCode.PARAMETER_NULL.getValue())
-                .appendParameter(LuoErrorCode.PARAMETER_NULL.getValue()
-                        , LuoErrorCode.PARAMETER_NULL.getDesc())
+                .setResult(ErrorCode.PARAMETER_NULL.getValue())
+                .appendParameter(ErrorCode.PARAMETER_NULL.getValue()
+                        , ErrorCode.PARAMETER_NULL.getDesc())
                 .send();
     }
 
@@ -58,9 +57,9 @@ public class SystemExceptionResult {
     public Map<String, Object> dataIntegrityViolationException() {
 
         return new ResultMap()
-                .setResult(LuoErrorCode.CONSTRAINT_VIOLATE_DATABASES.getValue())
-                .appendParameter(LuoErrorCode.CONSTRAINT_VIOLATE_DATABASES.getValue()
-                        , LuoErrorCode.CONSTRAINT_VIOLATE_DATABASES.getDesc())
+                .setResult(ErrorCode.CONSTRAINT_VIOLATE_DATABASES.getValue())
+                .appendParameter(ErrorCode.CONSTRAINT_VIOLATE_DATABASES.getValue()
+                        , ErrorCode.CONSTRAINT_VIOLATE_DATABASES.getDesc())
                 .send();
     }
 
@@ -73,9 +72,9 @@ public class SystemExceptionResult {
     public Map<String, Object> dataRetrievalFailureException() {
 
         return new ResultMap()
-                .setResult(LuoErrorCode.DATABASES_ERROR_DATA_RETRIEVAL_FAIL.getValue())
-                .appendParameter(LuoErrorCode.DATABASES_ERROR_DATA_RETRIEVAL_FAIL.getValue()
-                        , LuoErrorCode.DATABASES_ERROR_DATA_RETRIEVAL_FAIL.getDesc())
+                .setResult(ErrorCode.DATABASES_ERROR_DATA_RETRIEVAL_FAIL.getValue())
+                .appendParameter(ErrorCode.DATABASES_ERROR_DATA_RETRIEVAL_FAIL.getValue()
+                        , ErrorCode.DATABASES_ERROR_DATA_RETRIEVAL_FAIL.getDesc())
                 .send();
     }
 
@@ -88,9 +87,9 @@ public class SystemExceptionResult {
     public Map<String, Object> uncategorizedDataAccessException() {
 
         return new ResultMap()
-                .setResult(LuoErrorCode.DATABASES_ERROR_UNCATEGORIZED.getValue())
-                .appendParameter(LuoErrorCode.DATABASES_ERROR_UNCATEGORIZED.getValue()
-                        , LuoErrorCode.DATABASES_ERROR_UNCATEGORIZED.getDesc())
+                .setResult(ErrorCode.DATABASES_ERROR_UNCATEGORIZED.getValue())
+                .appendParameter(ErrorCode.DATABASES_ERROR_UNCATEGORIZED.getValue()
+                        , ErrorCode.DATABASES_ERROR_UNCATEGORIZED.getDesc())
                 .send();
     }
 

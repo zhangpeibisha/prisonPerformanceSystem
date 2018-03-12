@@ -25,11 +25,12 @@ public class DateUtil {
 
         Date now = new Date();
 
-        System.out.println(now.getTime());
-
         long nowTime = now.getTime();
         Thread.sleep(1000);
         long newTime = new Date().getTime();
+
+
+
         //获取年月的值
         System.out.println(nowTime/1000/60/60/24/30.0);
         System.out.println(newTime/1000/60/60/24/30.0);
@@ -133,6 +134,33 @@ public class DateUtil {
 
     private DateUtil() {
         // 私用构造主法.因为此类是工具类.
+    }
+
+    /**
+     * 获得指定时间的年
+     *
+     * @param date
+     * @return 一个有字符串组成的年月 列如201803
+     */
+    public static int getDateYear(Date date){
+        Calendar now = Calendar.getInstance();
+        now.setTime(date);
+        int year = now.get(Calendar.YEAR);
+        return year;
+    }
+
+    public static int getDateMonth(Date date){
+        Calendar now = Calendar.getInstance();
+        now.setTime(date);
+        int month = now.get(Calendar.MONTH) + 1; // 0-based!
+        return month;
+    }
+
+    public static int getDateDay(Date date){
+        Calendar now = Calendar.getInstance();
+        now.setTime(date);
+        int day = now.get(Calendar.DAY_OF_MONTH);
+        return day;
     }
 
     /**

@@ -18,8 +18,8 @@ public class BaseException extends RuntimeException{
         super(code.toString());
 
         //如果是枚举类就直接赋值
-        if (code instanceof LuoErrorCode){
-            LuoErrorCode luoErrorCode = (LuoErrorCode) code;
+        if (code instanceof ErrorCode){
+            ErrorCode luoErrorCode = (ErrorCode) code;
             setValue(luoErrorCode.getValue());
             setDesc(luoErrorCode.getDesc());
         }

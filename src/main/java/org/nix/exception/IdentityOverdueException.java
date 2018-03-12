@@ -12,6 +12,6 @@ public class IdentityOverdueException extends BaseException{
     private static Logger logger = Logger.getLogger(IdentityOverdueException.class);
 
     public IdentityOverdueException() {
-        super(LuoErrorCode.IDENTITY_OVERDUE);
+        super(ErrorCode.IDENTITY_OVERDUE);
     }
 }
