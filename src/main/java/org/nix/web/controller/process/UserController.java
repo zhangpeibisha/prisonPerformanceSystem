@@ -75,13 +75,14 @@ public class UserController {
      */
     @RequestMapping(value = "/register", method = RequestMethod.POST)
     public Map<String, Object> register(@RequestParam("serialNumber") String serialNumber,
-                                        @RequestParam("password") String password)
+                                        @RequestParam("password") String password,
+                                        @RequestParam("userName")String userName)
             throws NullPointerException, PropertyValueException, DataAccessException {
         User user = new UserBuild()
                 .setSiren(serialNumber)
                 .setPassword(password)
-                .setName("系统配置002")
-//                .setBasicWage(4700)
+                .setName(userName)
+                .setBasicWage(4700)
                 .setCreateTime()
                 .build();
         userService.registered(user);
