@@ -98,6 +98,10 @@
                     forward:/exception/system/uncategorizedDataAccessException.do
                 </prop>
 
+                <!--系统参数异常-->
+                <prop key="java.lang.IllegalArgumentException">
+                    forward:/exception/system/illegalArgumentException.do
+                </prop>
 
             </props>
         </property>

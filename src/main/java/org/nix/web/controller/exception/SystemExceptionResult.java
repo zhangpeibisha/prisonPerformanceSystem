@@ -93,5 +93,19 @@ public class SystemExceptionResult {
                 .send();
     }
 
+    /**
+     * 参数异常
+     *
+     * @return
+     */
+    @RequestMapping(value = "/illegalArgumentException")
+    public Map<String, Object> illegalArgumentException() {
+        return new ResultMap()
+                .setResult(ErrorCode.PARAMETER_EXCEPTION.getValue())
+                .appendParameter(ErrorCode.PARAMETER_EXCEPTION.getValue()
+                        , ErrorCode.PARAMETER_EXCEPTION.getDesc())
+                .send();
+    }
+
 
 }
