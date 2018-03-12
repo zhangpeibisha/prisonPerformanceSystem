@@ -4,12 +4,14 @@
     background-size: cover;
 }
 .login-mid{
-    margin-left: 20%;
-    margin-top: 300px;
-    height: 250px;
     width: 60%;
     background-color: #ffffff;
     border-radius: 20px;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    height: 250px;
+    transform: translate(-50%, -50%);
 }
 .login-title{
     line-height: 60px;
