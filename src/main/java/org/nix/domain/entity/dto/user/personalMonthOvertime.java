@@ -4,8 +4,10 @@ import org.apache.log4j.Logger;
 import org.nix.domain.entity.OvertimeRecord;
 import org.nix.domain.entity.User;
 import org.nix.domain.entity.dto.ResultDto;
+import org.nix.utils.datetime.DateUtil;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
 
@@ -142,13 +144,28 @@ public class personalMonthOvertime implements ResultDto<User> {
     /**
      * 通过原始数据将所有信息进行相加、或者移除
      */
-    private List<UserOvertimeInfo> statistics() {
-
+    private List<OvertimeRecord> statistics() {
         //临时使用存储相同年份和月份的订单
         List<OvertimeRecord> tempList = new ArrayList<>();
+        //临时年月
+        int year_1;
+        int month_1;
+        int year_2;
+        int month_2;
+        Date tempTime_1;
+        Date tempTime_2;
+        //临时加班记录
+        OvertimeRecord tempOvertimeRecord_1;
+        OvertimeRecord tempOvertimeRecord_2;
 
         for (int i = 0; i < oldData.size(); i++) {
+            tempOvertimeRecord_1 = oldData.get(i);
+            tempTime_1 = tempOvertimeRecord_1.getOvertimeStart();
+            year_1 = DateUtil.getYear(tempTime_1);
+            month_1 = DateUtil.getMonth(tempTime_1);
+            for (int j = i; j <oldData.size() ; j++) {
 
+            }
         }
         return null;
     }

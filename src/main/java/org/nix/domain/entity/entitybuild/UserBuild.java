@@ -19,9 +19,8 @@ public class  UserBuild {
 
     User user = new User();
 
-    public UserBuild setSiren(String siren) {
-
-        user.setSiren(siren);
+    public UserBuild setSerialNumber(String siren) {
+        user.setSerialNumber(siren);
         return this;
     }
     public UserBuild setPassword(String password) {

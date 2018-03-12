@@ -4,7 +4,9 @@ import org.apache.log4j.Logger;
 import org.hibernate.PropertyValueException;
 import org.hibernate.exception.ConstraintViolationException;
 import org.nix.annotation.ValidatePermission;
+import org.nix.dao.service.RoleService;
 import org.nix.dao.service.UserService;
+import org.nix.domain.entity.Role;
 import org.nix.domain.entity.User;
 import org.nix.domain.entity.dto.ResultDto;
 import org.nix.domain.entity.dto.user.PresonalOvertimeInformation;
@@ -39,6 +41,9 @@ public class UserController {
 
     @Autowired
     private PresonalOvertimeInformation presonalOvertimeInformation;
+
+    @Autowired
+    private RoleService roleService;
 
     //日志记录
     private static Logger logger = Logger.getLogger(UserController.class);
@@ -78,12 +83,16 @@ public class UserController {
                                         @RequestParam("password") String password,
                                         @RequestParam("userName")String userName)
             throws NullPointerException, PropertyValueException, DataAccessException {
+
+        Role role = roleService.findById(1);
+
         User user = new UserBuild()
-                .setSiren(serialNumber)
+                .setSerialNumber(serialNumber)
                 .setPassword(password)
                 .setName(userName)
                 .setBasicWage(4700)
                 .setCreateTime()
+                .setRole(role)
                 .build();
         userService.registered(user);
         return new ResultMap().resultSuccess().send();

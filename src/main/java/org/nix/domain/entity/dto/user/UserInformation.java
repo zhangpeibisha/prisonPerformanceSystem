@@ -53,7 +53,7 @@ public class UserInformation implements ResultDto<User> {
         setOvertimeAllmoney(overtimeAllmoney);
         setBasicWage(user.getBasicWage());
         setName(user.getName());
-        setSiren(user.getSiren());
+        setSiren(user.getSerialNumber());
 
         return this;
     }

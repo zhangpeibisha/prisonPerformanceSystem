@@ -37,20 +37,20 @@ public class UserService extends SupperBaseDAOImp<User> {
      * 用户登陆查询
      * 如果账号密码不匹配将抛出账号异常
      *
-     * @param siren    警号
+     * @param serialNumber    警号
      * @param password 账户密码
      * @return 账号密码是否匹配成功
      */
-    public User login(String siren, String password) {
+    public User login(String serialNumber, String password) {
 
         //表示警号列的列名
-        String columnSiren = "siren";
+        String columnSiren = "serialNumber";
 
-        if (SystemUtil.parameterNull(siren, password)) {
+        if (SystemUtil.parameterNull(serialNumber, password)) {
             throw new NullPointerException();
         }
 
-        User user = findByProperty(columnSiren, siren);
+        User user = findByProperty(columnSiren, serialNumber);
 
         if (user== null || !user.getPassword().equals(password)) {
             throw new AccountNumberException();
