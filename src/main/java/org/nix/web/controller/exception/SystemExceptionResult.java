@@ -107,5 +107,17 @@ public class SystemExceptionResult {
                 .send();
     }
 
+    /**
+     * 参数类型异常--参数需求类型和实际类型不匹配
+     * @return
+     */
+    @RequestMapping(value = "/methodArgumentTypeMismatchException")
+    public Map<String, Object> methodArgumentTypeMismatchException() {
+        return new ResultMap()
+                .setResult(ErrorCode.Method_Argument_Type_Mismatch_Exception.getValue())
+                .appendParameter(ErrorCode.Method_Argument_Type_Mismatch_Exception.getValue()
+                        , ErrorCode.Method_Argument_Type_Mismatch_Exception.getDesc())
+                .send();
+    }
 
 }

@@ -41,7 +41,7 @@ public class UserService extends SupperBaseDAOImp<User> {
      * @param password 账户密码
      * @return 账号密码是否匹配成功
      */
-    public User login(String serialNumber, String password) {
+    public User login( int serialNumber, String password) {
 
         //表示警号列的列名
         String columnSiren = "serialNumber";

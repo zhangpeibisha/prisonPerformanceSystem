@@ -59,7 +59,7 @@ public class UserController {
      * @throws NullPointerException   空指针异常
      */
     @RequestMapping(value = "/login", method = RequestMethod.POST)
-    public Map<String, Object> login(@RequestParam("userName") String userName,
+    public Map<String, Object> login(@RequestParam("userName") int userName,
                                      @RequestParam("password") String password,
                                      HttpSession session) throws AccountNumberException, NullPointerException {
         User user = userService.login(userName, password);
@@ -79,7 +79,7 @@ public class UserController {
      * @throws ConstraintViolationException 数据插入违反唯一约束
      */
     @RequestMapping(value = "/register", method = RequestMethod.POST)
-    public Map<String, Object> register(@RequestParam("serialNumber") String serialNumber,
+    public Map<String, Object> register(@RequestParam("serialNumber") int serialNumber,
                                         @RequestParam("password") String password,
                                         @RequestParam("userName")String userName)
             throws NullPointerException, PropertyValueException, DataAccessException {

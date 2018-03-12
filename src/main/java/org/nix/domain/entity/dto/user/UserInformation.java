@@ -35,7 +35,7 @@ public class UserInformation implements ResultDto<User> {
     //基础工资
     private double basicWage;
     //警号 司法警号为 7位
-    private String siren;
+    private int serialNumber;
 
     @Override
     public ResultDto resultDto(User user) throws IdentityOverdueException, NullPointerException {
@@ -53,7 +53,7 @@ public class UserInformation implements ResultDto<User> {
         setOvertimeAllmoney(overtimeAllmoney);
         setBasicWage(user.getBasicWage());
         setName(user.getName());
-        setSiren(user.getSerialNumber());
+        setSerialNumber(user.getSerialNumber());
 
         return this;
     }
@@ -90,11 +90,11 @@ public class UserInformation implements ResultDto<User> {
         this.basicWage = basicWage;
     }
 
-    public String getSiren() {
-        return siren;
+    public int getSerialNumber() {
+        return serialNumber;
     }
 
-    public void setSiren(String siren) {
-        this.siren = siren;
+    public void setSerialNumber(int serialNumber) {
+        this.serialNumber = serialNumber;
     }
 }
