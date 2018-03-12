@@ -6,14 +6,16 @@ $(document).ready(function () {
     });
 
     $("#register").click(function () {
-        var name = $("#user").val();
+        var user = $("#user").val();
+        var name = $("#name").val();
         var pass = $("#password").val();
         pass= hex_md5(pass);
         $.ajax({
             type: 'POST',
             url: registerUrl,
             data: {
-                serialNumber:name,
+                serialNumber:user,
+                userName:name,
                 password:pass
             },
             success: function (data) {
