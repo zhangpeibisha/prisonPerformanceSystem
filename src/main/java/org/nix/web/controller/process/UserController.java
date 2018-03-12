@@ -14,15 +14,9 @@ import org.nix.exception.AccountNumberException;
 import org.nix.exception.AuthorizationException;
 import org.nix.exception.IdentityOverdueException;
 import org.nix.utils.SessionKey;
-import org.nix.utils.SystemUtil;
-import org.nix.web.controller.exception.UserExceptionResult;
 import org.nix.web.controller.utils.ResultMap;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpSession;
 import java.util.Map;
@@ -32,8 +26,8 @@ import java.util.Map;
  * <p>
  * 用户接口
  */
-@Controller
-public class UserController extends UserExceptionResult {
+@RestController
+public class UserController  {
 
     @Autowired
     private UserService userService;

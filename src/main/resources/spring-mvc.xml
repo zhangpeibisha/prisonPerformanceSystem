@@ -20,6 +20,7 @@
             <mvc:exclude-mapping path="/login.*"/> <!--登陆页不拦截-->
             <!--修改密码不拦截-->
             <mvc:exclude-mapping path="/register.*"/> <!--注册页不拦截-->
+            <mvc:exclude-mapping path="/exception/**/*.*"/> <!--异常处理不拦截-->
             <bean class="org.nix.web.interceptor.SecurityInterceptor">
             </bean>
         </mvc:interceptor>
@@ -76,7 +77,10 @@
         <property name="exceptionMappings">
             <props>
                 <!--<prop key="org.nix.exception.AuthorizationException">redirect:/login</prop>-->
-                <prop key="org.nix.exception.AuthorizationException">forward:/accessDenied.do</prop>
+                <prop key="org.nix.exception.AuthorizationException">forward:/exception/user/accessDenied.do</prop>
+                <prop key="java.lang.NullPointerException">forward:/exception/system/parameterNullException.do</prop>
+                <prop key="org.nix.exception.AccountNumberException">forward:/exception/user/accountNumberException.do</prop>
+                <prop key="org.nix.exception.IdentityOverdueException">forward:/exception/user/identityOverdueException.do</prop>
             </props>
         </property>
     </bean>

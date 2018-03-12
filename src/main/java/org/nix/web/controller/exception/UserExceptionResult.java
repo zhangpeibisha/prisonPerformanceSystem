@@ -6,14 +6,20 @@ import org.nix.exception.IdentityOverdueException;
 import org.nix.exception.LuoErrorCode;
 import org.nix.web.controller.utils.ResultMap;
 import org.springframework.web.bind.annotation.ExceptionHandler;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.RestController;
 
 import java.util.Map;
 
 /**
  * Create by zhangpe0312@qq.com on 2018/3/10.
+ *
+ * 用户异常处理类
  */
-public class UserExceptionResult extends SystemExceptionResult{
+@RestController
+@RequestMapping(value = "/exception/user")
+public class UserExceptionResult{
     //日志记录
     private static Logger logger = Logger.getLogger(UserExceptionResult.class);
 
@@ -21,8 +27,7 @@ public class UserExceptionResult extends SystemExceptionResult{
      * 账号密码不匹配异常
      * @return 返回错误通知信息
      */
-    @ExceptionHandler(AccountNumberException.class)
-    @ResponseBody
+    @RequestMapping(value = "/accountNumberException")
     public Map<String, Object> accountNumberException() {
 
         return new ResultMap()
@@ -36,8 +41,7 @@ public class UserExceptionResult extends SystemExceptionResult{
      * 身份过期异常
      * @return
      */
-    @ExceptionHandler(IdentityOverdueException.class)
-    @ResponseBody
+    @RequestMapping(value = "/identityOverdueException")
     public Map<String,Object> identityOverdueException(){
         return new ResultMap()
                 .setResult(LuoErrorCode.IDENTITY_OVERDUE.getValue())

@@ -1,15 +1,9 @@
 package org.nix.web.controller.exception;
 
 import org.apache.log4j.Logger;
-import org.hibernate.PropertyValueException;
-import org.hibernate.exception.ConstraintViolationException;
-import org.nix.exception.AccountNumberException;
-import org.nix.exception.IdentityOverdueException;
 import org.nix.exception.LuoErrorCode;
 import org.nix.web.controller.utils.ResultMap;
-import org.springframework.web.bind.annotation.ControllerAdvice;
-import org.springframework.web.bind.annotation.ExceptionHandler;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.Map;
 
@@ -18,18 +12,33 @@ import java.util.Map;
  * <p>
  * 对一些系统异常进行处理异常进行处理
  */
-@ControllerAdvice
+@RestController
+@RequestMapping(value = "/exception/system")
 public class SystemExceptionResult {
     //日志记录
     private static Logger logger = Logger.getLogger(SystemExceptionResult.class);
+
+
+    /**
+     * 权限不足返回的控制接口
+     *
+     * @return
+     */
+    @RequestMapping(value = "/accessDenied")
+    public Map<String, Object> accessDenied() {
+        logger.error("权限不足，访问被拒绝");
+        return new ResultMap()
+                .setResult(LuoErrorCode.PERMISSION_DENIED.getValue())
+                .appendParameter(LuoErrorCode.PERMISSION_DENIED.getValue(),LuoErrorCode.PERMISSION_DENIED.getDesc())
+                .send();
+    }
 
     /**
      * 空指针异常返回结果类
      *
      * @return 返回错误通知信息
      */
-    @ExceptionHandler(NullPointerException.class)
-    @ResponseBody
+    @RequestMapping(value = "/parameterNullException")
     public Map<String, Object> parameterNullException() {
 
         return new ResultMap()
@@ -43,8 +52,7 @@ public class SystemExceptionResult {
      * 违反了数据库唯一约束的插入操作
      * @return 返回错误通知信息
      */
-    @ExceptionHandler(ConstraintViolationException.class)
-    @ResponseBody
+    @RequestMapping(value = "/repeatedDataException")
     public Map<String, Object> repeatedDataException() {
 
         return new ResultMap()
@@ -58,8 +66,7 @@ public class SystemExceptionResult {
      * 插入数据库的不能为空的字段为空，抛出异常
      * @return
      */
-    @ExceptionHandler(PropertyValueException.class)
-    @ResponseBody
+    @RequestMapping(value = "/nullFieldDatabaseException")
     public Map<String, Object> nullFieldDatabaseException() {
 
         return new ResultMap()
