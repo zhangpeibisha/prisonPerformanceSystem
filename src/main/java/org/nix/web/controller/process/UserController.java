@@ -16,6 +16,8 @@ import org.nix.exception.IdentityOverdueException;
 import org.nix.utils.SessionKey;
 import org.nix.web.controller.utils.ResultMap;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataAccessException;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpSession;
@@ -27,7 +29,7 @@ import java.util.Map;
  * 用户接口
  */
 @RestController
-public class UserController  {
+public class UserController {
 
     @Autowired
     private UserService userService;
@@ -52,10 +54,9 @@ public class UserController  {
      * @throws NullPointerException   空指针异常
      */
     @RequestMapping(value = "/login", method = RequestMethod.POST)
-    public @ResponseBody
-    Map<String, Object> login(@RequestParam("userName") String userName,
-                              @RequestParam("password") String password,
-                              HttpSession session) throws AccountNumberException, NullPointerException {
+    public Map<String, Object> login(@RequestParam("userName") String userName,
+                                     @RequestParam("password") String password,
+                                     HttpSession session) throws AccountNumberException, NullPointerException {
         User user = userService.login(userName, password);
         session.setAttribute(SessionKey.USER, user);
         logger.info("登陆成功");
@@ -73,10 +74,9 @@ public class UserController  {
      * @throws ConstraintViolationException 数据插入违反唯一约束
      */
     @RequestMapping(value = "/register", method = RequestMethod.POST)
-    public @ResponseBody
-    Map<String, Object> register(@RequestParam("serialNumber") String serialNumber,
-                                 @RequestParam("password") String password)
-            throws NullPointerException, PropertyValueException, ConstraintViolationException {
+    public Map<String, Object> register(@RequestParam("serialNumber") String serialNumber,
+                                        @RequestParam("password") String password)
+            throws NullPointerException, PropertyValueException, DataAccessException {
         User user = new UserBuild()
                 .setSiren(serialNumber)
                 .setPassword(password)
@@ -97,8 +97,7 @@ public class UserController  {
      */
     @RequestMapping(value = "/information", method = RequestMethod.POST)
     @ValidatePermission
-    public @ResponseBody
-    Map<String, Object> information(HttpSession session) throws AuthorizationException, NullPointerException {
+    public Map<String, Object> information(HttpSession session) throws AuthorizationException, NullPointerException {
 
         User user = (User) session.getAttribute(SessionKey.USER);
 
@@ -121,8 +120,7 @@ public class UserController  {
      */
     @RequestMapping(value = "/personalOvertime", method = RequestMethod.POST)
     @ValidatePermission
-    public @ResponseBody
-    Map<String, Object> personalOvertime(
+    public Map<String, Object> personalOvertime(
             @RequestParam("limit") int limit,
             @RequestParam("currentPage") int currentPage,
             HttpSession session) throws AuthorizationException, IdentityOverdueException, NullPointerException {
@@ -146,8 +144,7 @@ public class UserController  {
      * @return 统计出来的每个月的信息
      */
     @RequestMapping(value = "/personalMonthOvertime", method = RequestMethod.POST)
-    public @ResponseBody
-    Map<String, Object> personalMonthOvertime() {
+    public Map<String, Object> personalMonthOvertime() {
 
         return new ResultMap().resultSuccess().send();
     }

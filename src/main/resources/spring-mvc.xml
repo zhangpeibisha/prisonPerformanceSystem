@@ -36,9 +36,9 @@
 
     <!-- 以下为SpringMVC配置 -->
     <!-- json支持 -->
-    <bean class="org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerMapping" />
+    <bean class="org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerMapping"/>
     <bean class="org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter">
-        <property name="cacheSeconds" value="0" />
+        <property name="cacheSeconds" value="0"/>
         <property name="messageConverters">
             <list>
                 <bean class="com.alibaba.fastjson.support.spring.FastJsonHttpMessageConverter">
@@ -76,11 +76,29 @@
         <!-- <property name="defaultErrorView" value="rediret:/error"></property>   -->
         <property name="exceptionMappings">
             <props>
-                <!--<prop key="org.nix.exception.AuthorizationException">redirect:/login</prop>-->
+                <!--权限异常-->
                 <prop key="org.nix.exception.AuthorizationException">forward:/exception/user/accessDenied.do</prop>
+
+                <!--用户业务逻辑错误-->
                 <prop key="java.lang.NullPointerException">forward:/exception/system/parameterNullException.do</prop>
-                <prop key="org.nix.exception.AccountNumberException">forward:/exception/user/accountNumberException.do</prop>
-                <prop key="org.nix.exception.IdentityOverdueException">forward:/exception/user/identityOverdueException.do</prop>
+                <prop key="org.nix.exception.AccountNumberException">forward:/exception/user/accountNumberException.do
+                </prop>
+                <prop key="org.nix.exception.IdentityOverdueException">
+                    forward:/exception/user/identityOverdueException.do
+                </prop>
+
+                <!--处理数据库异常-->
+                <prop key="org.springframework.dao.DataIntegrityViolationException">
+                    forward:/exception/system/dataIntegrityViolationException.do
+                </prop>
+                <prop key="org.springframework.dao.DataRetrievalFailureException">
+                    forward:/exception/system/dataRetrievalFailureException.do
+                </prop>
+                <prop key="org.springframework.dao.UncategorizedDataAccessException">
+                    forward:/exception/system/uncategorizedDataAccessException.do
+                </prop>
+
+
             </props>
         </property>
     </bean>
@@ -92,7 +110,7 @@
             <aop:pointcut id="pc"
                           expression="@annotation(org.nix.annotation.ValidatePermission)
                 and @annotation(org.springframework.web.bind.annotation.ResponseBody)
-                and execution(* org.nix.web.controller..*.*(..)) " />
+                and execution(* org.nix.web.controller..*.*(..)) "/>
             <aop:before pointcut-ref="pc" method="doBefore"/>
         </aop:aspect>
     </aop:config>

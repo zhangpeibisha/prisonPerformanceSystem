@@ -7,15 +7,14 @@ package org.nix.exception;
  */
 public enum LuoErrorCode {
 
-    NULL_OBJ("LUO001","对象为空"),
-    ERROR_ADD_USER("LUO002","添加用户失败"),
-    UNKNOWN_ERROR("LUO999","系统繁忙，请稍后再试...."),
     USERNAME_PASSWORD_ERROR("LUO004","账号或者密码错误"),
     PARAMETER_NULL("LUO005","空指针异常"),
-    CONSTRAINT_VIOLATE_DATABASES("LUO006","插入重复"),
+    CONSTRAINT_VIOLATE_DATABASES("LUO006","Insert或Update数据时违反了完整性，例如违反了惟一性限制"),
     NULL_FIEID_DATABASES("LUO007","插入字段为空"),
     IDENTITY_OVERDUE("LUO008","身份过期"),
-    PERMISSION_DENIED("LUO003","访问拒绝，没有权限");
+    PERMISSION_DENIED("LUO003","访问拒绝，没有权限"),
+    DATABASES_ERROR_UNCATEGORIZED("LUO009","数据库发生错误，无法归类"),
+    DATABASES_ERROR_DATA_RETRIEVAL_FAIL("LUO011","某些数据不能被检测到，例如不能通过关键字找到一条记录");
 
     private String value;
     private String desc;
