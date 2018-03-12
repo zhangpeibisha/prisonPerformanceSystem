@@ -20,7 +20,7 @@ import java.util.Set;
 public class User extends BaseEntity{
 
     //警号 司法警号为 7位
-    private String serialNumber;
+    private int serialNumber;
     //密码
     private String password;
     //狱警名字
@@ -35,11 +35,11 @@ public class User extends BaseEntity{
     private Set<OvertimeRecord> overtimeRecords = new HashSet<>();
 
     @Column(name = "serialNumber" , nullable = false , length = 7 , unique = true)
-    public String getSerialNumber() {
+    public int getSerialNumber() {
         return serialNumber;
     }
 
-    public void setSerialNumber(String siren) {
+    public void setSerialNumber(int siren) {
         this.serialNumber = siren;
     }
 
