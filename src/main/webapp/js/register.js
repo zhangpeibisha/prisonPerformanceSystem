@@ -10,6 +10,7 @@ $(document).ready(function () {
         var name = $("#name").val();
         var pass = $("#password").val();
         pass= hex_md5(pass);
+        console.info(pass);
         $.ajax({
             type: 'POST',
             url: registerUrl,
