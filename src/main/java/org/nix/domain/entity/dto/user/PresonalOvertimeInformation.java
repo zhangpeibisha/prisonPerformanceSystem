@@ -17,11 +17,11 @@ import java.util.List;
 
 /**
  * Create by zhangpe0312@qq.com on 2018/3/11.
- *
+ * <p>
  * 分页返回用户的加班信息
  */
 @Service
-public class PresonalOvertimeInformation implements ResultDto<User> {
+public class PresonalOvertimeInformation implements ResultDto {
     //日志记录
     private static Logger logger = Logger.getLogger(PresonalOvertimeInformation.class);
 
@@ -39,15 +39,17 @@ public class PresonalOvertimeInformation implements ResultDto<User> {
 
 
     @Override
-    public ResultDto resultDto(User user) throws AuthorizationException {
-        if (SystemUtil.parameterNull(user)) {
+    public ResultDto resultDto(Object... objects) throws AuthorizationException {
+        if (SystemUtil.parameterNull(objects)) {
             throw new IdentityOverdueException();
         }
+        User user;
+        //因为是查一个人的，所以只取第一个值
+        user = (User) objects[0];
         user = userService.findById(user.getId());
         Page recordPage = userService.findOvertimeRecordByUser(user);
         total = recordPage.getTotal();
         records = recordPage.getPageList(limit, currentPage);
-
         return this;
     }
 
@@ -78,4 +80,6 @@ public class PresonalOvertimeInformation implements ResultDto<User> {
         this.currentPage = currentPage;
         return this;
     }
+
+
 }

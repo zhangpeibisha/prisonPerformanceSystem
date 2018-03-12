@@ -63,12 +63,11 @@ public class UserService extends SupperBaseDAOImp<User> {
      *
      * @param user 用户对象
      */
-    public void registered(User user) {
+    public Object registered(User user) {
         if (SystemUtil.parameterNull(user)) {
             throw new NullPointerException();
         }
-        Object result = save(user);
-        logger.info(result + " 用户执行了注册操作");
+       return save(user);
     }
 
     /**

@@ -81,10 +81,10 @@ public class UserController {
     @RequestMapping(value = "/register", method = RequestMethod.POST)
     public Map<String, Object> register(@RequestParam("serialNumber") int serialNumber,
                                         @RequestParam("password") String password,
-                                        @RequestParam("userName")String userName)
+                                        @RequestParam("userName") String userName)
             throws NullPointerException, PropertyValueException, DataAccessException {
 
-        Role role = roleService.findById(1);
+        Role role = roleService.findById(2);
 
         User user = new UserBuild()
                 .setSerialNumber(serialNumber)
@@ -94,7 +94,9 @@ public class UserController {
                 .setCreateTime()
                 .setRole(role)
                 .build();
-        userService.registered(user);
+
+        Object result = userService.registered(user);
+        logger.info(result + " 用户执行了注册操作成功");
         return new ResultMap().resultSuccess().send();
     }
 
@@ -112,6 +114,8 @@ public class UserController {
         User user = (User) session.getAttribute(SessionKey.USER);
 
         ResultDto resultDto = userInformation.resultDto(user);
+
+        logger.info("查看了用户" + user.getId() + "的个人信息");
 
         return new ResultMap()
                 .resultSuccess()
@@ -141,6 +145,8 @@ public class UserController {
                 .setLimit(limit)
                 .setCurrentPage(currentPage)
                 .resultDto(user);
+
+        logger.info("查看了用户" + user.getId() + "的个人加班信息");
 
         return new ResultMap()
                 .appendParameter(ResultMap.DATA, resultDto)

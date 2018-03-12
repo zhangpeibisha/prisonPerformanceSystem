@@ -19,7 +19,7 @@ import org.springframework.stereotype.Service;
  * 显示用户的个人信息所返回的信息
  */
 @Service
-public class UserInformation implements ResultDto<User> {
+public class UserInformation implements ResultDto {
     //日志记录
     private static Logger logger = Logger.getLogger(UserInformation.class);
 
@@ -38,14 +38,13 @@ public class UserInformation implements ResultDto<User> {
     private int serialNumber;
 
     @Override
-    public ResultDto resultDto(User user) throws IdentityOverdueException, NullPointerException {
+    public ResultDto resultDto(Object... objects) throws IdentityOverdueException, NullPointerException {
 
-        if (SystemUtil.parameterNull(user)) {
+        if (SystemUtil.parameterNull(objects)) {
             throw new IdentityOverdueException();
         }
-
+        User user = (User) objects[0];
         user = userService.findById(user.getId());
-
         overtimeAllLenth = userService.overtimeAllTime(user);
         overtimeAllmoney = userService.overtimeAllMoney(user);
 
