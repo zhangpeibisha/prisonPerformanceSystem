@@ -2,6 +2,7 @@ package org.nix.domain.entity.dto.user;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.apache.log4j.Logger;
+import org.nix.dao.service.OvertimeRecordService;
 import org.nix.dao.service.UserService;
 import org.nix.dao.service.utils.Page;
 import org.nix.domain.entity.User;
@@ -26,6 +27,9 @@ public class PresonalOvertimeInformation implements ResultDto {
     private static Logger logger = Logger.getLogger(PresonalOvertimeInformation.class);
 
     @Autowired
+    private OvertimeRecordService overtimeRecordService;
+
+    @Autowired
     private UserService userService;
 
     //加班信息
@@ -47,7 +51,8 @@ public class PresonalOvertimeInformation implements ResultDto {
         //因为是查一个人的，所以只取第一个值
         user = (User) objects[0];
         user = userService.findById(user.getId());
-        Page recordPage = userService.findOvertimeRecordByUser(user);
+
+        Page recordPage = overtimeRecordService.findOvertimeRecordByUser(user);
         total = recordPage.getTotal();
         records = recordPage.getPageList(limit, currentPage);
         return this;

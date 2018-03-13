@@ -95,17 +95,6 @@ public class UserService extends SupperBaseDAOImp<User> {
         return findBySqlCount(sql);
     }
 
-    /**
-     * 查询这个人的加班信息记录
-     *
-     * @param user
-     * @return
-     */
-    public Page findOvertimeRecordByUser(User user) {
-        String sql = "SELECT * FROM overtimerecord WHERE `user` = " +  user.getId();
-        List<OvertimeRecord> records = findBySql(sql);
-        return new Page().setList(records);
-    }
 
     /**
      * 发现指定用户当月的加班信息
