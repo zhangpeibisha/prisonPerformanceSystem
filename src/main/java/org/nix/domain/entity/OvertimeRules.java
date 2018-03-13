@@ -21,22 +21,22 @@ public class OvertimeRules extends BaseEntity{
 
     //计费名字
     private String name;
-    //规则描述
+    //规则描述 weekend 代表周末工资倍数  usually平时上班工资计算 holiday假日工资计费
     private String description;
     //计费倍数
     private double payMultiples;
     //备注
     private String note;
 
-    //一个计费规则有多个加班记录，一个加班记录只有一个计费规则
-    private Set<OvertimeRecord> overtimeRecords = new HashSet<>();
+//    //一个计费规则有多个加班记录，一个加班记录只有一个计费规则
+//    private Set<OvertimeRecord> overtimeRecords = new HashSet<>();
 
     @Column(name = "name",length = 20 , unique = true)
     public String getName() {
         return name;
     }
 
-    @Column(name = "description")
+    @Column(name = "description", unique = true , nullable = false)
     public String getDescription() {
         return description;
     }
@@ -51,10 +51,10 @@ public class OvertimeRules extends BaseEntity{
         return note;
     }
 
-    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "rules")
-    public Set<OvertimeRecord> getOvertimeRecords() {
-        return overtimeRecords;
-    }
+//    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "rules")
+//    public Set<OvertimeRecord> getOvertimeRecords() {
+//        return overtimeRecords;
+//    }
 
     public void setName(String name) {
         this.name = name;
@@ -72,7 +72,7 @@ public class OvertimeRules extends BaseEntity{
         this.note = note;
     }
 
-    public void setOvertimeRecords(Set<OvertimeRecord> overtimeRecords) {
-        this.overtimeRecords = overtimeRecords;
-    }
+//    public void setOvertimeRecords(Set<OvertimeRecord> overtimeRecords) {
+//        this.overtimeRecords = overtimeRecords;
+//    }
 }

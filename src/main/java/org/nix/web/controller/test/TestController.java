@@ -7,6 +7,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.RestController;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -15,7 +16,7 @@ import java.util.Map;
 /**
  * Create by zhangpe0312@qq.com on 2018/3/9.
  */
-@Controller
+@RestController
 public class TestController {
 
     private Logger logger = Logger.getLogger(TestController.class);
@@ -31,7 +32,7 @@ public class TestController {
     }
 
     @RequestMapping(value = "/model" , method = RequestMethod.POST)
-    public @ResponseBody
+    public
     Map<String, Object> model()  {
 
         return new ResultMap().resultSuccess().send();

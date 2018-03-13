@@ -65,7 +65,10 @@ public class UserController {
         User user = userService.login(userName, password);
         session.setAttribute(SessionKey.USER, user);
         logger.info("登陆成功");
-        return new ResultMap().resultSuccess().send();
+        return new ResultMap()
+                .resultSuccess()
+                .appendParameter(ResultMap.ROLE_CLASS,user.getRole().getName().equals("普通用户")?0:1)
+                .send();
     }
 
     /**

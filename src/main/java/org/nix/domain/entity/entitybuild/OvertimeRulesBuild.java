@@ -36,10 +36,10 @@ public class OvertimeRulesBuild {
         return this;
     }
 
-    public OvertimeRulesBuild setOvertimeRecords(Set<OvertimeRecord> overtimeRecords) {
-        rules.setOvertimeRecords(overtimeRecords);
-        return this;
-    }
+//    public OvertimeRulesBuild setOvertimeRecords(Set<OvertimeRecord> overtimeRecords) {
+//        rules.setOvertimeRecords(overtimeRecords);
+//        return this;
+//    }
 
     public OvertimeRulesBuild setCreateTime() {
         rules.setCreateTime(new Date());

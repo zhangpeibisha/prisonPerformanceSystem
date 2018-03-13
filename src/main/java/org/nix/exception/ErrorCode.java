@@ -16,7 +16,9 @@ public enum ErrorCode {
     DATABASES_ERROR_UNCATEGORIZED("ERROR009","数据库发生错误，无法归类"),
     DATABASES_ERROR_DATA_RETRIEVAL_FAIL("ERROR011","某些数据不能被检测到，例如不能通过关键字找到一条记录"),
     PARAMETER_EXCEPTION("ERROR012","参数传递异常"),
-    Method_Argument_Type_Mismatch_Exception("ERROR013","方法参数类型不匹配")
+    Method_Argument_Type_Mismatch_Exception("ERROR013","方法参数类型不匹配"),
+    Missing_Servlet_Request_Parameter_Exception("ERROR014","参数缺失"),
+    SELECT_EXCEPTION("ERROR015","数据库查询失败")
     ;
 
     private String value;

@@ -38,7 +38,7 @@ public class PermissionAspect {
             //进行权限检验
             return;
         }
-        throw new AuthorizationException ();
+//        throw new AuthorizationException ();
     }
 
     private Method getSourceMethod(JoinPoint jp) {

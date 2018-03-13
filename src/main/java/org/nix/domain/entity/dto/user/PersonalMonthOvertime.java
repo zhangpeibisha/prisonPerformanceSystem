@@ -6,6 +6,7 @@ import org.nix.dao.service.UserService;
 import org.nix.domain.entity.OvertimeRecord;
 import org.nix.domain.entity.User;
 import org.nix.domain.entity.dto.ResultDto;
+import org.nix.domain.entity.entitybuild.PersonalMonthOvertimeBuild;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -76,9 +77,16 @@ public class PersonalMonthOvertime implements ResultDto {
      */
     public void processOvertimeRecordNowMonth(List<OvertimeRecord> list){
         //这个月加班总时间
-        double overtimeLength;
+        double overtimeLength = 0;
         //这个月加班总工资
-        double overtimeMoney;
+        double overtimeMoney = 0;
+
+        for (int i = 0; i <list.size() ; i++) {
+            overtimeLength += list.get(i).getOvertimeLength();
+            overtimeMoney += list.get(i).getOvertimeMoney();
+        }
+
+
     }
 
 

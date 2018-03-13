@@ -3,10 +3,12 @@ package org.nix.dao.service;
 import org.apache.log4j.Logger;
 import org.nix.dao.base.SupperBaseDAOImp;
 import org.nix.domain.entity.OvertimeRecord;
+import org.nix.utils.datetime.DateUtil;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -27,4 +29,7 @@ public class OvertimeRecordService extends SupperBaseDAOImp<OvertimeRecord> {
     public <T> Long findByCriteriaCount(T object) {
         return null;
     }
+
+
+
 }

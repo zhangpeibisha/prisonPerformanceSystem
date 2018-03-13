@@ -18,7 +18,8 @@ public class ResultMap {
     public static final String DATA = "data";
     //返回分页的总条数
     public static final String TOTAL = "total";
-
+    //返回角色类型
+    public  static final String ROLE_CLASS = "role";
 
     private Map<String,Object> result = new HashMap<>();
 

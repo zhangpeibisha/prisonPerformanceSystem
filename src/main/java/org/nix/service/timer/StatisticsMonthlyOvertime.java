@@ -14,12 +14,12 @@ public class StatisticsMonthlyOvertime {
     //日志记录
     private static Logger logger = Logger.getLogger(StatisticsMonthlyOvertime.class);
 
-    @Scheduled(fixedRate = 5000)
+//    @Scheduled(fixedRate = 5000)
     public void test() {
         System.out.println("AAAA***********5秒执行一次");
     }
 
-    @Scheduled(fixedRate = 10000)
+//    @Scheduled(fixedRate = 10000)
     public void testa() {
         System.out.println("BBBB***********10秒执行一次");
     }

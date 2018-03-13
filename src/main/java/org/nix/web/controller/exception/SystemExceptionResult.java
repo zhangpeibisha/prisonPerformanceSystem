@@ -120,4 +120,13 @@ public class SystemExceptionResult {
                 .send();
     }
 
+    @RequestMapping(value = "/missingServletRequestParameterException")
+    public Map<String, Object> missingServletRequestParameterException() {
+        return new ResultMap()
+                .setResult(ErrorCode.Missing_Servlet_Request_Parameter_Exception.getValue())
+                .appendParameter(ErrorCode.Missing_Servlet_Request_Parameter_Exception.getValue()
+                        , ErrorCode.Missing_Servlet_Request_Parameter_Exception.getDesc())
+                .send();
+    }
+
 }

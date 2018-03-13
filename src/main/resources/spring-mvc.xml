@@ -79,7 +79,7 @@
         <property name="exceptionMappings">
             <props>
                 <!--权限异常-->
-                <prop key="org.nix.exception.AuthorizationException">forward:/exception/user/accessDenied.do</prop>
+                <prop key="org.nix.exception.AuthorizationException">forward:/exception/system/accessDenied.do</prop>
 
                 <!--用户业务逻辑错误-->
                 <prop key="java.lang.NullPointerException">forward:/exception/system/parameterNullException.do</prop>
@@ -106,6 +106,9 @@
                 </prop>
                 <prop key="org.springframework.web.method.annotation.MethodArgumentTypeMismatchException">
                     forward:/exception/system/methodArgumentTypeMismatchException.do
+                </prop>
+                <prop key="org.springframework.web.bind.MissingServletRequestParameterException">
+                    forward:/exception/system/missingServletRequestParameterException.do
                 </prop>
 
             </props>

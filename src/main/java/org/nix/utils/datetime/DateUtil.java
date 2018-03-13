@@ -29,7 +29,7 @@ public class DateUtil {
         Thread.sleep(1000);
         long newTime = new Date().getTime();
 
-
+        System.out.println("星期" + getWeek(now).getNumber());
 
         //获取年月的值
         System.out.println(nowTime/1000/60/60/24/30.0);

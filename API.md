@@ -294,3 +294,17 @@
 18. 返回列表
    0：成功
    
+   
+19.新增添加班工资标准
+* 添加工资标准
+* HTTP ： POST
+* URL ：addOvertimeRules.do
+* 请求参数{
+   name : 计费标准名字
+   description：使用时间段 weekend : 代表周末工资倍数 ; usually : 平时上班工资计算
+   payMultiples:计费倍数
+   note ：备注
+}
+* 返回参数{
+    result:返回列表
+}
