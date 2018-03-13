@@ -21,7 +21,10 @@ $(document).ready(function(){
             success: function (data) {
                 console.info(data);
                 if(data.result=="0"){
-                     $(location).attr('href','welcomeUser.html');
+                    if(data.role="0")
+                        $(location).attr('href','welcomeUser.html');
+                    else if(data.role="1")
+                        $(location).attr('href','welcomeAdmin.html');
                 }
                 else{
                     alert(data.message);

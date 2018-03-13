@@ -13,9 +13,9 @@ $(document).ready(function () {
             },
             success: function (data) {
                 console.log(data);
-                if(data.result==0&&data.total!=0){
+                if(data.result==="0"&&data.data.total!==0){
                     var listData = data.data;
-                    var total = data.total;
+                    var total = data.data.total;
                     showData(listData);
 
                     var num = (total+pageLimit -1)/pageLimit;//向上取整
@@ -45,25 +45,20 @@ $(document).ready(function () {
                                 dataType: 'json',
                                 success: function (data) {
                                     console.info(data);
-                                    if(data.data==0){
+                                    if(data.result==="0"){
                                         var listData = data.data;
                                         showData(listData);
                                     }
-                                    else if(data.data==1){
+                                    else {
                                         noData();
                                     }
-                                    else if(data.data==2)
-                                        alert("error！");
                                 }
                             });
                         }
                     });
                 }
-                else if(data.data==0&&data.total==0){
+                else if(data.result==="0"&&data.data.total===0){
                     noData();
-                }
-                else{
-                    alert(data.message);
                 }
             },
             dataType: "json"
