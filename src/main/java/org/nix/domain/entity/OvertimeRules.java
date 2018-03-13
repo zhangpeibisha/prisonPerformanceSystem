@@ -28,8 +28,8 @@ public class OvertimeRules extends BaseEntity{
     //备注
     private String note;
 
-//    //一个计费规则有多个加班记录，一个加班记录只有一个计费规则
-//    private Set<OvertimeRecord> overtimeRecords = new HashSet<>();
+    //一个计费规则有多个加班记录，一个加班记录只有一个计费规则
+    private Set<OvertimeRecord> overtimeRecords = new HashSet<>();
 
     @Column(name = "name",length = 20 , unique = true)
     public String getName() {
@@ -51,10 +51,10 @@ public class OvertimeRules extends BaseEntity{
         return note;
     }
 
-//    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "rules")
-//    public Set<OvertimeRecord> getOvertimeRecords() {
-//        return overtimeRecords;
-//    }
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "rules")
+    public Set<OvertimeRecord> getOvertimeRecords() {
+        return overtimeRecords;
+    }
 
     public void setName(String name) {
         this.name = name;
@@ -72,7 +72,7 @@ public class OvertimeRules extends BaseEntity{
         this.note = note;
     }
 
-//    public void setOvertimeRecords(Set<OvertimeRecord> overtimeRecords) {
-//        this.overtimeRecords = overtimeRecords;
-//    }
+    public void setOvertimeRecords(Set<OvertimeRecord> overtimeRecords) {
+        this.overtimeRecords = overtimeRecords;
+    }
 }

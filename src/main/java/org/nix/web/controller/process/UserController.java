@@ -64,7 +64,7 @@ public class UserController {
                                      HttpSession session) throws AccountNumberException, NullPointerException {
         User user = userService.login(userName, password);
         session.setAttribute(SessionKey.USER, user);
-        logger.info("登陆成功");
+        logger.info(user.getName() + "登陆成功");
         return new ResultMap()
                 .resultSuccess()
                 .appendParameter(ResultMap.ROLE_CLASS,user.getRole().getName().equals("普通用户")?0:1)
@@ -87,7 +87,8 @@ public class UserController {
                                         @RequestParam("userName") String userName)
             throws NullPointerException, PropertyValueException, DataAccessException {
 
-        Role role = roleService.findById(2);
+        String column = "name";
+        Role role = roleService.findByProperty(column,"普通用户");
 
         User user = new UserBuild()
                 .setSerialNumber(serialNumber)

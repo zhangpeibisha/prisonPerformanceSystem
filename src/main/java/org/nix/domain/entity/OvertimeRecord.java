@@ -55,13 +55,13 @@ public class OvertimeRecord extends BaseEntity{
         return overtimeMoney;
     }
 
-    @ManyToOne(targetEntity = Role.class , fetch = FetchType.LAZY)
+    @ManyToOne(targetEntity = OvertimeRules.class , fetch = FetchType.LAZY)
     @JoinColumn(name = "rules")
     public OvertimeRules getRules() {
         return rules;
     }
 
-    @ManyToOne(targetEntity = Role.class , fetch = FetchType.LAZY)
+    @ManyToOne(targetEntity = User.class , fetch = FetchType.LAZY)
     @JoinColumn(name = "user")
     public User getUser() {
         return user;

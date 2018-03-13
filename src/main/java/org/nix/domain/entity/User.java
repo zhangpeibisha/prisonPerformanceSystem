@@ -79,7 +79,7 @@ public class User extends BaseEntity{
         this.overtimeRecords = overtimeRecords;
     }
 
-    @ManyToOne(targetEntity = Role.class)
+    @ManyToOne(targetEntity = Role.class, fetch = FetchType.LAZY)
     @JoinColumn(name = "role")
     public Role getRole() {
         return role;

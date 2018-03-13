@@ -102,8 +102,8 @@ public class UserService extends SupperBaseDAOImp<User> {
      * @return
      */
     public Page findOvertimeRecordByUser(User user) {
-        String sql = "SELECT * FROM overtimerecord WHERE `user` = ?";
-        List<OvertimeRecord> records = findBySql(sql, user.getId());
+        String sql = "SELECT * FROM overtimerecord WHERE `user` = " +  user.getId();
+        List<OvertimeRecord> records = findBySql(sql);
         return new Page().setList(records);
     }
 
