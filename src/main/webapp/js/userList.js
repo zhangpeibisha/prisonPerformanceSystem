@@ -75,11 +75,16 @@ $(document).ready(function () {
 
         temp.push('<table class="table table-hover">');
         temp.push('<thead><tr><th>用户编号</th><th>警号</th><th>姓名</th>' +
-            '<th>工资</th><th>密码</th></tr><tbody>');
+            '<th>工资</th><th>密码</th><th>操作</th></tr><tbody>');
         for (var i = 0; i < showNum; i++) {
+
+            var detailHref = "../html/userDetail.html?id=" +listData[i].serialNumber;
+            var updateHref = "../html/userUpdate.html?id=" +listData[i].serialNumber;
+
             temp.push("<tr><td>" + listData[i].month + "</td><td>" + listData[i].serialNumber + "</td><td>"
                 + listData[i].name+ "</td><td>" + listData[i].password+ "</td><td>"
-                + listData[i].salary+ "</td>");
+                + listData[i].salary+
+                "</td><td><a class='point' href="+ detailHref +">详情</a><a class='point' href="+ updateHref +">修改</a></td>");
         }
         temp.push('</tbody></table>');
 
@@ -90,8 +95,8 @@ $(document).ready(function () {
         var temp = [];
         temp.push('<table class="table table-hover">');
         temp.push('<thead><tr><th>用户编号</th><th>警号</th><th>姓名</th>' +
-            '<th>工资</th><th>密码</th></tr><tbody>');
-        temp.push("<tr><td colspan='5' style='text-align: center'>暂无数据</td></tr>");
+            '<th>工资</th><th>密码</th><th>操作</th></tr><tbody>');
+        temp.push("<tr><td colspan='6' style='text-align: center'>暂无数据</td></tr>");
         temp.push('</tbody></table>');
 
         $('#list').html(temp.join(''));
