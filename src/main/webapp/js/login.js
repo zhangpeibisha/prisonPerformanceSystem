@@ -38,6 +38,4 @@ $(document).ready(function(){
     $("#register").click(function () {
         $(location).attr('href', 'register.html');
     });
-
-
 });
