@@ -14,7 +14,7 @@ $(document).ready(function () {
             success: function (data) {
                 console.log(data);
                 if(data.result==="0"&&data.data.total!==0){
-                    var listData = data.data;
+                    var listData = data.data.records;
                     var total = data.data.total;
                     showData(listData);
 
@@ -71,10 +71,16 @@ $(document).ready(function () {
         temp.push('<table class="table table-hover">');
         temp.push('<thead><tr><th>记录编号</th><th>加班开始时间</th><th>加班结束时间</th>' +
             '<th>加班时长</th><th>加班工资</th></tr><tbody>');
+
         for (var i = 0; i < showNum; i++) {
-            temp.push("<tr><td>" + listData[i].overtimeRecordsId + "</td><td>" + listData[i].startTime + "</td><td>"
-                + listData[i].stopTime+ "</td><td>" + listData[i].duration + "</td><td>"
-                + listData[i].overtimeSalary + "</td>");
+            listData[i].overtimeStart = new Date(listData[i].overtimeStart).toLocaleString();
+            listData[i].overtimeEnd = new Date(listData[i].overtimeEnd).toLocaleString();
+            listData[i].overtimeLength = MillisecondToDate(listData[i].overtimeLength);
+
+
+            temp.push("<tr><td>" + listData[i].id + "</td><td>" + listData[i].overtimeStart + "</td><td>"
+                + listData[i].overtimeEnd+ "</td><td>" + listData[i].overtimeLength + "</td><td>"
+                + listData[i].overtimeMoney + "元</td>");
         }
         temp.push('</tbody></table>');
 
