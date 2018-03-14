@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>添加用户</title>
+    <link rel="stylesheet" href="../resource/bootstrap-3.3.7-dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="../css/common.css">
+    <script src="../resource/js/jquery.min.js"></script>
+</head>
+<body class="common-bac">
+<div class="container" style="padding-top: 20px;">
+    <ul class="nav nav-pills">
+        <li role="presentation"><a href="welcomeAdmin.html">主页</a></li>
+        <li role="presentation"><a href="userList.html">用户列表</a></li>
+        <li role="presentation"><a href="overtimeAdmin.html">加班信息</a></li>
+        <li role="presentation"><a href="statistics.html">加班信息统计</a></li>
+        <li style="float:right"><a href="login.html">退出账号</a></li>
+    </ul>
+
+    <form class="form-horizontal">
+        <div class="form-group">
+            <label for="user" class="col-sm-2 control-label">警号</label>
+            <div class="col-sm-8">
+                <input type="text" class="form-control" id="user" placeholder="警号">
+            </div>
+        </div>
+        <div class="form-group">
+            <label for="password" class="col-sm-2 control-label">密码</label>
+            <div class="col-sm-8">
+                <input type="password" class="form-control" id="password" placeholder="密码">
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="col-sm-offset-2 col-sm-10">
+                <button type="button" class="btn btn-info" id="login">确认添加</button>
+            </div>
+        </div>
+    </form>
+
+</div>
+</body>
+</html>
