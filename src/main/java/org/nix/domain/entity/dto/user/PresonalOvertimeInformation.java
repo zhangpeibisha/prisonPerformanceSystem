@@ -1,10 +1,9 @@
 package org.nix.domain.entity.dto.user;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.apache.log4j.Logger;
 import org.nix.dao.service.OvertimeRecordService;
 import org.nix.dao.service.UserService;
-import org.nix.dao.service.utils.Page;
+import org.nix.domain.entity.OvertimeRecord;
 import org.nix.domain.entity.User;
 import org.nix.domain.entity.dto.ResultDto;
 import org.nix.exception.AuthorizationException;
@@ -33,9 +32,9 @@ public class PresonalOvertimeInformation implements ResultDto {
     private UserService userService;
 
     //加班信息
-    private List records = new ArrayList();
+    private List<OvertimeRecord> records = new ArrayList<>();
     //加班总条数
-    private int total;
+    private long total;
 
     private int limit = 10;
 
@@ -52,9 +51,9 @@ public class PresonalOvertimeInformation implements ResultDto {
         user = (User) objects[0];
         user = userService.findById(user.getId());
 
-        Page recordPage = overtimeRecordService.findOvertimeRecordByUser(user);
-        total = recordPage.getTotal();
-        records = recordPage.getPageList(limit, currentPage);
+        total = overtimeRecordService.findOvertimeRecordCountByUser(user);
+        records = overtimeRecordService.findOvertimeRecordByUser(user,limit,currentPage);
+        setParmaterNull();
         return this;
     }
 
@@ -67,11 +66,11 @@ public class PresonalOvertimeInformation implements ResultDto {
         return this;
     }
 
-    public int getTotal() {
+    public long getTotal() {
         return total;
     }
 
-    public PresonalOvertimeInformation setTotal(int total) {
+    public PresonalOvertimeInformation setTotal(long total) {
         this.total = total;
         return this;
     }
@@ -86,5 +85,14 @@ public class PresonalOvertimeInformation implements ResultDto {
         return this;
     }
 
+    /**
+     * 设置不用的参数为空
+     */
+    public void setParmaterNull(){
+        for (int i = 0; i <records.size() ; i++) {
+            records.get(i).setRules(null);
+            records.get(i).setUser(null);
+        }
+    }
 
 }

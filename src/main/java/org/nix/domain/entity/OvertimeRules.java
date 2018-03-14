@@ -15,7 +15,7 @@ import java.util.Set;
  */
 @Entity
 @Table(name = "OvertimeRules")
-@JsonIgnoreProperties(value={"handler","hibernateLazyInitializer" , "overtimeRecords" , "overtimeRecords"})
+@JsonIgnoreProperties(value={"handler","hibernateLazyInitializer" , "overtimeRecords"})
 @JsonSerialize(include=JsonSerialize.Inclusion.NON_NULL)
 public class OvertimeRules extends BaseEntity{
 

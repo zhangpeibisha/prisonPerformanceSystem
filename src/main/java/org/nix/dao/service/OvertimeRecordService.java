@@ -1,11 +1,11 @@
 package org.nix.dao.service;
 
 import org.apache.log4j.Logger;
+import org.hibernate.Query;
+import org.hibernate.SQLQuery;
 import org.nix.dao.base.SupperBaseDAOImp;
-import org.nix.dao.service.utils.Page;
 import org.nix.domain.entity.OvertimeRecord;
 import org.nix.domain.entity.User;
-import org.nix.utils.datetime.DateUtil;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -39,15 +39,31 @@ public class OvertimeRecordService extends SupperBaseDAOImp<OvertimeRecord> {
      * @param user
      * @return
      */
-    public Page findOvertimeRecordByUser(User user) {
+    public List<OvertimeRecord> findOvertimeRecordByUser(User user , int limit , int currentPage) {
+
+        int start = (currentPage-1)*limit;
+
+        String sql = "select overtime from OvertimeRecord overtime where overtime.user = "
+                + user.getId();
+
+        return batchGetDataIteratorByHQL(sql,start,limit);
+    }
+
+    /**
+     * 发现用户的加班总条数
+     * @param user
+     * @return
+     */
+    public long findOvertimeRecordCountByUser(User user) {
+
         String sql = "    SELECT\n" +
-                "        * \n" +
+                "        count(*) \n" +
                 "    FROM\n" +
                 "        overtimerecord \n" +
                 "    WHERE\n" +
                 "        `user` = ?";
-        List<OvertimeRecord> records = findBySql(sql,user.getId());
-        return new Page().setList(records);
+
+        return findBySqlCount(sql,user.getId());
     }
 
 }

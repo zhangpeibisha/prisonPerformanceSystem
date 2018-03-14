@@ -1,5 +1,6 @@
 package org.nix.domain.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import org.codehaus.jackson.map.annotate.JsonSerialize;
 import org.nix.domain.entity.base.BaseEntity;

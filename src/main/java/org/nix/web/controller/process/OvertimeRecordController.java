@@ -75,7 +75,7 @@ public class OvertimeRecordController {
 
         double overtimeLength = calculationSalary.getOvertimeLength(start,stop);
 
-        double overtimemoney = calculationSalary.getOvertimeMoney(start,overtimeLength);
+        double overtimemoney = calculationSalary.getOvertimeMoney(start,overtimeLength,user);
 
         OvertimeRules rules = overtimeRulesService.findRecordByDate(start);
 

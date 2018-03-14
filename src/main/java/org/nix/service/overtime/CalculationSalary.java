@@ -3,8 +3,10 @@ package org.nix.service.overtime;
 import org.apache.log4j.Logger;
 import org.nix.dao.service.OvertimeRecordService;
 import org.nix.dao.service.OvertimeRulesService;
+import org.nix.dao.service.UserService;
 import org.nix.domain.entity.OvertimeRecord;
 import org.nix.domain.entity.OvertimeRules;
+import org.nix.domain.entity.User;
 import org.nix.exception.SelectException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -24,13 +26,16 @@ public class CalculationSalary {
     @Autowired
     private OvertimeRulesService overtimeRulesService;
 
+    @Autowired
+    private UserService userService;
+
     /**
      * 计算加班工资
      * @param nowTime 当前时间，为了得出加班规则
      * @param overtimeLength 加班时长
      * @return 加班应该获取的工资
      */
-    public double getOvertimeMoney(Date nowTime , double overtimeLength){
+    public double getOvertimeMoney(Date nowTime , double overtimeLength , User user){
 
         //找到当前日期应该使用的规则
         OvertimeRules rules = overtimeRulesService.findRecordByDate(nowTime);
@@ -39,7 +44,9 @@ public class CalculationSalary {
             throw new SelectException();
         }
 
-        return overtimeLength * rules.getPayMultiples();
+        double money = userService.findeUserBasicWageHoures(user);
+
+        return overtimeLength * rules.getPayMultiples() * money;
     }
 
     /**
@@ -53,5 +60,6 @@ public class CalculationSalary {
         return (stop.getTime() - start.getTime())/1000/60/60*1.0;
 
     }
+
 
 }
