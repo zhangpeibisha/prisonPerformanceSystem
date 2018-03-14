@@ -120,12 +120,29 @@ public class SystemExceptionResult {
                 .send();
     }
 
+    /**
+     * 参数缺失
+     * @return
+     */
     @RequestMapping(value = "/missingServletRequestParameterException")
     public Map<String, Object> missingServletRequestParameterException() {
         return new ResultMap()
                 .setResult(ErrorCode.Missing_Servlet_Request_Parameter_Exception.getValue())
                 .appendParameter(ErrorCode.Missing_Servlet_Request_Parameter_Exception.getValue()
                         , ErrorCode.Missing_Servlet_Request_Parameter_Exception.getDesc())
+                .send();
+    }
+
+    /**
+     * 字段长度不符合要求
+     * @return
+     */
+    @RequestMapping(value = "/constraintViolationException")
+    public Map<String, Object> constraintViolationException() {
+        return new ResultMap()
+                .setResult(ErrorCode.Constraint_Violation_Exception.getValue())
+                .appendParameter(ErrorCode.Constraint_Violation_Exception.getValue()
+                        , ErrorCode.Constraint_Violation_Exception.getDesc())
                 .send();
     }
 

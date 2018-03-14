@@ -3,6 +3,7 @@ package org.nix.domain.entity;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import org.codehaus.jackson.map.annotate.JsonSerialize;
+import org.hibernate.validator.constraints.Length;
 import org.nix.domain.entity.base.BaseEntity;
 
 import javax.persistence.*;
@@ -21,7 +22,7 @@ import java.util.Set;
 public class User extends BaseEntity{
 
     //警号 司法警号为 7位
-    private int serialNumber;
+    private String serialNumber;
     //密码
     private String password;
     //狱警名字
@@ -36,15 +37,17 @@ public class User extends BaseEntity{
     private Set<OvertimeRecord> overtimeRecords = new HashSet<>();
 
     @Column(name = "serialNumber" , nullable = false , length = 7 , unique = true)
-    public int getSerialNumber() {
+    @Length(min=7, max=7)
+    public String getSerialNumber() {
         return serialNumber;
     }
 
-    public void setSerialNumber(int siren) {
+    public void setSerialNumber(String siren) {
         this.serialNumber = siren;
     }
 
     @Column(name = "password" , nullable = false , length = 32 )
+    @Length(min=32, max=32)
     public String getPassword() {
         return password;
     }

@@ -53,7 +53,7 @@ public class OvertimeRecordController {
      */
     @RequestMapping(value = "/addOvertime" , method = RequestMethod.POST)
     public
-    Map<String, Object> addOvertime(@RequestParam("serialNumber")int serialNumber,
+    Map<String, Object> addOvertime(@RequestParam("serialNumber")String serialNumber,
                                     @RequestParam("startTime")long startTime,
                                     @RequestParam("stopTime")long stopTime, HttpSession session)  {
 
@@ -63,7 +63,7 @@ public class OvertimeRecordController {
             throw new IdentityOverdueException();
         }
 
-        if (user.getSerialNumber() != serialNumber){
+        if (!user.getSerialNumber().equals(serialNumber)){
             throw new AuthorizationException();
         }
 

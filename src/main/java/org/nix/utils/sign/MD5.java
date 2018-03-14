@@ -111,8 +111,10 @@ public class MD5  {
     }
 
     public static void main(String[] args) {
-        String str = "fasgfjkashgjjkashgfw";
-        System.out.println(new MD5().encryption(str));
+        String str = "123456";
+        str = new MD5().encryption(str);
+        System.out.println(str);
+        System.out.println(str.length());
     }
 
 }

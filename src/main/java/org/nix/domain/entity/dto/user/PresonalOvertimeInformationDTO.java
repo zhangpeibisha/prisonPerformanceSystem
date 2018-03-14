@@ -21,9 +21,9 @@ import java.util.List;
  * 分页返回用户的加班信息
  */
 @Service
-public class PresonalOvertimeInformation implements ResultDto {
+public class PresonalOvertimeInformationDTO implements ResultDto {
     //日志记录
-    private static Logger logger = Logger.getLogger(PresonalOvertimeInformation.class);
+    private static Logger logger = Logger.getLogger(PresonalOvertimeInformationDTO.class);
 
     @Autowired
     private OvertimeRecordService overtimeRecordService;
@@ -61,7 +61,7 @@ public class PresonalOvertimeInformation implements ResultDto {
         return records;
     }
 
-    public PresonalOvertimeInformation setRecords(List records) {
+    public PresonalOvertimeInformationDTO setRecords(List records) {
         this.records = records;
         return this;
     }
@@ -70,17 +70,17 @@ public class PresonalOvertimeInformation implements ResultDto {
         return total;
     }
 
-    public PresonalOvertimeInformation setTotal(long total) {
+    public PresonalOvertimeInformationDTO setTotal(long total) {
         this.total = total;
         return this;
     }
 
-    public PresonalOvertimeInformation setLimit(int limit) {
+    public PresonalOvertimeInformationDTO setLimit(int limit) {
         this.limit = limit;
         return this;
     }
 
-    public PresonalOvertimeInformation setCurrentPage(int currentPage) {
+    public PresonalOvertimeInformationDTO setCurrentPage(int currentPage) {
         this.currentPage = currentPage;
         return this;
     }
