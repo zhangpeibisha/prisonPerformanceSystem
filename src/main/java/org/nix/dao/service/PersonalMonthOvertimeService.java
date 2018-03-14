@@ -67,4 +67,20 @@ public class PersonalMonthOvertimeService extends SupperBaseDAOImp<PersonalMonth
         return findUniqueBySql(sql , user.getId() , year, month);
 
     }
+
+    /**
+     * 删除这个月的所有加班统计信息
+     */
+    public void deleteAllNowMonthOvertime(){
+        //得到当前年月
+        Date nowTime = new Date();
+        int year = DateUtil.getYear(nowTime);
+        int month = DateUtil.getMonth(nowTime);
+
+        String sql = "DELETE FROM personalmonthovertime WHERE YEAR = ? and month = ?";
+
+        int result = batchUpdateOrDelete(sql,year,month);
+
+        logger.info("删除了" + result + "条当月统计加班信息");
+    }
 }

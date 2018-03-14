@@ -17,9 +17,9 @@
     <context:component-scan base-package="org.nix"/>
 
     <!--启用注解驱动的定时任务-->
-    <task:annotation-driven scheduler="myScheduler"/>
-    <!--配置定时任务的线程池-->
-    <task:scheduler id="myScheduler" pool-size="5"/>
+    <task:executor id="executor" pool-size="5" />
+    <task:scheduler id="scheduler" pool-size="10" />
+    <task:annotation-driven executor="executor" scheduler="scheduler" />
 
 
 
