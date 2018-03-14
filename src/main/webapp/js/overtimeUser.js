@@ -45,11 +45,11 @@ $(document).ready(function () {
                                 dataType: 'json',
                                 success: function (data) {
                                     console.info(data);
-                                    if(data.result==="0"){
-                                        var listData = data.data;
+                                    if(data.result==="0"&&data.data.total!==0){
+                                        var listData = data.data.records;
                                         showData(listData);
                                     }
-                                    else {
+                                    else if(data.result==="0"&&data.data.total===0){
                                         noData();
                                     }
                                 }
@@ -73,6 +73,8 @@ $(document).ready(function () {
             '<th>加班时长</th><th>加班工资</th></tr><tbody>');
 
         for (var i = 0; i < showNum; i++) {
+
+
             listData[i].overtimeStart = new Date(listData[i].overtimeStart).toLocaleString();
             listData[i].overtimeEnd = new Date(listData[i].overtimeEnd).toLocaleString();
             listData[i].overtimeLength = MillisecondToDate(listData[i].overtimeLength);
