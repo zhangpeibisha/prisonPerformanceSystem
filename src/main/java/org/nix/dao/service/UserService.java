@@ -99,19 +99,6 @@ public class UserService extends SupperBaseDAOImp<User> {
     }
 
 
-    /**
-     * 发现指定用户当月的加班信息
-     *
-     * @param user 需要查询的用户
-     * @return 当月加班信息集合
-     */
-    public List<OvertimeRecord> findOvertimeNowMonthRecordByUser(User user) {
-
-        String sql = "SELECT * FROM overtimerecord WHERE `user` = ? " +
-                "AND  YEARWEEK(`overtimerecord`.createTime) = YEARWEEK(NOW())";
-
-        return findBySql(sql, user.getId());
-    }
 
     /**
      * 查询该用户历史统计记录

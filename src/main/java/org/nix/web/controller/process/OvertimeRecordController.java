@@ -7,6 +7,8 @@ import org.nix.dao.service.UserService;
 import org.nix.domain.entity.OvertimeRecord;
 import org.nix.domain.entity.OvertimeRules;
 import org.nix.domain.entity.User;
+import org.nix.domain.entity.dto.ResultDto;
+import org.nix.domain.entity.dto.user.PersonalMonthOvertimeDTO;
 import org.nix.domain.entity.entitybuild.OvertimeRecordBuild;
 import org.nix.exception.AuthorizationException;
 import org.nix.exception.IdentityOverdueException;
@@ -43,6 +45,10 @@ public class OvertimeRecordController {
 
     @Autowired
     private OvertimeRulesService overtimeRulesService;
+
+    @Autowired
+    private PersonalMonthOvertimeDTO personalMonthOvertimeDTO;
+
     /**
      * 添加用户加班记录
      * @param serialNumber 警号
@@ -97,5 +103,30 @@ public class OvertimeRecordController {
                 .resultSuccess()
                 .send();
     }
+
+
+    /**
+     * 显示用户每月加班信息汇总
+     *
+     * @return 统计出来的每个月的信息
+     */
+    @RequestMapping(value = "/personalMonthOvertime", method = RequestMethod.POST)
+    public Map<String, Object> personalMonthOvertime(@RequestParam("limit") int limit,
+                                                     @RequestParam("currentPage") int currentPage,
+                                                     HttpSession session) {
+
+        User user = (User) session.getAttribute(SessionKey.USER);
+
+      ResultDto resultDto =  personalMonthOvertimeDTO
+              .setLimit(limit)
+              .setCurrentPage(currentPage)
+              .resultDto(user);
+
+        return new ResultMap()
+                .resultSuccess()
+                .appendParameter(ResultMap.DATA,resultDto)
+                .send();
+    }
+
 
 }

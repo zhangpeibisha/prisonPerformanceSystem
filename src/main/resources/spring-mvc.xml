@@ -105,9 +105,9 @@
 
 
                 <!--系统参数异常-->
-                <prop key="java.lang.IllegalArgumentException">
-                    forward:/exception/system/illegalArgumentException.do
-                </prop>
+                <!--<prop key="java.lang.IllegalArgumentException">-->
+                    <!--forward:/exception/system/illegalArgumentException.do-->
+                <!--</prop>-->
                 <prop key="org.springframework.web.method.annotation.MethodArgumentTypeMismatchException">
                     forward:/exception/system/methodArgumentTypeMismatchException.do
                 </prop>

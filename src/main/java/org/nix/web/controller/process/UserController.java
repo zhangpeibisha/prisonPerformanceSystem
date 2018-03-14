@@ -157,21 +157,5 @@ public class UserController {
                 .send();
     }
 
-    /**
-     * 显示用户每月加班信息汇总
-     *
-     * @return 统计出来的每个月的信息
-     */
-    @RequestMapping(value = "/personalMonthOvertime", method = RequestMethod.POST)
-    public Map<String, Object> personalMonthOvertime(@RequestParam("limit") int limit,
-                                                     @RequestParam("currentPage") int currentPage,
-                                                     HttpSession session) {
-
-        User user = (User) session.getAttribute(SessionKey.USER);
-
-
-
-        return new ResultMap().resultSuccess().send();
-    }
 
 }

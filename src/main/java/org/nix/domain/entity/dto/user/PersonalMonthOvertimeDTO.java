@@ -1,6 +1,7 @@
 package org.nix.domain.entity.dto.user;
 
 import org.apache.log4j.Logger;
+import org.nix.dao.service.OvertimeRecordService;
 import org.nix.dao.service.PersonalMonthOvertimeService;
 import org.nix.dao.service.UserService;
 import org.nix.domain.entity.OvertimeRecord;
@@ -8,6 +9,7 @@ import org.nix.domain.entity.PersonalMonthOvertime;
 import org.nix.domain.entity.User;
 import org.nix.domain.entity.dto.ResultDto;
 import org.nix.domain.entity.entitybuild.PersonalMonthOvertimeBuild;
+import org.nix.utils.SystemUtil;
 import org.nix.utils.datetime.DateUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -32,6 +34,8 @@ public class PersonalMonthOvertimeDTO implements ResultDto {
     @Autowired
     private UserService userService;
 
+    @Autowired
+    private OvertimeRecordService overtimeRecordService;
 
     //记录总条数
     private int total;
@@ -68,11 +72,18 @@ public class PersonalMonthOvertimeDTO implements ResultDto {
 
         User user = (User) objects[0];
         this.user = user;
-        //获取当前月总数
+
+        //获取当前月总数，并更新到数据库
         getNowMonthOvertimeRecord(user);
         //获取历史统计记录
-        personalMonthOvertimes.addAll(personalMonthOvertimeService
-                .findPersonalMonthOvertimeByUser(user,limit,currentPage));
+        personalMonthOvertimes =
+                personalMonthOvertimeService.findPersonalMonthOvertimeByUser(user, limit, currentPage);
+
+        //设置数量
+        setTotal();
+
+        //清除不需要的数据
+        setParmaterNull();
 
         return this;
     }
@@ -80,10 +91,10 @@ public class PersonalMonthOvertimeDTO implements ResultDto {
     /**
      * 获取当前用户、当前年、当前月的加班信息
      */
-    public void getNowMonthOvertimeRecord(User user) {
+    private void getNowMonthOvertimeRecord(User user) {
         //获取当前月用户的加班信息
         List<OvertimeRecord> overtimeRecords =
-                userService.findOvertimeNowMonthRecordByUser(user);
+                overtimeRecordService.findOvertimeNowMonthRecordByUser(user);
 
         processOvertimeRecordNowMonth(overtimeRecords);
     }
@@ -91,7 +102,7 @@ public class PersonalMonthOvertimeDTO implements ResultDto {
     /**
      * 处理当前用户、当前月、当前年的零散加班信息
      */
-    public void processOvertimeRecordNowMonth(List<OvertimeRecord> list) {
+    private void processOvertimeRecordNowMonth(List<OvertimeRecord> list) {
         //这个月加班总时间
         double overtimeLength = 0;
         //这个月加班总工资
@@ -105,32 +116,64 @@ public class PersonalMonthOvertimeDTO implements ResultDto {
             overtimeMoney += list.get(i).getOvertimeMoney();
         }
 
-        PersonalMonthOvertime personalMonthOvertime
-                = new PersonalMonthOvertimeBuild()
-                .setMonth(month)
-                .setYear(year)
-                .setCreateTime()
-                .setDuration(overtimeLength)
-                .setOvertimeSalary(overtimeMoney)
-                .setUser(user)
-                .build();
 
-        personalMonthOvertimeService.update(personalMonthOvertime);
+        PersonalMonthOvertime personalMonthOvertime
+                = personalMonthOvertimeService.findNowMonthOvertime(user);
+
+        if (!SystemUtil.parameterNull(personalMonthOvertime)){
+            personalMonthOvertime.setDuration(overtimeLength);
+            personalMonthOvertime.setOvertimeSalary(overtimeMoney);
+
+            personalMonthOvertimeService.update(personalMonthOvertime);
+        }else {
+            PersonalMonthOvertime   newPersonalMonthOvertime =  new PersonalMonthOvertimeBuild()
+                    .setUser(user)
+                    .setCreateTime()
+                    .setDuration(overtimeLength)
+                    .setMonth(month)
+                    .setOvertimeSalary(overtimeMoney)
+                    .setYear(year)
+                    .build();
+            personalMonthOvertimeService.save(newPersonalMonthOvertime);
+        }
+
     }
 
-    public void setTotal() {
+    private void setTotal() {
         this.total = personalMonthOvertimes.size();
     }
 
-    public void setLimit(int limit) {
+    public PersonalMonthOvertimeDTO setLimit(int limit) {
         this.limit = limit;
+        return this;
     }
 
-    public void setCurrentPage(int currentPage) {
+    public PersonalMonthOvertimeDTO setCurrentPage(int currentPage) {
         this.currentPage = currentPage;
+        return this;
     }
 
+    /**
+     * 返回json时的数据
+     * @return
+     */
 
+    public int getTotal() {
+        return total;
+    }
+
+    public List<PersonalMonthOvertime> getPersonalMonthOvertimes() {
+        return personalMonthOvertimes;
+    }
+
+    /**
+     * 清理不需要的数据
+     */
+    public void setParmaterNull(){
+        for (int i = 0; i <personalMonthOvertimes.size() ; i++) {
+            personalMonthOvertimes.get(i).setUser(null);
+        }
+    }
 
 }
 

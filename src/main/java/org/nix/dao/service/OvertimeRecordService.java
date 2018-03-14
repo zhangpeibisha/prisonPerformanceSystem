@@ -66,4 +66,31 @@ public class OvertimeRecordService extends SupperBaseDAOImp<OvertimeRecord> {
         return findBySqlCount(sql,user.getId());
     }
 
+
+    /**
+     * 发现指定用户当月的加班信息
+     *
+     * @param user 需要查询的用户
+     * @return 当月加班信息集合
+     */
+    public List<OvertimeRecord> findOvertimeNowMonthRecordByUser(User user) {
+//
+//        String sql = "SELECT * FROM overtimerecord WHERE `user` = userID " +
+//                "AND  YEARWEEK(`overtimerecord`.createTime) = YEARWEEK(NOW())";
+
+//        String sql = "SELECT * FROM overtimerecord WHERE `user` = userID " +
+//                "AND  YEARWEEK(`overtimerecord`.createTime) = YEARWEEK(NOW())";
+
+        String sql = "SELECT * FROM OvertimeRecord WHERE `user` = userID " +
+                "AND  YEARWEEK(`overtimerecord`.createTime) = YEARWEEK(NOW())";
+
+        sql = sql.replaceAll("userID", String.valueOf(user.getId()));
+
+//        Query query = sessionFactory.getCurrentSession().createSQLQuery(sql);
+//
+//        query.setCacheable(false);
+
+        return getListBySQL(sql);
+    }
+
 }
