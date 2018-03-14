@@ -3,6 +3,7 @@ package org.nix.dao.service;
 import org.apache.log4j.Logger;
 import org.nix.dao.base.SupperBaseDAOImp;
 import org.nix.domain.entity.PersonalMonthOvertime;
+import org.nix.domain.entity.User;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -24,5 +25,12 @@ public class PersonalMonthOvertimeService extends SupperBaseDAOImp<PersonalMonth
     public <T> Long findByCriteriaCount(T object) {
         return null;
     }
+
+
+    public List<PersonalMonthOvertime> findPersonalMonthOvertimeByUser(User user , int limit , int currentPage ){
+        String sql = "SELECT * FROM personalmonthovertime WHERE `user` = ? limit ?,?";
+        return findBySql(sql,user.getId(),limit,currentPage);
+    }
+
 
 }

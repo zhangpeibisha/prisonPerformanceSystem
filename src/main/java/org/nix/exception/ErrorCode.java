@@ -18,7 +18,8 @@ public enum ErrorCode {
     PARAMETER_EXCEPTION("ERROR012","参数传递异常"),
     Method_Argument_Type_Mismatch_Exception("ERROR013","方法参数类型不匹配"),
     Missing_Servlet_Request_Parameter_Exception("ERROR014","参数缺失"),
-    SELECT_EXCEPTION("ERROR015","数据库查询失败")
+    SELECT_EXCEPTION("ERROR015","数据库查询失败"),
+    Constraint_Violation_Exception("ERROR016","参数规格不符合要求")
     ;
 
     private String value;

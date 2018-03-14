@@ -1,12 +1,9 @@
 package org.nix.domain.entity.dto.user;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.apache.log4j.Logger;
-import org.codehaus.jackson.annotate.JsonIgnoreProperties;
 import org.nix.dao.service.UserService;
 import org.nix.domain.entity.User;
 import org.nix.domain.entity.dto.ResultDto;
-import org.nix.exception.AuthorizationException;
 import org.nix.exception.IdentityOverdueException;
 import org.nix.utils.SystemUtil;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,9 +16,9 @@ import org.springframework.stereotype.Service;
  * 显示用户的个人信息所返回的信息
  */
 @Service
-public class UserInformation implements ResultDto {
+public class UserInformationDTO implements ResultDto {
     //日志记录
-    private static Logger logger = Logger.getLogger(UserInformation.class);
+    private static Logger logger = Logger.getLogger(UserInformationDTO.class);
 
     @Autowired
     private UserService userService;
@@ -35,7 +32,7 @@ public class UserInformation implements ResultDto {
     //基础工资
     private double basicWage;
     //警号 司法警号为 7位
-    private int serialNumber;
+    private String serialNumber;
 
     @Override
     public ResultDto resultDto(Object... objects) throws IdentityOverdueException, NullPointerException {
@@ -89,11 +86,11 @@ public class UserInformation implements ResultDto {
         this.basicWage = basicWage;
     }
 
-    public int getSerialNumber() {
+    public String getSerialNumber() {
         return serialNumber;
     }
 
-    public void setSerialNumber(int serialNumber) {
+    public void setSerialNumber(String serialNumber) {
         this.serialNumber = serialNumber;
     }
 }

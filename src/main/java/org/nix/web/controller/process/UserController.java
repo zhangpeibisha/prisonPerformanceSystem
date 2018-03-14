@@ -9,8 +9,8 @@ import org.nix.dao.service.UserService;
 import org.nix.domain.entity.Role;
 import org.nix.domain.entity.User;
 import org.nix.domain.entity.dto.ResultDto;
-import org.nix.domain.entity.dto.user.PresonalOvertimeInformation;
-import org.nix.domain.entity.dto.user.UserInformation;
+import org.nix.domain.entity.dto.user.PresonalOvertimeInformationDTO;
+import org.nix.domain.entity.dto.user.UserInformationDTO;
 import org.nix.domain.entity.entitybuild.UserBuild;
 import org.nix.exception.AccountNumberException;
 import org.nix.exception.AuthorizationException;
@@ -19,7 +19,6 @@ import org.nix.utils.SessionKey;
 import org.nix.web.controller.utils.ResultMap;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
-import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpSession;
@@ -37,10 +36,10 @@ public class UserController {
     private UserService userService;
 
     @Autowired
-    private UserInformation userInformation;
+    private UserInformationDTO userInformation;
 
     @Autowired
-    private PresonalOvertimeInformation presonalOvertimeInformation;
+    private PresonalOvertimeInformationDTO presonalOvertimeInformation;
 
     @Autowired
     private RoleService roleService;
@@ -59,7 +58,7 @@ public class UserController {
      * @throws NullPointerException   空指针异常
      */
     @RequestMapping(value = "/login", method = RequestMethod.POST)
-    public Map<String, Object> login(@RequestParam("userName") int userName,
+    public Map<String, Object> login(@RequestParam("userName") String userName,
                                      @RequestParam("password") String password,
                                      HttpSession session) throws AccountNumberException, NullPointerException {
         User user = userService.login(userName, password);
@@ -82,7 +81,7 @@ public class UserController {
      * @throws ConstraintViolationException 数据插入违反唯一约束
      */
     @RequestMapping(value = "/register", method = RequestMethod.POST)
-    public Map<String, Object> register(@RequestParam("serialNumber") int serialNumber,
+    public Map<String, Object> register(@RequestParam("serialNumber") String serialNumber,
                                         @RequestParam("password") String password,
                                         @RequestParam("userName") String userName)
             throws NullPointerException, PropertyValueException, DataAccessException {
@@ -164,7 +163,13 @@ public class UserController {
      * @return 统计出来的每个月的信息
      */
     @RequestMapping(value = "/personalMonthOvertime", method = RequestMethod.POST)
-    public Map<String, Object> personalMonthOvertime() {
+    public Map<String, Object> personalMonthOvertime(@RequestParam("limit") int limit,
+                                                     @RequestParam("currentPage") int currentPage,
+                                                     HttpSession session) {
+
+        User user = (User) session.getAttribute(SessionKey.USER);
+
+
 
         return new ResultMap().resultSuccess().send();
     }

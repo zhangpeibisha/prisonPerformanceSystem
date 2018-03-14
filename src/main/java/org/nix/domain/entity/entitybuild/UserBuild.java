@@ -19,7 +19,7 @@ public class  UserBuild {
 
     User user = new User();
 
-    public UserBuild setSerialNumber(int serialNumber) {
+    public UserBuild setSerialNumber(String serialNumber) {
         user.setSerialNumber(serialNumber);
         return this;
     }

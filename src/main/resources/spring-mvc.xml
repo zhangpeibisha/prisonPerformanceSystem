@@ -99,6 +99,10 @@
                 <prop key="org.springframework.dao.UncategorizedDataAccessException">
                     forward:/exception/system/uncategorizedDataAccessException.do
                 </prop>
+                <prop key="javax.validation.ConstraintViolationException">
+                    forward:/exception/system/constraintViolationException.do
+                </prop>
+
 
                 <!--系统参数异常-->
                 <prop key="java.lang.IllegalArgumentException">

@@ -42,7 +42,7 @@ public class UserService extends SupperBaseDAOImp<User> {
      * @param password     账户密码
      * @return 账号密码是否匹配成功
      */
-    public User login(int serialNumber, String password) {
+    public User login(String serialNumber, String password) {
 
         //表示警号列的列名
         String columnSiren = "serialNumber";
@@ -80,7 +80,8 @@ public class UserService extends SupperBaseDAOImp<User> {
     public double overtimeAllTime(User user) {
         String sql = "SELECT sum(overtimeLength) FROM overtimerecord WHERE `user` = id";
         sql = sql.replaceAll("id", String.valueOf(user.getId()));
-        return findBySqlCount(sql);
+        Query query = sessionFactory.getCurrentSession().createSQLQuery(sql);
+        return (double) query.uniqueResult();
     }
 
     /**
@@ -92,7 +93,9 @@ public class UserService extends SupperBaseDAOImp<User> {
     public double overtimeAllMoney(User user) {
         String sql = "SELECT sum(overtimeMoney) FROM overtimerecord WHERE `user` = id";
         sql = sql.replaceAll("id", String.valueOf(user.getId()));
-        return findBySqlCount(sql);
+        Query query = sessionFactory.getCurrentSession().createSQLQuery(sql);
+
+        return (double) query.uniqueResult();
     }
 
 
