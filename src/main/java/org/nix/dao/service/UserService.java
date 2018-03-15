@@ -135,7 +135,7 @@ public class UserService extends SupperBaseDAOImp<User> {
 
         int start = (currentPage - 1) * limit;
 
-        String isDesc = desc?"DESC":"";
+        String isDesc = desc ? "DESC" : "";
 
         String sql = "SELECT * FROM `user` " +
                 "WHERE role = (SELECT role.id FROM role WHERE role.`name` = '普通用户') " +
@@ -143,10 +143,53 @@ public class UserService extends SupperBaseDAOImp<User> {
                 "limit start , amount ";
 
         sql = sql.replaceAll("start", String.valueOf(start))
-        .replaceAll("amount", String.valueOf(limit))
-        .replaceAll("DESC",isDesc);
+                .replaceAll("amount", String.valueOf(limit))
+                .replaceAll("DESC", isDesc);
 
         return getListBySQL(sql);
+    }
+
+    /**
+     * 删除用户的加班记录
+     *
+     * @param user
+     */
+    public int deleteUserOvertime(User user) {
+
+        String sql = "DELETE FROM overtimerecord WHERE overtimerecord.`user` = ?";
+        return batchUpdateOrDelete(sql, user.getId());
+    }
+
+    /**
+     * 用户删除，首先应该删除他绑定外键的表记录
+     *
+     * @param user 需要删除的用户
+     */
+    public void deleteUser(User user) {
+
+        logger.info("注销用户"+user.getName()+"开始");
+
+        int temp;
+
+        temp = deleteUserOvertime(user);
+
+        logger.info("删除用户加班记录"+temp+"条");
+
+        temp = deleteUserMonthOvertime(user);
+
+        logger.info("删除用户月统计记录"+temp+"条");
+
+        delete(user);
+
+        logger.info("删除用户基础信息");
+
+        logger.info("注销用户"+user.getName()+"结束");
+
+    }
+
+    public int deleteUserMonthOvertime(User user) {
+        String sql = "DELETE FROM personalmonthovertime WHERE personalmonthovertime.`user` = ?";
+        return batchUpdateOrDelete(sql, user.getId());
     }
 
 }

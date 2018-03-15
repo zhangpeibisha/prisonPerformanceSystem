@@ -26,7 +26,7 @@ import java.util.Map;
 
 /**
  * Create by zhangpe0312@qq.com on 2018/3/13.
- *
+ * <p>
  * 加班信息控制器
  */
 @RestController
@@ -51,25 +51,25 @@ public class OvertimeRecordController {
 
     /**
      * 添加用户加班记录
+     *
      * @param serialNumber 警号
-     * @param startTime 开始加班时间
-     * @param stopTime 结束加班时间
-     * @param session 用户进程
+     * @param startTime    开始加班时间
+     * @param stopTime     结束加班时间
+     * @param session      用户进程
      * @return 添加结果
      */
-    @RequestMapping(value = "/addOvertime" , method = RequestMethod.POST)
-    public
-    Map<String, Object> addOvertime(@RequestParam("serialNumber")String serialNumber,
-                                    @RequestParam("startTime")long startTime,
-                                    @RequestParam("stopTime")long stopTime, HttpSession session)  {
+    @RequestMapping(value = "/addOvertime", method = RequestMethod.POST)
+    public Map<String, Object> addOvertime(@RequestParam("serialNumber") String serialNumber,
+                                           @RequestParam("startTime") long startTime,
+                                           @RequestParam("stopTime") long stopTime, HttpSession session) {
 
         User user = (User) session.getAttribute(SessionKey.USER);
 
-        if (SystemUtil.parameterNull(user)){
+        if (SystemUtil.parameterNull(user)) {
             throw new IdentityOverdueException();
         }
 
-        if (!user.getSerialNumber().equals(serialNumber)){
+        if (!user.getSerialNumber().equals(serialNumber)) {
             throw new AuthorizationException();
         }
 
@@ -79,9 +79,9 @@ public class OvertimeRecordController {
 
         Date stop = new Date(stopTime);
 
-        double overtimeLength = calculationSalary.getOvertimeLength(start,stop);
+        double overtimeLength = calculationSalary.getOvertimeLength(start, stop);
 
-        double overtimemoney = calculationSalary.getOvertimeMoney(start,overtimeLength,user);
+        double overtimemoney = calculationSalary.getOvertimeMoney(start, overtimeLength, user);
 
         OvertimeRules rules = overtimeRulesService.findRecordByDate(start);
 
@@ -97,7 +97,7 @@ public class OvertimeRecordController {
 
         overtimeRecordService.save(record);
 
-        logger.info("记录"+ user.getId() +"的加班工资成功");
+        logger.info("记录" + user.getId() + "的加班工资成功");
 
         return new ResultMap()
                 .resultSuccess()
@@ -117,14 +117,14 @@ public class OvertimeRecordController {
 
         User user = (User) session.getAttribute(SessionKey.USER);
 
-      ResultDto resultDto =  personalMonthOvertimeDTO
-              .setLimit(limit)
-              .setCurrentPage(currentPage)
-              .resultDto(user);
+        ResultDto resultDto = personalMonthOvertimeDTO
+                .setLimit(limit)
+                .setCurrentPage(currentPage)
+                .resultDto(user);
 
         return new ResultMap()
                 .resultSuccess()
-                .appendParameter(ResultMap.DATA,resultDto)
+                .appendParameter(ResultMap.DATA, resultDto)
                 .send();
     }
 

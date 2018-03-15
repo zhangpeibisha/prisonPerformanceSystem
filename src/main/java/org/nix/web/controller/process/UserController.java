@@ -204,14 +204,17 @@ public class UserController {
     /**
      * 查看用户详细信息
      *
-     * @param session 用户进程
      * @return
      */
     @RequestMapping(value = "/userDetail", method = RequestMethod.POST)
-    public Map<String, Object> userDetail(HttpSession session) {
+    public Map<String, Object> userDetail(@RequestParam("userId")int userId) {
 
 
-        User user = (User) session.getAttribute(SessionKey.USER);
+        User user = userService.findById(userId);
+
+        if (SystemUtil.parameterNull(user)){
+            throw new SelectException();
+        }
 
         ResultDto resultDto = userDetailDTO.resultDto(user);
 
@@ -243,6 +246,9 @@ public class UserController {
                                           @RequestParam("salary") double salary,
                                           HttpSession session) {
 
+        String isUpdataPassword = "d41d8cd98f00b204e9800998ecf8427e";
+
+
         User user = (User) session.getAttribute(SessionKey.USER);
         if (SystemUtil.parameterNull(user)) {
             throw new IdentityOverdueException();
@@ -264,8 +270,10 @@ public class UserController {
             throw new SelectException();
         }
 
+        if (password.equals(isUpdataPassword)){
+            user.setPassword(password);
+        }
         user.setName(name);
-        user.setPassword(password);
         user.setSerialNumber(serialNumber);
         user.setBasicWage(salary);
         userService.update(user);
@@ -275,6 +283,27 @@ public class UserController {
                 .resultSuccess()
                 .send();
     }
+
+    /**
+     * 用户注销
+     * @param userId 用户id
+     * @return 操作结果
+     */
+    @RequestMapping(value = "/deleteUser" , method = RequestMethod.POST)
+    public
+    Map<String, Object> deleteUser(@RequestParam("userId")int userId)  {
+
+        User user = userService.findById(userId);
+
+        if (SystemUtil.parameterNull(user)){
+            throw new SelectException();
+        }
+
+        userService.deleteUser(user);
+        logger.info("删除了用户" + user.getName() + "的信息");
+        return new ResultMap().resultSuccess().send();
+    }
+
 
 
 }
