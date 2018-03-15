@@ -124,7 +124,7 @@ public class UserService extends SupperBaseDAOImp<User> {
     }
 
     /**
-     * 按id排序查询用户信息
+     * 按id排序查询普通用户信息
      *
      * @param limit       每页行数
      * @param currentPage 当前页
@@ -133,11 +133,20 @@ public class UserService extends SupperBaseDAOImp<User> {
      */
     public List<User> userList(int limit, int currentPage, boolean desc) {
 
-        String clounm = "id";
-
         int start = (currentPage - 1) * limit;
 
-        return findAllByPage(clounm, desc, start, limit);
+        String isDesc = desc?"DESC":"";
+
+        String sql = "SELECT * FROM `user` " +
+                "WHERE role = (SELECT role.id FROM role WHERE role.`name` = '普通用户') " +
+                " ORDER BY id DESC" +
+                "limit start , amount ";
+
+        sql = sql.replaceAll("start", String.valueOf(start))
+        .replaceAll("amount", String.valueOf(limit))
+        .replaceAll("DESC",isDesc);
+
+        return getListBySQL(sql);
     }
 
 }

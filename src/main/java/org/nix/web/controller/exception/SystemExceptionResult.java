@@ -146,4 +146,18 @@ public class SystemExceptionResult {
                 .send();
     }
 
+    /**
+     * 没有查询到数据异常
+     * @return
+     */
+    @RequestMapping(value = "/slectException")
+    public Map<String, Object> slectException() {
+        return new ResultMap()
+                .setResult(ErrorCode.SELECT_EXCEPTION.getValue())
+                .appendParameter(ErrorCode.SELECT_EXCEPTION.getValue()
+                        , ErrorCode.SELECT_EXCEPTION.getDesc())
+                .send();
+    }
+
+
 }
