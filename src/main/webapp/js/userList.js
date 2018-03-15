@@ -1,7 +1,14 @@
 $(document).ready(function () {
     var userListUrl = "http://localhost:8080/userList.do";
+    var userDeleteUrl = "http://localhost:8080/deleteUser.do";
     var pageLimit = 10;
     var currentPage = 1;
+
+    function checkall() {
+        console.log("1");
+       /* $(":checkbox[name='items']").attr("checked",true);
+        $("#checkItems").attr("checked",true);*/
+    }
 
     function init() {
         $.ajax({
@@ -46,7 +53,7 @@ $(document).ready(function () {
                                 success: function (data) {
                                     console.info(data);
                                     if(data.result==="0"&&data.total!==0){
-                                        var listData = data.data;
+                                        var listData = data.data.users;
                                         showData(listData);
                                     }
                                     else if(data.data==="0"&&data.total===0){
@@ -69,16 +76,18 @@ $(document).ready(function () {
         var temp = [], showNum = listData.length;
 
         temp.push('<table class="table table-hover">');
-        temp.push('<thead><tr><th>用户编号</th><th>警号</th><th>姓名</th>' +
-            '<th>工资</th><th>操作</th></tr><tbody>');
+        temp.push('<thead><tr><th>用户编号</th><th>警号</th><th>姓名</th>'
+        + '<th>工资</th><th>操作</th></tr><tbody>');
         for (var i = 0; i < showNum; i++) {
 
             var detailHref = "../html/userDetail.html?id=" +listData[i].id;
             var updateHref = "../html/userUpdate.html?id=" +listData[i].id;
 
             temp.push("<tr><td>" + listData[i].id + "</td><td>" + listData[i].serialNumber + "</td><td>"
-                + listData[i].name+ "</td><td>" + listData[i].basicWage +
-                "</td><td><a class='point' href="+ detailHref +">详情</a><a class='point' href="+ updateHref +">修改</a></td>");
+                + listData[i].name+ "</td><td>" + listData[i].basicWage
+                + "</td><td><a class='point' href="+ detailHref +">详情</a>"
+                + "<a class='point' href="+ updateHref +">修改</a>"
+                + "<a class='point' id='del' name="+ listData[i].id + ">删除</a></td>");
         }
         temp.push('</tbody></table>');
 
@@ -97,4 +106,26 @@ $(document).ready(function () {
     }
 
     init();
+
+    $(document).on("click", "#del", function() {
+        $.ajax({
+            type: 'POST',
+            url: userDeleteUrl,
+            data: {
+                userId:$(this).attr("name")
+            },
+            success: function (data) {
+                console.info(data);
+                if(data.result==="0"){
+                    alert("删除成功！");
+                    location.reload();
+                }
+                else{
+                    alert(data.message);
+                }
+            },
+            dataType: "json"
+        });
+    });
 });
+

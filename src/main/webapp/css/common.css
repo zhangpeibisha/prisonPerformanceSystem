@@ -18,7 +18,6 @@
     text-decoration: none;
     padding-right:10px;
 }
-/*
-#list{
-    margin-top: -10px;
-}*/
+.common-btn{
+    margin: 5px 0 0 10px;
+}

@@ -44,8 +44,8 @@ $(document).ready(function(){
             },
             success: function (data) {
                 if(data.result==="0"){
-                    alert("修改成功！");
-                    window.location.reload();
+                    alert("修改成功！");;
+                    $(location).attr("href","../html/userDetail.html?id="+id);
                 }
                 else{
                     alert(data.message);
@@ -76,9 +76,6 @@ $(document).ready(function(){
             dataType: "json"
         });
     }
-
-
-
 
     init();
 });
