@@ -2,6 +2,7 @@ package org.nix.web.controller.process;
 
 import org.apache.log4j.Logger;
 import org.hibernate.PropertyValueException;
+import org.hibernate.QueryException;
 import org.hibernate.exception.ConstraintViolationException;
 import org.nix.annotation.ValidatePermission;
 import org.nix.dao.service.RoleService;
@@ -17,6 +18,7 @@ import org.nix.domain.entity.entitybuild.UserBuild;
 import org.nix.exception.AccountNumberException;
 import org.nix.exception.AuthorizationException;
 import org.nix.exception.IdentityOverdueException;
+import org.nix.exception.SelectException;
 import org.nix.utils.SessionKey;
 import org.nix.utils.SystemUtil;
 import org.nix.web.controller.utils.ResultMap;
@@ -222,6 +224,57 @@ public class UserController {
 
     }
 
+    /**
+     * 管理员更新用户基础信息
+     *
+     * @param userId       需要修改用户的id
+     * @param name         用户更新的姓名
+     * @param serialNumber 用户警号
+     * @param password     用户密码
+     * @param salary       用户工资
+     * @param session      用户进程
+     * @return 更新结果
+     */
+    @RequestMapping(value = "/updateUser", method = RequestMethod.POST)
+    public Map<String, Object> updateUser(@RequestParam("userId") int userId,
+                                          @RequestParam("name") String name,
+                                          @RequestParam("serialNumber") String serialNumber,
+                                          @RequestParam("password") String password,
+                                          @RequestParam("salary") double salary,
+                                          HttpSession session) {
+
+        User user = (User) session.getAttribute(SessionKey.USER);
+        if (SystemUtil.parameterNull(user)) {
+            throw new IdentityOverdueException();
+        }
+
+        //查询当前用户是否为管理
+        user = userService.loadById(user.getId());
+
+        Role role = user.getRole();
+
+        if (!role.getName().equals("管理员")) {
+            throw new AuthorizationException();
+        }
+
+        //获取需要更新的用户信息
+        user = userService.findById(userId);
+
+        if (SystemUtil.parameterNull(user)) {
+            throw new SelectException();
+        }
+
+        user.setName(name);
+        user.setPassword(password);
+        user.setSerialNumber(serialNumber);
+        user.setBasicWage(salary);
+        userService.update(user);
+        logger.info("为用户" + user.getId() + "修改信息成功");
+
+        return new ResultMap()
+                .resultSuccess()
+                .send();
+    }
 
 
 }

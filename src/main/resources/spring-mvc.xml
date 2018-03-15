@@ -88,6 +88,10 @@
                 <prop key="org.nix.exception.IdentityOverdueException">
                     forward:/exception/user/identityOverdueException.do
                 </prop>
+                <prop key="org.nix.exception.SelectException">
+                    forward:/exception/user/slectException.do
+                </prop>
+
 
                 <!--处理数据库异常-->
                 <prop key="org.springframework.dao.DataIntegrityViolationException">
