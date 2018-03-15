@@ -4,6 +4,7 @@ import org.apache.log4j.Logger;
 import org.nix.dao.service.UserService;
 import org.nix.domain.entity.User;
 import org.nix.domain.entity.dto.ResultDto;
+import org.nix.utils.SystemUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -24,13 +25,13 @@ public class UserListDTO implements ResultDto{
     private List<User> users = new ArrayList<>();
 
     //总数
-    private int total;
+    private int total = 0;
 
     //行数
-    private int limit;
+    private int limit = 10;
 
     //当前页
-    private int currentPage;
+    private int currentPage = 1;
 
     //是否逆序
     private boolean desc = false;
@@ -40,7 +41,14 @@ public class UserListDTO implements ResultDto{
 
         users = userService.userList(limit,currentPage,desc);
 
+        if (SystemUtil.parameterNull(users)){
+            return this;
+        }
+
         setTotal();
+
+        //过滤属性
+        setParmaterNull();
 
         return this;
     }
@@ -76,7 +84,9 @@ public class UserListDTO implements ResultDto{
 
     public void setParmaterNull(){
         for (int i = 0; i <users.size() ; i++) {
-
+            users.get(i).setRole(null);
+            users.get(i).setOvertimeRecords(null);
+            users.get(i).setPassword(null);
         }
     }
 
