@@ -21,18 +21,18 @@ $(document).ready(function () {
                     var num = (total+pageLimit -1)/pageLimit;//向上取整
                     $('#page').bootstrapPaginator({
                         bootstrapMajorVersion: 3,
-                        currentPage: 1,//当前页码
-                        totalPages: num,
-                        numberOfPages: 5,
-                        shouldShowPage:true,//是否显示该按钮
-                        itemTexts: function (type, page, current) {
-                            switch (type) {
-                                case "first": return "首页";
-                                case "prev": return "上一页";
-                                case "next": return "下一页";
-                                case "last": return "末页";
-                                case "page": return page;
-                            }
+                            currentPage: 1,//当前页码
+                                totalPages: num,
+                                numberOfPages: 5,
+                                shouldShowPage:true,//是否显示该按钮
+                                itemTexts: function (type, page, current) {
+                                switch (type) {
+                                    case "first": return "首页";
+                                    case "prev": return "上一页";
+                                    case "next": return "下一页";
+                                    case "last": return "末页";
+                                    case "page": return page;
+                                }
                         },
                         onPageClicked: function (event, originalEvent, type, page) {
                             $.ajax({
@@ -52,18 +52,14 @@ $(document).ready(function () {
                                     else if(data.data==="0"&&data.data.total===0){
                                         noData();
                                     }
-                                    else{
-                                        alert("error!");
-                                    }
+
                                 }
                             });
                         }
                     });
                 }
-                else if(data.data==="0"&&data.data.total===0){
+                else if(data.result==="0"&&data.data.total===0){
                     noData();
-                } else{
-                    alert("error!");
                 }
             },
             dataType: "json"
