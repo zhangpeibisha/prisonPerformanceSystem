@@ -13,3 +13,6 @@
     height: 550px;
     transform: translate(-50%, -50%);
 }
+.point{
+    cursor: pointer;
+}
