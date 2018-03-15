@@ -115,7 +115,35 @@ public class UserController {
         Object result = userService.registered(user);
         logger.info(result + " 用户执行了注册操作成功");
         return new ResultMap().resultSuccess().send();
+
     }
+
+
+    @RequestMapping(value = "/addUser", method = RequestMethod.POST)
+    public Map<String, Object> addUser(@RequestParam("serialNumber") String serialNumber,
+                                        @RequestParam("password") String password,
+                                        @RequestParam("userName") String userName,
+                                       @RequestParam("salary")double salary)
+            throws NullPointerException, PropertyValueException, DataAccessException {
+
+        String column = "name";
+        Role role = roleService.findByProperty(column, "普通用户");
+
+        User user = new UserBuild()
+                .setSerialNumber(serialNumber)
+                .setPassword(password)
+                .setName(userName)
+                .setBasicWage(salary)
+                .setCreateTime()
+                .setRole(role)
+                .build();
+
+        Object result = userService.registered(user);
+        logger.info(" 管理员添加了用户"+result);
+        return new ResultMap().resultSuccess().send();
+    }
+
+
 
     /**
      * 显示用户的个人信息
@@ -207,12 +235,12 @@ public class UserController {
      * @return
      */
     @RequestMapping(value = "/userDetail", method = RequestMethod.POST)
-    public Map<String, Object> userDetail(@RequestParam("userId")int userId) {
+    public Map<String, Object> userDetail(@RequestParam("userId") int userId) {
 
 
         User user = userService.findById(userId);
 
-        if (SystemUtil.parameterNull(user)){
+        if (SystemUtil.parameterNull(user)) {
             throw new SelectException();
         }
 
@@ -248,7 +276,6 @@ public class UserController {
 
         String isUpdataPassword = "d41d8cd98f00b204e9800998ecf8427e";
 
-
         User user = (User) session.getAttribute(SessionKey.USER);
         if (SystemUtil.parameterNull(user)) {
             throw new IdentityOverdueException();
@@ -270,9 +297,10 @@ public class UserController {
             throw new SelectException();
         }
 
-        if (password.equals(isUpdataPassword)){
+        if (password.equals(isUpdataPassword)) {
             user.setPassword(password);
         }
+
         user.setName(name);
         user.setSerialNumber(serialNumber);
         user.setBasicWage(salary);
@@ -286,16 +314,16 @@ public class UserController {
 
     /**
      * 用户注销
+     *
      * @param userId 用户id
      * @return 操作结果
      */
-    @RequestMapping(value = "/deleteUser" , method = RequestMethod.POST)
-    public
-    Map<String, Object> deleteUser(@RequestParam("userId")int userId)  {
+    @RequestMapping(value = "/deleteUser", method = RequestMethod.POST)
+    public Map<String, Object> deleteUser(@RequestParam("userId") int userId) {
 
         User user = userService.findById(userId);
 
-        if (SystemUtil.parameterNull(user)){
+        if (SystemUtil.parameterNull(user)) {
             throw new SelectException();
         }
 
