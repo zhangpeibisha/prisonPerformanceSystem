@@ -10,6 +10,7 @@ import org.nix.domain.entity.Role;
 import org.nix.domain.entity.User;
 import org.nix.domain.entity.dto.ResultDto;
 import org.nix.domain.entity.dto.user.PresonalOvertimeInformationDTO;
+import org.nix.domain.entity.dto.user.UserDetailDTO;
 import org.nix.domain.entity.dto.user.UserInformationDTO;
 import org.nix.domain.entity.dto.user.UserListDTO;
 import org.nix.domain.entity.entitybuild.UserBuild;
@@ -49,6 +50,8 @@ public class UserController {
     @Autowired
     private UserListDTO userListDTO;
 
+    @Autowired
+    private UserDetailDTO userDetailDTO;
 
     //日志记录
     private static Logger logger = Logger.getLogger(UserController.class);
@@ -75,7 +78,7 @@ public class UserController {
 
         return new ResultMap()
                 .resultSuccess()
-                .appendParameter(ResultMap.ROLE_CLASS,roleName.equals("普通用户")?0:1)
+                .appendParameter(ResultMap.ROLE_CLASS, roleName.equals("普通用户") ? 0 : 1)
                 .send();
     }
 
@@ -96,7 +99,7 @@ public class UserController {
             throws NullPointerException, PropertyValueException, DataAccessException {
 
         String column = "name";
-        Role role = roleService.findByProperty(column,"普通用户");
+        Role role = roleService.findByProperty(column, "普通用户");
 
         User user = new UserBuild()
                 .setSerialNumber(serialNumber)
@@ -167,21 +170,20 @@ public class UserController {
     }
 
 
-    @RequestMapping(value = "/userList" , method = RequestMethod.POST)
-    public
-    Map<String, Object> userList(@RequestParam("limit") int limit,
-                                 @RequestParam("currentPage") int currentPage,
-                                 HttpSession session)  {
+    @RequestMapping(value = "/userList", method = RequestMethod.POST)
+    public Map<String, Object> userList(@RequestParam("limit") int limit,
+                                        @RequestParam("currentPage") int currentPage,
+                                        HttpSession session) {
 
         User user = (User) session.getAttribute(SessionKey.USER);
 
-        if (SystemUtil.parameterNull(user)){
+        if (SystemUtil.parameterNull(user)) {
             throw new IdentityOverdueException();
         }
 
         user = userService.findById(user.getId());
 
-        if (!user.getRole().getName().equals("管理员")){
+        if (!user.getRole().getName().equals("管理员")) {
             throw new AuthorizationException();
         }
 
@@ -193,8 +195,33 @@ public class UserController {
 
         return new ResultMap()
                 .resultSuccess()
-                .appendParameter(ResultMap.DATA,resultDto)
+                .appendParameter(ResultMap.DATA, resultDto)
                 .send();
     }
+
+    /**
+     * 查看用户详细信息
+     *
+     * @param session 用户进程
+     * @return
+     */
+    @RequestMapping(value = "/userDetail", method = RequestMethod.POST)
+    public Map<String, Object> userDetail(HttpSession session) {
+
+
+        User user = (User) session.getAttribute(SessionKey.USER);
+
+        ResultDto resultDto = userDetailDTO.resultDto(user);
+
+        logger.info("查看了用户" + user.getId() + "的详细个人信息");
+
+        return new ResultMap()
+                .resultSuccess()
+                .appendParameter(ResultMap.DATA, resultDto)
+                .send();
+
+    }
+
+
 
 }
