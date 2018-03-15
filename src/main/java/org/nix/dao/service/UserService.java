@@ -59,6 +59,14 @@ public class UserService extends SupperBaseDAOImp<User> {
         return user;
     }
 
+    public User findUserBySerialNumber(String serialNumber){
+
+        String column = "serialNumber";
+
+        return findByProperty(column,serialNumber);
+    }
+
+
     /**
      * 用户注册
      *

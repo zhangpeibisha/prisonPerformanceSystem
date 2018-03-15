@@ -1,11 +1,13 @@
 package org.nix.web.controller.process;
 
 import org.apache.log4j.Logger;
+import org.nix.annotation.ValidatePermission;
 import org.nix.dao.service.OvertimeRecordService;
 import org.nix.dao.service.OvertimeRulesService;
 import org.nix.dao.service.UserService;
 import org.nix.domain.entity.OvertimeRecord;
 import org.nix.domain.entity.OvertimeRules;
+import org.nix.domain.entity.Role;
 import org.nix.domain.entity.User;
 import org.nix.domain.entity.dto.ResultDto;
 import org.nix.domain.entity.dto.user.PersonalMonthOvertimeDTO;
@@ -51,29 +53,21 @@ public class OvertimeRecordController {
 
     /**
      * 添加用户加班记录
-     *
+     * 1521115646577
      * @param serialNumber 警号
      * @param startTime    开始加班时间
      * @param stopTime     结束加班时间
-     * @param session      用户进程
      * @return 添加结果
      */
     @RequestMapping(value = "/addOvertime", method = RequestMethod.POST)
+    @ValidatePermission @ResponseBody
     public Map<String, Object> addOvertime(@RequestParam("serialNumber") String serialNumber,
                                            @RequestParam("startTime") long startTime,
-                                           @RequestParam("stopTime") long stopTime, HttpSession session) {
+                                           @RequestParam("stopTime") long stopTime) {
 
-        User user = (User) session.getAttribute(SessionKey.USER);
+        User user;
 
-        if (SystemUtil.parameterNull(user)) {
-            throw new IdentityOverdueException();
-        }
-
-        if (!user.getSerialNumber().equals(serialNumber)) {
-            throw new AuthorizationException();
-        }
-
-        user = userService.findById(user.getId());
+        user = userService.findUserBySerialNumber(serialNumber);
 
         Date start = new Date(startTime);
 
@@ -127,6 +121,8 @@ public class OvertimeRecordController {
                 .appendParameter(ResultMap.DATA, resultDto)
                 .send();
     }
+
+
 
 
 

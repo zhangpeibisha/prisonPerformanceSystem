@@ -61,4 +61,23 @@ public class OvertimeRulesController {
                 .send();
     }
 
+    /**
+     * 查看工资标准列表
+     * @param limit 每页多少行
+     * @param currentPage 当前页
+     * @return 操作结果
+     */
+    @RequestMapping(value = "/wageScale" , method = RequestMethod.POST)
+    public
+    Map<String, Object> wageScale( @RequestParam("limit") int limit,
+                                   @RequestParam("currentPage") int currentPage)  {
+
+
+
+
+        return new ResultMap()
+                .resultSuccess()
+                .send();
+    }
+
 }

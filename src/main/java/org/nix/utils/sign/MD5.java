@@ -3,6 +3,7 @@ package org.nix.utils.sign;
 import org.springframework.stereotype.Service;
 
 import java.security.MessageDigest;
+import java.util.Date;
 
 /**
  * 该加密方法和前端加密方法一直，可以互相验证加密结果
@@ -115,6 +116,10 @@ public class MD5  {
         str = new MD5().encryption(str);
         System.out.println(str);
         System.out.println(str.length());
+
+
+        Date date = new Date();
+        System.out.println(date.getTime());
     }
 
 }

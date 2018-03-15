@@ -31,6 +31,9 @@ public class DateUtil {
 
         System.out.println("星期" + getWeek(now).getNumber());
 
+        System.out.println("年" + getYear(now));
+        System.out.println("月" + getMonth(now));
+
         //获取年月的值
         System.out.println(nowTime/1000/60/60/24/30.0);
         System.out.println(newTime/1000/60/60/24/30.0);
@@ -153,7 +156,7 @@ public class DateUtil {
         Calendar now = Calendar.getInstance();
         now.setTime(date);
         int month = now.get(Calendar.MONTH) + 1; // 0-based!
-        return month;
+        return month+1;
     }
 
     public static int getDateDay(Date date){
@@ -1464,7 +1467,7 @@ public class DateUtil {
      * @return 月份
      */
     public static int getMonth(Date date) {
-        return getInteger(date, Calendar.MONTH);
+        return getInteger(date, Calendar.MONTH)+1;
     }
 
     /**
