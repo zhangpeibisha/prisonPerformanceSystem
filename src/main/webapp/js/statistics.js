@@ -13,7 +13,7 @@ $(document).ready(function () {
             },
             success: function (data) {
                 console.log(data);
-                if(data.result==0&&data.total!=0){
+                if(data.result===0&&data.total!==0){
                     var listData = data.data;
                     var total = data.total;
                     showData(listData);

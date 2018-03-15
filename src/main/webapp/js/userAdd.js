@@ -1,14 +1,14 @@
 $(document).ready(function(){
-    var userAddUrl = "http://localhost:8080/addUser.do";
+    var userAddUrl = "http://localhost:8080/register.do";
 
     $("#sure").click(function(){
         var user = $("#user").val();
         var name = $("#name").val();
         var wage = $("#wage").val();
         var password = $("#password").val();
-        var pass1 = $("#password1").val();
+        var password1 = $("#password1").val();
 
-        if (user == null || name == null || wage == null || password == null || pass1 == null || user == "" || name == "" || wage == "" || password == ""|| pass1 == "" ) {
+        if (user == null || name == null || wage == null || password == null || password1 == null || user == "" || name == "" || wage == "" || password == ""|| password1 == "" ) {
             alert("输入不能为空");
             return;
         }
@@ -16,7 +16,7 @@ $(document).ready(function(){
             alert("警号必须为7位！");
             return;
         }
-        if(pass!==pass1){
+        if(password!==password1){
             alert("两次输入密码不一致！");
             return;
         }
