@@ -14,7 +14,7 @@ $(document).ready(function () {
             success: function (data) {
                 console.log(data);
                 if(data.result==="0"&&data.total!==0){
-                    var listData = data.data;
+                    var listData = data.data.users;
                     var total = data.total;
                     showData(listData);
 
@@ -45,25 +45,20 @@ $(document).ready(function () {
                                 dataType: 'json',
                                 success: function (data) {
                                     console.info(data);
-                                    if(data.data==0){
+                                    if(data.result==="0"&&data.total!==0){
                                         var listData = data.data;
                                         showData(listData);
                                     }
-                                    else if(data.data==1){
+                                    else if(data.data==="0"&&data.total===0){
                                         noData();
                                     }
-                                    else if(data.data==2)
-                                        alert("error！");
                                 }
                             });
                         }
                     });
                 }
-                else if(data.data==0&&data.total==0){
+                else if(data.data==="0"&&data.total===0){
                     noData();
-                }
-                else{
-                    alert(data.message);
                 }
             },
             dataType: "json"
@@ -75,15 +70,14 @@ $(document).ready(function () {
 
         temp.push('<table class="table table-hover">');
         temp.push('<thead><tr><th>用户编号</th><th>警号</th><th>姓名</th>' +
-            '<th>工资</th><th>密码</th><th>操作</th></tr><tbody>');
+            '<th>工资</th><th>操作</th></tr><tbody>');
         for (var i = 0; i < showNum; i++) {
 
-            var detailHref = "../html/userDetail.html?id=" +listData[i].serialNumber;
-            var updateHref = "../html/userUpdate.html?id=" +listData[i].serialNumber;
+            var detailHref = "../html/userDetail.html?id=" +listData[i].id;
+            var updateHref = "../html/userUpdate.html?id=" +listData[i].id;
 
-            temp.push("<tr><td>" + listData[i].month + "</td><td>" + listData[i].serialNumber + "</td><td>"
-                + listData[i].name+ "</td><td>" + listData[i].password+ "</td><td>"
-                + listData[i].salary+
+            temp.push("<tr><td>" + listData[i].id + "</td><td>" + listData[i].serialNumber + "</td><td>"
+                + listData[i].name+ "</td><td>" + listData[i].basicWage +
                 "</td><td><a class='point' href="+ detailHref +">详情</a><a class='point' href="+ updateHref +">修改</a></td>");
         }
         temp.push('</tbody></table>');

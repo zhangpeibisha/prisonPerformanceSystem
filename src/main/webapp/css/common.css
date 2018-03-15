@@ -15,4 +15,10 @@
 }
 .point{
     cursor: pointer;
+    text-decoration: none;
+    padding-right:10px;
 }
+/*
+#list{
+    margin-top: -10px;
+}*/
