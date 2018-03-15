@@ -83,9 +83,10 @@ public class User extends BaseEntity{
         this.overtimeRecords = overtimeRecords;
     }
 
-    @ManyToOne(targetEntity = Role.class, fetch = FetchType.LAZY)
+    @ManyToOne(targetEntity = Role.class)
     @JoinColumn(name = "role")
     public Role getRole() {
+        System.out.println("获取角色信息---------");
         return role;
     }
 

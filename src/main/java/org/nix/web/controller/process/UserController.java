@@ -72,9 +72,9 @@ public class UserController {
     public Map<String, Object> login(@RequestParam("userName") String userName,
                                      @RequestParam("password") String password,
                                      HttpSession session) throws AccountNumberException, NullPointerException {
+
         User user = userService.login(userName, password);
         session.setAttribute(SessionKey.USER, user);
-
         String roleName = user.getRole().getName();
         logger.info(user.getName() + "登陆成功 角色为" + roleName);
 

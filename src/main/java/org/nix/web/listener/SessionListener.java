@@ -37,7 +37,7 @@ public class SessionListener implements HttpSessionListener, HttpSessionAttribut
             //将User中的密码过滤掉
             User user = (User) object;
             user.setPassword(null);
-            user.setRole(null);
+//            user.setRole(null);
             user.setOvertimeRecords(null);
             //覆盖user信息
             session.setAttribute(SessionKey.USER,user);
