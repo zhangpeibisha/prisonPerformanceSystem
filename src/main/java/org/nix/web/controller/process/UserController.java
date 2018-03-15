@@ -63,10 +63,13 @@ public class UserController {
                                      HttpSession session) throws AccountNumberException, NullPointerException {
         User user = userService.login(userName, password);
         session.setAttribute(SessionKey.USER, user);
-        logger.info(user.getName() + "登陆成功");
+
+        String roleName = user.getRole().getName();
+        logger.info(user.getName() + "登陆成功 角色为" + roleName);
+
         return new ResultMap()
                 .resultSuccess()
-                .appendParameter(ResultMap.ROLE_CLASS,user.getRole().getName().equals("普通用户")?0:1)
+                .appendParameter(ResultMap.ROLE_CLASS,roleName.equals("普通用户")?0:1)
                 .send();
     }
 

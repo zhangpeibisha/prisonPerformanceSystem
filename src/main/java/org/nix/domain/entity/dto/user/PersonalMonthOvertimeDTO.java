@@ -103,6 +103,11 @@ public class PersonalMonthOvertimeDTO implements ResultDto {
      * 处理当前用户、当前月、当前年的零散加班信息
      */
     private void processOvertimeRecordNowMonth(List<OvertimeRecord> list) {
+
+        if (SystemUtil.parameterNull(list) || list.size() == 0){
+            return;
+        }
+
         //这个月加班总时间
         double overtimeLength = 0;
         //这个月加班总工资
