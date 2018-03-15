@@ -24,9 +24,9 @@ public class UserInformationDTO implements ResultDto {
     private UserService userService;
 
     //加班总时长
-    private double overtimeAllLenth;
+    private double overtimeAllLenth = 0;
     //加班总工资
-    private double overtimeAllmoney;
+    private double overtimeAllmoney = 0;
     //狱警名字
     private String name;
     //基础工资
@@ -42,14 +42,16 @@ public class UserInformationDTO implements ResultDto {
         }
         User user = (User) objects[0];
         user = userService.findById(user.getId());
+
+        setBasicWage(user.getBasicWage());
+        setName(user.getName());
+        setSerialNumber(user.getSerialNumber());
+
         overtimeAllLenth = userService.overtimeAllTime(user);
         overtimeAllmoney = userService.overtimeAllMoney(user);
 
         setOvertimeAllLenth(overtimeAllLenth);
         setOvertimeAllmoney(overtimeAllmoney);
-        setBasicWage(user.getBasicWage());
-        setName(user.getName());
-        setSerialNumber(user.getSerialNumber());
 
         return this;
     }

@@ -11,11 +11,13 @@ import org.nix.domain.entity.User;
 import org.nix.domain.entity.dto.ResultDto;
 import org.nix.domain.entity.dto.user.PresonalOvertimeInformationDTO;
 import org.nix.domain.entity.dto.user.UserInformationDTO;
+import org.nix.domain.entity.dto.user.UserListDTO;
 import org.nix.domain.entity.entitybuild.UserBuild;
 import org.nix.exception.AccountNumberException;
 import org.nix.exception.AuthorizationException;
 import org.nix.exception.IdentityOverdueException;
 import org.nix.utils.SessionKey;
+import org.nix.utils.SystemUtil;
 import org.nix.web.controller.utils.ResultMap;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
@@ -43,6 +45,10 @@ public class UserController {
 
     @Autowired
     private RoleService roleService;
+
+    @Autowired
+    private UserListDTO userListDTO;
+
 
     //日志记录
     private static Logger logger = Logger.getLogger(UserController.class);
@@ -160,5 +166,35 @@ public class UserController {
                 .send();
     }
 
+
+    @RequestMapping(value = "/userList" , method = RequestMethod.POST)
+    public
+    Map<String, Object> userList(@RequestParam("limit") int limit,
+                                 @RequestParam("currentPage") int currentPage,
+                                 HttpSession session)  {
+
+        User user = (User) session.getAttribute(SessionKey.USER);
+
+        if (SystemUtil.parameterNull(user)){
+            throw new IdentityOverdueException();
+        }
+
+        user = userService.findById(user.getId());
+
+        if (!user.getRole().getName().equals("管理员")){
+            throw new AuthorizationException();
+        }
+
+        ResultDto resultDto = userListDTO
+                .setLimit(limit)
+                .setCurrentPage(currentPage)
+                .setDesc(false)
+                .resultDto();
+
+        return new ResultMap()
+                .resultSuccess()
+                .appendParameter(ResultMap.DATA,resultDto)
+                .send();
+    }
 
 }

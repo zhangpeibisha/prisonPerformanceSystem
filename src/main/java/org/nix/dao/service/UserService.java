@@ -81,6 +81,11 @@ public class UserService extends SupperBaseDAOImp<User> {
         String sql = "SELECT sum(overtimeLength) FROM overtimerecord WHERE `user` = id";
         sql = sql.replaceAll("id", String.valueOf(user.getId()));
         Query query = sessionFactory.getCurrentSession().createSQLQuery(sql);
+
+        if (SystemUtil.parameterNull(query.uniqueResult())) {
+            return 0;
+        }
+
         return (double) query.uniqueResult();
     }
 
@@ -94,39 +99,45 @@ public class UserService extends SupperBaseDAOImp<User> {
         String sql = "SELECT sum(overtimeMoney) FROM overtimerecord WHERE `user` = id";
         sql = sql.replaceAll("id", String.valueOf(user.getId()));
         Query query = sessionFactory.getCurrentSession().createSQLQuery(sql);
-
+        if (SystemUtil.parameterNull(query.uniqueResult())) {
+            return 0;
+        }
         return (double) query.uniqueResult();
-    }
-
-
-
-    /**
-     * 查询该用户历史统计记录
-     * @param user
-     * @return
-     */
-    public List<PersonalMonthOvertime> findPersonalMonthOvertimeByUser(User user) {
-
-        String sql = "SELECT * FROM personalmonthovertime WHERE personalmonthovertime.`user` = ?";
-
-        return findBySql(sql, user.getId());
     }
 
     /**
      * 获得用户的基础工资  以小时计算
+     *
      * @param user 需要查找的人
      * @return 以小时计算的工资
      */
-    public double findeUserBasicWageHoures(User user){
+    public double findeUserBasicWageHoures(User user) {
         String sql = "SELECT `user`.basicWage FROM `user` where `user`.id = " + user.getId();
 
         Query query = sessionFactory.getCurrentSession().createSQLQuery(sql);
 
         double money = (double) query.uniqueResult();
 
-        money = money/30/24*1.0;
+        money = money / 30 / 24 * 1.0;
 
         return money;
+    }
+
+    /**
+     * 按id排序查询用户信息
+     *
+     * @param limit       每页行数
+     * @param currentPage 当前页
+     * @param desc        是否逆序
+     * @return 用户列表
+     */
+    public List<User> userList(int limit, int currentPage, boolean desc) {
+
+        String clounm = "id";
+
+        int start = (currentPage - 1) * limit;
+
+        return findAllByPage(clounm, desc, start, limit);
     }
 
 }
