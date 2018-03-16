@@ -36,10 +36,11 @@ public class StatisticsMonthlyOvertime {
 
 
         //首先删除这个月的一些统计信息
-        personalMonthOvertimeService.deleteAllNowMonthOvertime();
+        personalMonthOvertimeService.deletePersonalNowMonthOvertimeAll();
 
         //再通过具体统计的信息写入数据库中
 
+        personalMonthOvertimeService.calculationOvertimeNowMonthAllAndSave();
 
     }
 
