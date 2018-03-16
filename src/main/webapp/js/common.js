@@ -18,3 +18,7 @@ function MillisecondToDate(msd) {
     }
     return time;
 }
+
+function err(data) {
+
+}

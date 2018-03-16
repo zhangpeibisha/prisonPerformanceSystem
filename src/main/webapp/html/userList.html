@@ -3,9 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <title>用户列表</title>
-    <link rel="stylesheet" href="../resource/bootstrap-3.3.7-dist/css/bootstrap.min.css">
-    <link rel="stylesheet" href="../css/common.css">
     <script src="../resource/js/jquery.min.js"></script>
+    <link rel="stylesheet" href="../resource/bootstrap-3.3.7-dist/css/bootstrap.css">
+    <link rel="stylesheet" href="../css/common.css">
     <script src="../resource/js/bootstrap-paginator.js"></script>
     <script src="../js/userList.js"></script>
 </head>
@@ -19,15 +19,15 @@
         <li style="float:right"><a href="login.html">退出账号</a></li>
     </ul>
 
-    <div>
-        <button class="btn btn-info" onclick="   $(location).attr('href','userAdd.html');">新增用户</button>
-        <button class="btn btn-danger" id="delete">删除用户</button>
+    <div class="common-btn">
+        <button class="btn btn-info" onclick="$(location).attr('href','userAdd.html');">新增用户</button>
     </div>
 
     <div id="list" style="min-height: 410px;"></div>
     <div style="text-align:center;">
-        <ul id="page" style="margin-top: -10px;"></ul>
+        <ul id="page" style="margin-top: -19px;"></ul>
     </div>
+
 </div>
 </body>
 </html>
