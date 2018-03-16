@@ -10,6 +10,7 @@ import org.nix.domain.entity.OvertimeRecord;
 import org.nix.domain.entity.OvertimeRules;
 import org.nix.domain.entity.User;
 import org.nix.domain.entity.dto.ResultDto;
+import org.nix.domain.entity.dto.overtime.OvertimeListDTO;
 import org.nix.domain.entity.dto.overtime.PersonalMonthOvertimeAllDTO;
 import org.nix.domain.entity.dto.overtime.PersonalMonthOvertimeDTO;
 import org.nix.domain.entity.entitybuild.OvertimeRecordBuild;
@@ -53,6 +54,9 @@ public class OvertimeRecordController {
 
     @Autowired
     private PersonalMonthOvertimeAllDTO personalMonthOvertimeAllDTO;
+
+    @Autowired
+    private OvertimeListDTO overtimeListDTO;
 
     /**
      * 添加用户加班记录
@@ -138,14 +142,34 @@ public class OvertimeRecordController {
     Map<String, Object> overtimeMonthList(@RequestParam("limit") int limit,
                                           @RequestParam("currentPage") int currentPage)  {
 
-//        personalMonthOvertimeService.deletePersonalNowMonthOvertimeAll();
 
        ResultDto resultDto =  personalMonthOvertimeAllDTO
                .setLimit(limit)
                .setCurrentPage(currentPage)
                .resultDto();
 
+        return new ResultMap()
+                .appendParameter(ResultMap.DATA,resultDto)
+                .resultSuccess()
+                .send();
+    }
 
+    /**
+     * 查询所有用户的加班记录
+     * @param limit
+     * @param currentPage
+     * @return
+     */
+    @RequestMapping(value = "/recordList" , method = RequestMethod.POST)
+    public
+    Map<String, Object> recordList(@RequestParam("limit") int limit,
+                                   @RequestParam("currentPage") int currentPage)  {
+
+
+        ResultDto resultDto = overtimeListDTO
+                .setLimit(limit)
+                .setCurrentPage(currentPage)
+                .resultDto();
 
 
         return new ResultMap()

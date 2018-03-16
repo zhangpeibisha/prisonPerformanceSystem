@@ -85,6 +85,19 @@ public class OvertimeRecordService extends SupperBaseDAOImp<OvertimeRecord> {
     }
 
 
+    public List<OvertimeRecord> overtimeRecordList(int limit, int currentPage, boolean desc){
+        int start = (currentPage - 1) * limit;
+
+        String isDesc = desc ? "DESC" : "";
+
+        String sql = "SELECT * FROM overtimerecord  ORDER BY id  isDesc LIMIT  start , amount";
+
+        sql = sql.replaceAll("isDesc",isDesc)
+        .replaceAll("start", String.valueOf(start))
+        .replaceAll("amount", String.valueOf(limit));
+
+        return getListBySQL(sql);
+    }
 
 
 }
