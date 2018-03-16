@@ -77,7 +77,4 @@ public class OvertimeListDTO implements ResultDto{
             records.get(i).setRules(null);
         }
     }
-
-
-
 }

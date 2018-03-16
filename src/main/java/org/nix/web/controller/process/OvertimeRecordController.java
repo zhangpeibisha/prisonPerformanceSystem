@@ -13,9 +13,13 @@ import org.nix.domain.entity.dto.ResultDto;
 import org.nix.domain.entity.dto.overtime.OvertimeListDTO;
 import org.nix.domain.entity.dto.overtime.PersonalMonthOvertimeAllDTO;
 import org.nix.domain.entity.dto.overtime.PersonalMonthOvertimeDTO;
+import org.nix.domain.entity.dto.overtime.RecordDetailDTO;
 import org.nix.domain.entity.entitybuild.OvertimeRecordBuild;
+import org.nix.exception.SelectException;
 import org.nix.service.overtime.CalculationSalary;
 import org.nix.utils.SessionKey;
+import org.nix.utils.SystemUtil;
+import org.nix.utils.datetime.DateUtil;
 import org.nix.web.controller.utils.ResultMap;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -58,16 +62,21 @@ public class OvertimeRecordController {
     @Autowired
     private OvertimeListDTO overtimeListDTO;
 
+    @Autowired
+    private RecordDetailDTO recordDetailDTO;
+
     /**
      * 添加用户加班记录
      * 1521115646577
+     *
      * @param serialNumber 警号
      * @param startTime    开始加班时间
      * @param stopTime     结束加班时间
      * @return 添加结果
      */
     @RequestMapping(value = "/addOvertime", method = RequestMethod.POST)
-    @ValidatePermission @ResponseBody
+    @ValidatePermission
+    @ResponseBody
     public Map<String, Object> addOvertime(@RequestParam("serialNumber") String serialNumber,
                                            @RequestParam("startTime") long startTime,
                                            @RequestParam("stopTime") long stopTime) {
@@ -131,39 +140,39 @@ public class OvertimeRecordController {
 
     /**
      * 管理员查询所有用户的月统计信息
+     *
      * @param limit
      * @param currentPage
      * @return
      */
-    @RequestMapping(value = "/overtimeMonthList" , method = RequestMethod.POST)
+    @RequestMapping(value = "/overtimeMonthList", method = RequestMethod.POST)
     @ValidatePermission
     @ResponseBody
-    public
-    Map<String, Object> overtimeMonthList(@RequestParam("limit") int limit,
-                                          @RequestParam("currentPage") int currentPage)  {
+    public Map<String, Object> overtimeMonthList(@RequestParam("limit") int limit,
+                                                 @RequestParam("currentPage") int currentPage) {
 
 
-       ResultDto resultDto =  personalMonthOvertimeAllDTO
-               .setLimit(limit)
-               .setCurrentPage(currentPage)
-               .resultDto();
+        ResultDto resultDto = personalMonthOvertimeAllDTO
+                .setLimit(limit)
+                .setCurrentPage(currentPage)
+                .resultDto();
 
         return new ResultMap()
-                .appendParameter(ResultMap.DATA,resultDto)
+                .appendParameter(ResultMap.DATA, resultDto)
                 .resultSuccess()
                 .send();
     }
 
     /**
      * 查询所有用户的加班记录
+     *
      * @param limit
      * @param currentPage
      * @return
      */
-    @RequestMapping(value = "/recordList" , method = RequestMethod.POST)
-    public
-    Map<String, Object> recordList(@RequestParam("limit") int limit,
-                                   @RequestParam("currentPage") int currentPage)  {
+    @RequestMapping(value = "/recordList", method = RequestMethod.POST)
+    public Map<String, Object> recordList(@RequestParam("limit") int limit,
+                                          @RequestParam("currentPage") int currentPage) {
 
 
         ResultDto resultDto = overtimeListDTO
@@ -173,10 +182,87 @@ public class OvertimeRecordController {
 
 
         return new ResultMap()
-                .appendParameter(ResultMap.DATA,resultDto)
+                .appendParameter(ResultMap.DATA, resultDto)
                 .resultSuccess()
                 .send();
     }
+
+    /**
+     * 加班信息详情
+     *
+     * @param recordsId
+     * @return
+     */
+    @RequestMapping(value = "/recordDetail", method = RequestMethod.POST)
+    public Map<String, Object> recordDetail(@RequestParam("recordsId") int recordsId) {
+
+        ResultDto resultDto = recordDetailDTO.resultDto(recordsId);
+
+        return new ResultMap()
+                .resultSuccess()
+                .appendParameter(ResultMap.DATA, resultDto)
+                .send();
+    }
+
+    /**
+     * 有问题，不能确定加班信息，需要一个加班信息id
+     *
+     * @param serialNumber
+     * @param startTime
+     * @param stopTime
+     * @return
+     */
+    @RequestMapping(value = "/updateRecord", method = RequestMethod.POST)
+    public Map<String, Object> updateRecord(
+            @RequestParam("recordId") int recordId,
+            @RequestParam("serialNumber") String serialNumber,//警号不需要
+            @RequestParam("startTime") long startTime,
+            @RequestParam("stopTime") long stopTime) {
+
+
+        OvertimeRecord record = overtimeRecordService.findById(recordId);
+
+        if (SystemUtil.parameterNull(record)) {
+            throw new SelectException();
+        }
+
+        User user = record.getUser();
+
+        Date start = new Date(startTime);
+
+        Date stop = new Date(stopTime);
+
+        double overtimeLength = calculationSalary.getOvertimeLength(start, stop);
+
+        double overtimemoney = calculationSalary.getOvertimeMoney(start, overtimeLength, user);
+
+        record.setOvertimeLength(overtimeLength);
+        record.setOvertimeMoney(overtimemoney);
+        record.setOvertimeStart(start);
+        record.setOvertimeEnd(stop);
+        overtimeRecordService.update(record);
+
+        logger.info("更新用户" + user.getId()
+                + DateUtil.getYear(start) + "年" + DateUtil.getMonth(start) + "月"
+                + "的加班信息成功");
+
+        return new ResultMap()
+                .resultSuccess()
+                .send();
+    }
+
+
+    @RequestMapping(value = "/deleteRecord" , method = RequestMethod.POST)
+    public
+    Map<String, Object> deleteRecord(@RequestParam("recordId")int recordId )  {
+
+        overtimeRecordService.delete(recordId);
+
+        logger.info("删除加班信息成功 加班信息id：" + recordId);
+
+        return new ResultMap().resultSuccess().send();
+    }
+
 
 
 }
