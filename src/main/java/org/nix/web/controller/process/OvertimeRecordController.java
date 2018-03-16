@@ -4,11 +4,13 @@ import org.apache.log4j.Logger;
 import org.nix.annotation.ValidatePermission;
 import org.nix.dao.service.OvertimeRecordService;
 import org.nix.dao.service.OvertimeRulesService;
+import org.nix.dao.service.PersonalMonthOvertimeService;
 import org.nix.dao.service.UserService;
 import org.nix.domain.entity.OvertimeRecord;
 import org.nix.domain.entity.OvertimeRules;
 import org.nix.domain.entity.User;
 import org.nix.domain.entity.dto.ResultDto;
+import org.nix.domain.entity.dto.overtime.PersonalMonthOvertimeAllDTO;
 import org.nix.domain.entity.dto.overtime.PersonalMonthOvertimeDTO;
 import org.nix.domain.entity.entitybuild.OvertimeRecordBuild;
 import org.nix.service.overtime.CalculationSalary;
@@ -45,6 +47,12 @@ public class OvertimeRecordController {
 
     @Autowired
     private PersonalMonthOvertimeDTO personalMonthOvertimeDTO;
+
+    @Autowired
+    private PersonalMonthOvertimeService personalMonthOvertimeService;
+
+    @Autowired
+    private PersonalMonthOvertimeAllDTO personalMonthOvertimeAllDTO;
 
     /**
      * 添加用户加班记录
@@ -130,10 +138,20 @@ public class OvertimeRecordController {
     Map<String, Object> overtimeMonthList(@RequestParam("limit") int limit,
                                           @RequestParam("currentPage") int currentPage)  {
 
+//        personalMonthOvertimeService.deletePersonalNowMonthOvertimeAll();
+
+       ResultDto resultDto =  personalMonthOvertimeAllDTO
+               .setLimit(limit)
+               .setCurrentPage(currentPage)
+               .resultDto();
 
 
 
-        return new ResultMap().resultSuccess().send();
+
+        return new ResultMap()
+                .appendParameter(ResultMap.DATA,resultDto)
+                .resultSuccess()
+                .send();
     }
 
 

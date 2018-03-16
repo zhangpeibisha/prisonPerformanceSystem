@@ -84,4 +84,7 @@ public class OvertimeRecordService extends SupperBaseDAOImp<OvertimeRecord> {
         return getListBySQL(sql);
     }
 
+
+
+
 }

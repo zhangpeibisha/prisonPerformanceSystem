@@ -86,7 +86,6 @@ public class User extends BaseEntity{
     @ManyToOne(targetEntity = Role.class)
     @JoinColumn(name = "role")
     public Role getRole() {
-        System.out.println("获取角色信息---------");
         return role;
     }
 
