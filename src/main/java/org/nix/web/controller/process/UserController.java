@@ -2,7 +2,6 @@ package org.nix.web.controller.process;
 
 import org.apache.log4j.Logger;
 import org.hibernate.PropertyValueException;
-import org.hibernate.QueryException;
 import org.hibernate.exception.ConstraintViolationException;
 import org.nix.annotation.ValidatePermission;
 import org.nix.dao.service.RoleService;
@@ -10,7 +9,7 @@ import org.nix.dao.service.UserService;
 import org.nix.domain.entity.Role;
 import org.nix.domain.entity.User;
 import org.nix.domain.entity.dto.ResultDto;
-import org.nix.domain.entity.dto.user.PresonalOvertimeInformationDTO;
+import org.nix.domain.entity.dto.overtime.PresonalOvertimeInformationDTO;
 import org.nix.domain.entity.dto.user.UserDetailDTO;
 import org.nix.domain.entity.dto.user.UserInformationDTO;
 import org.nix.domain.entity.dto.user.UserListDTO;

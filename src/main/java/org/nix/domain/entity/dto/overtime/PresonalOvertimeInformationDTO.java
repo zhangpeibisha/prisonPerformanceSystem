@@ -1,4 +1,4 @@
-package org.nix.domain.entity.dto.user;
+package org.nix.domain.entity.dto.overtime;
 
 import org.apache.log4j.Logger;
 import org.nix.dao.service.OvertimeRecordService;

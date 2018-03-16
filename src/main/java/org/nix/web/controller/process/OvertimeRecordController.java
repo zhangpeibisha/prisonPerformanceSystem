@@ -7,17 +7,12 @@ import org.nix.dao.service.OvertimeRulesService;
 import org.nix.dao.service.UserService;
 import org.nix.domain.entity.OvertimeRecord;
 import org.nix.domain.entity.OvertimeRules;
-import org.nix.domain.entity.Role;
 import org.nix.domain.entity.User;
 import org.nix.domain.entity.dto.ResultDto;
-import org.nix.domain.entity.dto.user.PersonalMonthOvertimeDTO;
+import org.nix.domain.entity.dto.overtime.PersonalMonthOvertimeDTO;
 import org.nix.domain.entity.entitybuild.OvertimeRecordBuild;
-import org.nix.exception.AuthorizationException;
-import org.nix.exception.IdentityOverdueException;
 import org.nix.service.overtime.CalculationSalary;
 import org.nix.utils.SessionKey;
-import org.nix.utils.SystemUtil;
-import org.nix.utils.datetime.DateUtil;
 import org.nix.web.controller.utils.ResultMap;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -122,8 +117,24 @@ public class OvertimeRecordController {
                 .send();
     }
 
+    /**
+     * 管理员查询所有用户的月统计信息
+     * @param limit
+     * @param currentPage
+     * @return
+     */
+    @RequestMapping(value = "/overtimeMonthList" , method = RequestMethod.POST)
+    @ValidatePermission
+    @ResponseBody
+    public
+    Map<String, Object> overtimeMonthList(@RequestParam("limit") int limit,
+                                          @RequestParam("currentPage") int currentPage)  {
 
 
+
+
+        return new ResultMap().resultSuccess().send();
+    }
 
 
 }

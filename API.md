@@ -282,6 +282,7 @@
 * 返回参数{
     result:返回列表,
     data:{
+        year：年份,
         month:月份,
         overtimeRecordsId: 加班记录id,
         serialNumber: 警号,
