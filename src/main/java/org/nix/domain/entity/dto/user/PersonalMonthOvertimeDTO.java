@@ -145,7 +145,8 @@ public class PersonalMonthOvertimeDTO implements ResultDto {
     }
 
     private void setTotal() {
-        this.total = personalMonthOvertimes.size();
+        this.total = (int) personalMonthOvertimeService
+                .findPersonalMonthOvertimeCountByUser(user);
     }
 
     public PersonalMonthOvertimeDTO setLimit(int limit) {

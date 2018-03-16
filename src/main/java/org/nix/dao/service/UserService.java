@@ -157,6 +157,15 @@ public class UserService extends SupperBaseDAOImp<User> {
         return getListBySQL(sql);
     }
 
+    public long userListCount(){
+
+        String sql = " SELECT count(*) FROM `user` " +
+                    "WHERE role = (SELECT role.id FROM role WHERE role.`name` = '普通用户')";
+
+        return findBySqlCount(sql);
+    }
+
+
     /**
      * 删除用户的加班记录
      *

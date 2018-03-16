@@ -83,4 +83,13 @@ public class PersonalMonthOvertimeService extends SupperBaseDAOImp<PersonalMonth
 
         logger.info("删除了" + result + "条当月统计加班信息");
     }
+
+    public long findPersonalMonthOvertimeCountByUser(User user){
+
+        String sql = "select count(*) " +
+                "from personalmonthovertime " +
+                "where user = " + user.getId();
+
+        return findCountBySQL(sql);
+    }
 }

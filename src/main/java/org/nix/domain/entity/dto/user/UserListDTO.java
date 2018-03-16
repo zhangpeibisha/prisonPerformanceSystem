@@ -70,7 +70,7 @@ public class UserListDTO implements ResultDto{
     }
 
     public void setTotal() {
-        this.total = users.size();
+        this.total = (int) userService.userListCount();
     }
 
     public List<User> getUsers() {
