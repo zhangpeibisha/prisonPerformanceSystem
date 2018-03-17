@@ -1,5 +1,6 @@
 package org.nix.domain.entity;
 
+import com.alibaba.fastjson.annotation.JSONField;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import org.codehaus.jackson.map.annotate.JsonSerialize;
 import org.nix.domain.entity.base.BaseEntity;
@@ -48,6 +49,7 @@ public class Role extends BaseEntity{
     }
 
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "role")
+    @JSONField(serialize = false)
     public Set<User> getUsers() {
         return users;
     }
