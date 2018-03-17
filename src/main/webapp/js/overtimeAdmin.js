@@ -8,14 +8,16 @@ $(document).ready(function () {
             type: 'POST',
             url: recordListUrl,
             data: {
+                select:"",
                 limit: pageLimit,
                 currentPage: currentPage
             },
             success: function (data) {
                 console.log(data);
-                if(data.result==0&&data.total!=0){
-                    var listData = data.data;
-                    var total = data.total;
+                if(data.result==="0"&&data.data.total!==0){
+                    var listData = data.data.records;
+
+                    var total = data.data.total;
                     showData(listData);
 
                     var num = (total+pageLimit -1)/pageLimit;//向上取整
@@ -39,31 +41,28 @@ $(document).ready(function () {
                                 url: recordListUrl,
                                 type: 'POST',
                                 data: {
+                                    select:"",
                                     limit: pageLimit,
                                     currentPage: page
                                 },
                                 dataType: 'json',
                                 success: function (data) {
                                     console.info(data);
-                                    if(data.data==0){
-                                        var listData = data.data;
+                                    if(data.result==="0"&&data.data.total!==0){
+                                        var listData = data.data.records;
                                         showData(listData);
                                     }
-                                    else if(data.data==1){
+                                    else if(data.data==="0"&&data.total===0){
                                         noData();
                                     }
-                                    else if(data.data==2)
-                                        alert("error！");
+
                                 }
                             });
                         }
                     });
                 }
-                else if(data.data==0&&data.total==0){
+                else if(data.data==="0"&&data.total===0){
                     noData();
-                }
-                else{
-                    alert(data.message);
                 }
             },
             dataType: "json"
@@ -78,10 +77,21 @@ $(document).ready(function () {
             '<th>加班开始时间</th><th>加班结束时间</th>' +
             '<th>加班时长</th><th>加班工资</th><th>创建日期</th></tr><tbody>');
         for (var i = 0; i < showNum; i++) {
-            temp.push("<tr><td>" + listData[i].recordsId + "</td><td>" + listData[i].serialNumber + "</td><td>"
-                + listData[i].name+ "</td><td>" + listData[i].startTime + "</td><td>"
-                + listData[i].stopTime + "</td><td>" + listData[i].duration + "</td><td>"
-                + listData[i].overtimeSalary + "</td><td>" + listData[i].createTime+ "</td>");
+
+            var detailHref = "../html/overtimeDetail.html?id=" +listData[i].id;
+            var updateHref = "../html/overtimeUpdate.html?id=" +listData[i].id;
+
+            listData[i].overtimeStart = new Date(listData[i].overtimeStart).toLocaleString();
+            listData[i].overtimeEnd = new Date(listData[i].overtimeEnd).toLocaleString();
+            listData[i].overtimeLength = MillisecondToDate(listData[i].overtimeLength);
+
+            temp.push("<tr><td>" + listData[i].id + "</td><td>" + listData[i].serialNumber + "</td><td>"
+                + listData[i].name+ "</td><td>" + listData[i].overtimeStart + "</td><td>"
+                + listData[i].overtimeEnd + "</td><td>" + listData[i].overtimeLength + "</td><td>"
+                + listData[i].overtimeMoney + "元</td><td>" + listData[i].createTime
+                + "</td><td><a class='point' href="+ detailHref + ">详情</a>"
+                + "<a class='point' href="+ updateHref +">修改</a>"
+                + "<a class='point' id='del' name="+ listData[i].id + ">删除</a></td>");
         }
         temp.push('</tbody></table>');
 
@@ -93,8 +103,8 @@ $(document).ready(function () {
         temp.push('<table class="table table-hover">');
         temp.push('<thead><tr><th>记录编号</th><th>警号</th><th>姓名</th>' +
             '<th>加班开始时间</th><th>加班结束时间</th>' +
-            '<th>加班时长</th><th>加班工资</th><th>创建日期</th></tr><tbody>');
-        temp.push("<tr><td colspan='8' style='text-align: center'>暂无数据</td></tr>");
+            '<th>加班时长</th><th>加班工资</th><th>创建日期</th><th>操作</th></tr><tbody>');
+        temp.push("<tr><td colspan='9' style='text-align: center'>暂无数据</td></tr>");
         temp.push('</tbody></table>');
 
         $('#list').html(temp.join(''));

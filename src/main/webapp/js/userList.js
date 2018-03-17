@@ -22,7 +22,7 @@ $(document).ready(function () {
                 console.log(data);
                 if(data.result==="0"&&data.total!==0){
                     var listData = data.data.users;
-                    var total = data.total;
+                    var total = data.data.total;
                     showData(listData);
 
                     var num = (total+pageLimit -1)/pageLimit;//向上取整
