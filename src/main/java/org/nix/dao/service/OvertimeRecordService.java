@@ -12,6 +12,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -45,18 +46,19 @@ public class OvertimeRecordService extends SupperBaseDAOImp<OvertimeRecord> {
      * @param user
      * @return
      */
-    public List<OvertimeRecord> findOvertimeRecordByUser(User user , int limit , int currentPage) {
+    public List<OvertimeRecord> findOvertimeRecordByUser(User user, int limit, int currentPage) {
 
-        int start = (currentPage-1)*limit;
+        int start = (currentPage - 1) * limit;
 
         String sql = "select overtime from OvertimeRecord overtime where overtime.user = "
                 + user.getId();
 
-        return batchGetDataIteratorByHQL(sql,start,limit);
+        return batchGetDataIteratorByHQL(sql, start, limit);
     }
 
     /**
      * 发现用户的加班总条数
+     *
      * @param user
      * @return
      */
@@ -69,7 +71,7 @@ public class OvertimeRecordService extends SupperBaseDAOImp<OvertimeRecord> {
                 "    WHERE\n" +
                 "        `user` = ?";
 
-        return findBySqlCount(sql,user.getId());
+        return findBySqlCount(sql, user.getId());
     }
 
 
@@ -92,13 +94,14 @@ public class OvertimeRecordService extends SupperBaseDAOImp<OvertimeRecord> {
 
     /**
      * 通过模糊查询用户，通过警号
+     *
      * @param limit
      * @param currentPage
-     * @param select 用户警号
+     * @param select      用户警号
      * @param desc
      * @return
      */
-    public List<OvertimeRecord> overtimeRecordList(int limit, int currentPage,String select, boolean desc){
+    public List<OvertimeRecord> overtimeRecordList(int limit, int currentPage, String select, boolean desc) {
 
 
         List<User> users = userService.findBlurryUserBySerialNumber(select);
@@ -106,15 +109,15 @@ public class OvertimeRecordService extends SupperBaseDAOImp<OvertimeRecord> {
         //如果用户为空，则查询全部
         String selectUsers = "";
 
-        if (!SystemUtil.parameterNull(users) || users.size() == 0){
+        if (!SystemUtil.parameterNull(users) && users.size() != 0) {
 
             selectUsers = " where `user` in (";
 
-            for (int i = 0; i <users.size() ; i++) {
+            for (int i = 0; i < users.size(); i++) {
 
-                if (i == users.size() -1){
+                if (i == users.size() - 1) {
 
-                    selectUsers += users.get(i).getId() + ")";
+                    selectUsers += users.get(i).getId();
                     break;
 
                 }
@@ -122,6 +125,13 @@ public class OvertimeRecordService extends SupperBaseDAOImp<OvertimeRecord> {
                 selectUsers += users.get(i).getId() + ",";
             }
 
+            selectUsers += ")";
+
+        }
+        //如果查询字符不为空，但是找到的用户为空，则返回空
+        else if (select != null && select.length() != 0
+                && users.size() == 0){
+            return new ArrayList<>();
         }
 
         int start = (currentPage - 1) * limit;
@@ -132,34 +142,43 @@ public class OvertimeRecordService extends SupperBaseDAOImp<OvertimeRecord> {
                 " ORDER BY id  isDesc" +
                 " LIMIT  start , amount";
 
-        sql = sql.replaceAll("isDesc",isDesc)
-        .replaceAll("start", String.valueOf(start))
-        .replaceAll("amount", String.valueOf(limit))
-        .replaceAll("selectUsers",selectUsers);
+        sql = sql.replaceAll("isDesc", isDesc)
+                .replaceAll("start", String.valueOf(start))
+                .replaceAll("amount", String.valueOf(limit))
+                .replaceAll("selectUsers", selectUsers);
 
         return getListBySQL(sql);
     }
 
-    public long overtimeRecordListCount(String select){
+    public long overtimeRecordListCount(String select) {
+
+
         List<User> users = userService.findBlurryUserBySerialNumber(select);
 
         //如果用户为空，则查询全部
         String selectUsers = "";
 
-        if (!SystemUtil.parameterNull(users) || users.size() == 0){
+        if (!SystemUtil.parameterNull(users) && users.size() != 0) {
             selectUsers = "  where `user` in (";
-            for (int i = 0; i <users.size() ; i++) {
-                if (i == users.size() -1){
-                    selectUsers += users.get(i).getId() + ")";
+            for (int i = 0; i < users.size(); i++) {
+                if (i == users.size() - 1) {
+                    selectUsers += users.get(i).getId();
                     break;
                 }
                 selectUsers += users.get(i).getId() + ",";
             }
+
+            selectUsers += ")";
+        }
+        //如果查询字符不为空，但是找到的用户为空，则返回空
+        else if (select != null && select.length() != 0
+                && users.size() == 0){
+            return 0;
         }
 
         String sql = "SELECT count(*) FROM overtimerecord " + " selectUsers ";
 
-        sql = sql.replaceAll("selectUsers",selectUsers);
+        sql = sql.replaceAll("selectUsers", selectUsers);
 
         return findBySqlCount(sql);
     }

@@ -177,15 +177,14 @@ public class OvertimeRecordController {
                                           @RequestParam("select")String select) {
 
 
-        if (!Validator.isNumber(select)){
-
+        if (select.length() !=0 && !Validator.isNumeric(select)){
+            throw new IllegalArgumentException();
         }
-
 
         ResultDto resultDto = overtimeListDTO
                 .setLimit(limit)
                 .setCurrentPage(currentPage)
-                .setSelect(String.valueOf(select))
+                .setSelect(select)
                 .resultDto();
 
 

@@ -181,9 +181,9 @@ public class Validator {
         System.out.println(Validator.isUsername(username));
         System.out.println(Validator.isChinese(username));
 
-        String phone = "1";
+        String phone = "11";
         System.out.println(Validator.isMobile(phone));
-        System.out.println("number  " + Validator.isNumber(phone));
+        System.out.println("number  " + Validator.isNumeric(phone));
 
 
         String test = "";
