@@ -19,6 +19,7 @@ import org.nix.exception.SelectException;
 import org.nix.service.overtime.CalculationSalary;
 import org.nix.utils.SessionKey;
 import org.nix.utils.SystemUtil;
+import org.nix.utils.Validator;
 import org.nix.utils.datetime.DateUtil;
 import org.nix.web.controller.utils.ResultMap;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -176,10 +177,15 @@ public class OvertimeRecordController {
                                           @RequestParam("select")String select) {
 
 
+        if (!Validator.isNumber(select)){
+
+        }
+
+
         ResultDto resultDto = overtimeListDTO
                 .setLimit(limit)
                 .setCurrentPage(currentPage)
-                .setSelect(select)
+                .setSelect(String.valueOf(select))
                 .resultDto();
 
 
