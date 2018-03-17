@@ -59,12 +59,36 @@ public class UserService extends SupperBaseDAOImp<User> {
         return user;
     }
 
+    /**
+     * 通过警号查询用户
+     * @param serialNumber
+     * @return
+     */
     public User findUserBySerialNumber(String serialNumber){
 
         String column = "serialNumber";
 
         return findByProperty(column,serialNumber);
     }
+
+    /**
+     * 通过警号模糊查询用户
+     * @param select
+     * @return
+     */
+    public List<User> findBlurryUserBySerialNumber(String select){
+
+        if (select == null){
+            select = "";
+        }
+
+        String sql = "SELECT * FROM `user` WHERE serialNumber LIKE '%select%'";
+
+        sql = sql.replaceAll("select",select);
+
+        return getListBySQL(sql);
+    }
+
 
 
     /**
@@ -208,5 +232,8 @@ public class UserService extends SupperBaseDAOImp<User> {
         String sql = "DELETE FROM personalmonthovertime WHERE personalmonthovertime.`user` = ?";
         return batchUpdateOrDelete(sql, user.getId());
     }
+
+
+
 
 }

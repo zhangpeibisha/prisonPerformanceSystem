@@ -33,15 +33,18 @@ public class OvertimeListDTO implements ResultDto{
     private int limit = 10;
     //设置当前页
     private int currentPage = 1;
-
+    //是否排序
     private boolean isDesc = false;
+
+    private String select = "";
+
 
     @Override
     public ResultDto resultDto(Object... objects) {
 
-        records =  overtimeRecordService.overtimeRecordList(limit,currentPage,isDesc);
+        records =  overtimeRecordService.overtimeRecordList(limit,currentPage,select,isDesc);
 
-        total = overtimeRecordService.findAllCount();
+        total = overtimeRecordService.overtimeRecordListCount(select);
 
         setParmaterNull();
 
@@ -68,6 +71,11 @@ public class OvertimeListDTO implements ResultDto{
 
     public OvertimeListDTO setDesc(boolean desc) {
         isDesc = desc;
+        return this;
+    }
+
+    public OvertimeListDTO setSelect(String select) {
+        this.select = select;
         return this;
     }
 

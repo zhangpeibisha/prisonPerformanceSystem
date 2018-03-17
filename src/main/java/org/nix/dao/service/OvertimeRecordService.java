@@ -6,6 +6,8 @@ import org.hibernate.SQLQuery;
 import org.nix.dao.base.SupperBaseDAOImp;
 import org.nix.domain.entity.OvertimeRecord;
 import org.nix.domain.entity.User;
+import org.nix.utils.SystemUtil;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -21,6 +23,10 @@ import java.util.List;
 public class OvertimeRecordService extends SupperBaseDAOImp<OvertimeRecord> {
     //日志记录
     private static Logger logger = Logger.getLogger(OvertimeRecordService.class);
+
+    @Autowired
+    private UserService userService;
+
 
     @Override
     public <T> List<T> findByCriteria(T object, Integer startRow, Integer pageSize) {
@@ -84,19 +90,78 @@ public class OvertimeRecordService extends SupperBaseDAOImp<OvertimeRecord> {
         return getListBySQL(sql);
     }
 
+    /**
+     * 通过模糊查询用户，通过警号
+     * @param limit
+     * @param currentPage
+     * @param select 用户警号
+     * @param desc
+     * @return
+     */
+    public List<OvertimeRecord> overtimeRecordList(int limit, int currentPage,String select, boolean desc){
 
-    public List<OvertimeRecord> overtimeRecordList(int limit, int currentPage, boolean desc){
+
+        List<User> users = userService.findBlurryUserBySerialNumber(select);
+
+        //如果用户为空，则查询全部
+        String selectUsers = "";
+
+        if (!SystemUtil.parameterNull(users) || users.size() == 0){
+
+            selectUsers = " where `user` in (";
+
+            for (int i = 0; i <users.size() ; i++) {
+
+                if (i == users.size() -1){
+
+                    selectUsers += users.get(i).getId() + ")";
+                    break;
+
+                }
+
+                selectUsers += users.get(i).getId() + ",";
+            }
+
+        }
+
         int start = (currentPage - 1) * limit;
 
         String isDesc = desc ? "DESC" : "";
 
-        String sql = "SELECT * FROM overtimerecord  ORDER BY id  isDesc LIMIT  start , amount";
+        String sql = "SELECT * FROM overtimerecord " + " selectUsers " +
+                " ORDER BY id  isDesc" +
+                " LIMIT  start , amount";
 
         sql = sql.replaceAll("isDesc",isDesc)
         .replaceAll("start", String.valueOf(start))
-        .replaceAll("amount", String.valueOf(limit));
+        .replaceAll("amount", String.valueOf(limit))
+        .replaceAll("selectUsers",selectUsers);
 
         return getListBySQL(sql);
+    }
+
+    public long overtimeRecordListCount(String select){
+        List<User> users = userService.findBlurryUserBySerialNumber(select);
+
+        //如果用户为空，则查询全部
+        String selectUsers = "";
+
+        if (!SystemUtil.parameterNull(users) || users.size() == 0){
+            selectUsers = "  where `user` in (";
+            for (int i = 0; i <users.size() ; i++) {
+                if (i == users.size() -1){
+                    selectUsers += users.get(i).getId() + ")";
+                    break;
+                }
+                selectUsers += users.get(i).getId() + ",";
+            }
+        }
+
+        String sql = "SELECT count(*) FROM overtimerecord " + " selectUsers ";
+
+        sql = sql.replaceAll("selectUsers",selectUsers);
+
+        return findBySqlCount(sql);
     }
 
 

@@ -172,12 +172,14 @@ public class OvertimeRecordController {
      */
     @RequestMapping(value = "/recordList", method = RequestMethod.POST)
     public Map<String, Object> recordList(@RequestParam("limit") int limit,
-                                          @RequestParam("currentPage") int currentPage) {
+                                          @RequestParam("currentPage") int currentPage,
+                                          @RequestParam("select")String select) {
 
 
         ResultDto resultDto = overtimeListDTO
                 .setLimit(limit)
                 .setCurrentPage(currentPage)
+                .setSelect(select)
                 .resultDto();
 
 
