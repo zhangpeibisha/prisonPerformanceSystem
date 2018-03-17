@@ -1,5 +1,6 @@
 package org.nix.domain.entity;
 
+import com.alibaba.fastjson.annotation.JSONField;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import org.codehaus.jackson.map.annotate.JsonSerialize;
@@ -75,6 +76,7 @@ public class User extends BaseEntity{
     }
 
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "user")
+    @JSONField(serialize = false)
     public Set<OvertimeRecord> getOvertimeRecords() {
         return overtimeRecords;
     }
