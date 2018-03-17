@@ -82,7 +82,7 @@
                 <prop key="org.nix.exception.AuthorizationException">forward:/exception/system/accessDenied.do</prop>
 
                 <!--用户业务逻辑错误-->
-                <prop key="java.lang.NullPointerException">forward:/exception/system/parameterNullException.do</prop>
+                <!--<prop key="java.lang.NullPointerException">forward:/exception/system/parameterNullException.do</prop>-->
                 <prop key="org.nix.exception.AccountNumberException">forward:/exception/user/accountNumberException.do
                 </prop>
                 <prop key="org.nix.exception.IdentityOverdueException">

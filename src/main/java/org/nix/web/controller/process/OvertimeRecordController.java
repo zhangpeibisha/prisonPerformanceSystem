@@ -122,6 +122,8 @@ public class OvertimeRecordController {
      * @return 统计出来的每个月的信息
      */
     @RequestMapping(value = "/personalMonthOvertime", method = RequestMethod.POST)
+    @ValidatePermission
+    @ResponseBody
     public Map<String, Object> personalMonthOvertime(@RequestParam("limit") int limit,
                                                      @RequestParam("currentPage") int currentPage,
                                                      HttpSession session) {
@@ -172,6 +174,8 @@ public class OvertimeRecordController {
      * @return
      */
     @RequestMapping(value = "/recordList", method = RequestMethod.POST)
+    @ValidatePermission
+    @ResponseBody
     public Map<String, Object> recordList(@RequestParam("limit") int limit,
                                           @RequestParam("currentPage") int currentPage,
                                           @RequestParam("select")String select) {
@@ -201,6 +205,8 @@ public class OvertimeRecordController {
      * @return
      */
     @RequestMapping(value = "/recordDetail", method = RequestMethod.POST)
+    @ValidatePermission
+    @ResponseBody
     public Map<String, Object> recordDetail(@RequestParam("recordsId") int recordsId) {
 
         ResultDto resultDto = recordDetailDTO.resultDto(recordsId);
@@ -220,6 +226,8 @@ public class OvertimeRecordController {
      * @return
      */
     @RequestMapping(value = "/updateRecord", method = RequestMethod.POST)
+    @ValidatePermission
+    @ResponseBody
     public Map<String, Object> updateRecord(
             @RequestParam("recordId") int recordId,
             @RequestParam("serialNumber") String serialNumber,//警号不需要
@@ -260,6 +268,8 @@ public class OvertimeRecordController {
 
 
     @RequestMapping(value = "/deleteRecord" , method = RequestMethod.POST)
+    @ValidatePermission
+    @ResponseBody
     public
     Map<String, Object> deleteRecord(@RequestParam("recordId")int recordId )  {
 

@@ -29,6 +29,8 @@ public class PermissionAspect {
                 + jp.getTarget().getClass().getName() + "."
                 + jp.getSignature().getName();
 
+
+
         Method soruceMethod = getSourceMethod(jp);
 
         if (soruceMethod != null) {
@@ -38,6 +40,7 @@ public class PermissionAspect {
             //进行权限检验
             return;
         }
+        logger.info("访问失败 " + str);
 //        throw new AuthorizationException ();
     }
 

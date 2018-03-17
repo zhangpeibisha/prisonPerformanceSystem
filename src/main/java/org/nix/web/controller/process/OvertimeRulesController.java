@@ -1,15 +1,13 @@
 package org.nix.web.controller.process;
 
 import org.apache.log4j.Logger;
+import org.nix.annotation.ValidatePermission;
 import org.nix.dao.service.OvertimeRulesService;
 import org.nix.domain.entity.OvertimeRules;
 import org.nix.domain.entity.entitybuild.OvertimeRulesBuild;
 import org.nix.web.controller.utils.ResultMap;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.Map;
 
@@ -34,6 +32,8 @@ public class OvertimeRulesController {
      * @return 操作结果
      */
     @RequestMapping(value = "/addOvertimeRules", method = RequestMethod.POST)
+    @ValidatePermission
+    @ResponseBody
     public Map<String, Object> addOvertimeRules(@RequestParam("name") String name,
                                                 @RequestParam("description") String description,
                                                 @RequestParam("payMultiples") double payMultiples,

@@ -4,8 +4,10 @@ import org.apache.log4j.Logger;
 import org.hibernate.PropertyValueException;
 import org.hibernate.exception.ConstraintViolationException;
 import org.nix.annotation.ValidatePermission;
+import org.nix.dao.service.ResourcesService;
 import org.nix.dao.service.RoleService;
 import org.nix.dao.service.UserService;
+import org.nix.domain.entity.Resources;
 import org.nix.domain.entity.Role;
 import org.nix.domain.entity.User;
 import org.nix.domain.entity.dto.ResultDto;
@@ -13,6 +15,7 @@ import org.nix.domain.entity.dto.overtime.PresonalOvertimeInformationDTO;
 import org.nix.domain.entity.dto.user.UserDetailDTO;
 import org.nix.domain.entity.dto.user.UserInformationDTO;
 import org.nix.domain.entity.dto.user.UserListDTO;
+import org.nix.domain.entity.entitybuild.ResourcesBuild;
 import org.nix.domain.entity.entitybuild.UserBuild;
 import org.nix.exception.AccountNumberException;
 import org.nix.exception.AuthorizationException;
@@ -24,9 +27,16 @@ import org.nix.web.controller.utils.ResultMap;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.context.WebApplicationContext;
+import org.springframework.web.method.HandlerMethod;
+import org.springframework.web.servlet.DispatcherServlet;
+import org.springframework.web.servlet.mvc.condition.PatternsRequestCondition;
+import org.springframework.web.servlet.mvc.method.RequestMappingInfo;
+import org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerMapping;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
-import java.util.Map;
+import java.util.*;
 
 /**
  * Create by zhangpe0312@qq.com on 2018/3/10.
@@ -53,6 +63,10 @@ public class UserController {
 
     @Autowired
     private UserDetailDTO userDetailDTO;
+
+    @Autowired
+    private ResourcesService resourcesService;
+
 
     //日志记录
     private static Logger logger = Logger.getLogger(UserController.class);
@@ -153,6 +167,7 @@ public class UserController {
      */
     @RequestMapping(value = "/information", method = RequestMethod.POST)
     @ValidatePermission
+    @ResponseBody
     public Map<String, Object> information(HttpSession session) throws AuthorizationException, NullPointerException {
 
         User user = (User) session.getAttribute(SessionKey.USER);
@@ -178,6 +193,7 @@ public class UserController {
      */
     @RequestMapping(value = "/personalOvertime", method = RequestMethod.POST)
     @ValidatePermission
+    @ResponseBody
     public Map<String, Object> personalOvertime(
             @RequestParam("limit") int limit,
             @RequestParam("currentPage") int currentPage,
@@ -198,8 +214,16 @@ public class UserController {
                 .send();
     }
 
-
+    /**
+     * 查询用户列表
+     * @param limit
+     * @param currentPage
+     * @param session
+     * @return
+     */
     @RequestMapping(value = "/userList", method = RequestMethod.POST)
+    @ValidatePermission
+    @ResponseBody
     public Map<String, Object> userList(@RequestParam("limit") int limit,
                                         @RequestParam("currentPage") int currentPage,
                                         HttpSession session) {
@@ -234,6 +258,8 @@ public class UserController {
      * @return
      */
     @RequestMapping(value = "/userDetail", method = RequestMethod.POST)
+    @ValidatePermission
+    @ResponseBody
     public Map<String, Object> userDetail(@RequestParam("userId") int userId) {
 
 
@@ -266,6 +292,8 @@ public class UserController {
      * @return 更新结果
      */
     @RequestMapping(value = "/updateUser", method = RequestMethod.POST)
+    @ValidatePermission
+    @ResponseBody
     public Map<String, Object> updateUser(@RequestParam("userId") int userId,
                                           @RequestParam("name") String name,
                                           @RequestParam("serialNumber") String serialNumber,
@@ -318,6 +346,8 @@ public class UserController {
      * @return 操作结果
      */
     @RequestMapping(value = "/deleteUser", method = RequestMethod.POST)
+    @ValidatePermission
+    @ResponseBody
     public Map<String, Object> deleteUser(@RequestParam("userId") int userId) {
 
         User user = userService.findById(userId);
@@ -331,6 +361,27 @@ public class UserController {
         return new ResultMap().resultSuccess().send();
     }
 
+    /**
+     * 获取所有URL
+     * @param request
+     * @return
+     */
+    @RequestMapping(value = "/getAllUrl" , method = RequestMethod.POST)
+    public Set<String> getAllUrl(HttpServletRequest request) {
+        Set<String> result = new HashSet<String>();
+        WebApplicationContext wc = (WebApplicationContext) request.getAttribute(DispatcherServlet.WEB_APPLICATION_CONTEXT_ATTRIBUTE);
+        RequestMappingHandlerMapping bean = wc.getBean(RequestMappingHandlerMapping.class);
+        Map<RequestMappingInfo, HandlerMethod> handlerMethods = bean.getHandlerMethods();
+        for (RequestMappingInfo rmi : handlerMethods.keySet()) {
+            PatternsRequestCondition pc = rmi.getPatternsCondition();
+            Set<String> pSet = pc.getPatterns();
+            result.addAll(pSet);
+        }
+
+        resourcesService.batchSaveResources(result);
+
+        return result;
+    }
 
 
 }

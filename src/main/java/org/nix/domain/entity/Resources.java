@@ -27,12 +27,12 @@ public class Resources extends BaseEntity{
     //一个资源有多个角色，一个角色有多个资源
     private Set<Role> roles = new HashSet<>();
 
-    @Column(name = "name"  , length = 20 , unique = true)
+    @Column(name = "name"  , length = 100 , unique = true)
     public String getName() {
         return name;
     }
 
-    @Column(name = "url", unique = true)
+    @Column(name = "url", unique = true , nullable = false)
     public String getUrl() {
         return url;
     }
