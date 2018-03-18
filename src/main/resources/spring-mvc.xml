@@ -23,15 +23,25 @@
             <!--修改密码不拦截-->
             <mvc:exclude-mapping path="/register.*"/> <!--注册页不拦截-->
             <mvc:exclude-mapping path="/exception/**/*.*"/> <!--异常处理不拦截-->
-            <bean class="org.nix.web.interceptor.SecurityInterceptor">
-            </bean>
+            <bean class="org.nix.web.interceptor.SecurityInterceptor"/>
         </mvc:interceptor>
 
         <!--拦截所有请求为日志文件加入用户id-->
         <mvc:interceptor>
             <mvc:mapping path="/**"/><!--拦截所有请求 -->
-            <bean class="org.nix.web.interceptor.Log4jInterceptor">
-            </bean>
+            <bean class="org.nix.web.interceptor.Log4jInterceptor"/>
+        </mvc:interceptor>
+
+        <!-- 国际化操作拦截器 如果采用基于（请求/Session/Cookie）则必需配置 -->
+        <bean class="org.springframework.web.servlet.i18n.LocaleChangeInterceptor"/>
+
+        <mvc:interceptor>
+            <mvc:mapping path="/**"/> <!--拦截所有请求-->
+            <mvc:exclude-mapping path="/login.*"/> <!--登陆页不拦截-->
+            <!--修改密码不拦截-->
+            <mvc:exclude-mapping path="/register.*"/> <!--注册页不拦截-->
+            <mvc:exclude-mapping path="/exception/**/*.*"/> <!--异常处理不拦截-->
+            <bean class="org.nix.web.interceptor.AuthInterceptor"/>
         </mvc:interceptor>
 
     </mvc:interceptors>

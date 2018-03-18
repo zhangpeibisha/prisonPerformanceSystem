@@ -3,6 +3,7 @@ package org.nix.web.controller.process;
 import org.apache.log4j.Logger;
 import org.hibernate.PropertyValueException;
 import org.hibernate.exception.ConstraintViolationException;
+import org.nix.annotation.AuthPassport;
 import org.nix.annotation.ValidatePermission;
 import org.nix.dao.service.ResourcesService;
 import org.nix.dao.service.RoleService;
@@ -166,7 +167,7 @@ public class UserController {
      * @throws AuthorizationException 未登录异常
      */
     @RequestMapping(value = "/information", method = RequestMethod.POST)
-    @ValidatePermission
+    @AuthPassport
     @ResponseBody
     public Map<String, Object> information(HttpSession session) throws AuthorizationException, NullPointerException {
 
@@ -346,7 +347,7 @@ public class UserController {
      * @return 操作结果
      */
     @RequestMapping(value = "/deleteUser", method = RequestMethod.POST)
-    @ValidatePermission
+    @AuthPassport
     @ResponseBody
     public Map<String, Object> deleteUser(@RequestParam("userId") int userId) {
 
