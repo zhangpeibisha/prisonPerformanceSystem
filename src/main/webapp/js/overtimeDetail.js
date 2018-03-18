@@ -25,15 +25,14 @@ $(document).ready(function(){
 
                     data.data.overtimeRecord.overtimeStart = new Date(data.data.overtimeRecord.overtimeStart).toLocaleString();
                     data.data.overtimeRecord.overtimeEnd = new Date(data.data.overtimeRecord.overtimeEnd).toLocaleString();
-                    data.data.overtimeRecord.overtimeLength = MillisecondToDate(data.data.overtimeRecord.overtimeLength);
 
                     $("#id").val(data.data.overtimeRecord.id);
                     $("#serialNumber").val(data.data.serialNumber);
                     $("#name").val(data.data.name);
                     $("#startTime").val(data.data.overtimeRecord.overtimeStart);
                     $("#stopTime").val(data.data.overtimeRecord.overtimeEnd);
-                    $("#duration").val(data.data.overtimeRecord.overtimeLength);
-                    $("#overtimeSalary").val(data.data.overtimeRecord.overtimeMoney);
+                    $("#duration").val(data.data.overtimeRecord.overtimeLength+'小时');
+                    $("#overtimeSalary").val(data.data.overtimeRecord.overtimeMoney+'元');
                     $("#createTime").val(data.data.overtimeRecord.overtimeStart);
 
                 }
