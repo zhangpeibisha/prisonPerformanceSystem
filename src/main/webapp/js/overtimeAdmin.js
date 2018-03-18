@@ -85,8 +85,8 @@ $(document).ready(function () {
             listData[i].overtimeEnd = new Date(listData[i].overtimeEnd).toLocaleString();
             listData[i].overtimeLength = MillisecondToDate(listData[i].overtimeLength);
 
-            temp.push("<tr><td>" + listData[i].id + "</td><td>" + listData[i].serialNumber + "</td><td>"
-                + listData[i].name+ "</td><td>" + listData[i].overtimeStart + "</td><td>"
+            temp.push("<tr><td>" + listData[i].id + "</td><td>" + listData[i].user.serialNumber + "</td><td>"
+                + listData[i].user.name+ "</td><td>" + listData[i].overtimeStart + "</td><td>"
                 + listData[i].overtimeEnd + "</td><td>" + listData[i].overtimeLength + "</td><td>"
                 + listData[i].overtimeMoney + "元</td><td>" + listData[i].createTime
                 + "</td><td><a class='point' href="+ detailHref + ">详情</a>"
