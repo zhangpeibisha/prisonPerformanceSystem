@@ -66,6 +66,10 @@ public class Role extends BaseEntity{
         this.resources = resources;
     }
 
+    public void addResources(Resources resources) {
+        this.resources.add(resources);
+    }
+
     public void setUsers(Set<User> users) {
         this.users = users;
     }

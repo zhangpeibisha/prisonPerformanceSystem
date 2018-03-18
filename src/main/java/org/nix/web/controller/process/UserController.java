@@ -74,6 +74,8 @@ public class UserController {
 
     /**
      * 登陆接口
+     * <p>
+     * 通用接口
      *
      * @param userName 用户警号
      * @param password 用户密码
@@ -100,6 +102,8 @@ public class UserController {
 
     /**
      * 用户注册接口
+     * <p>
+     * 通用接口
      *
      * @param serialNumber 警号
      * @param password     用户密码
@@ -132,12 +136,26 @@ public class UserController {
 
     }
 
-
+    /**
+     * 添加用户接口
+     * <p>
+     * 管理员接口
+     *
+     * @param serialNumber
+     * @param password
+     * @param userName
+     * @param salary
+     * @return
+     * @throws NullPointerException
+     * @throws PropertyValueException
+     * @throws DataAccessException
+     */
     @RequestMapping(value = "/addUser", method = RequestMethod.POST)
+    @AuthPassport
     public Map<String, Object> addUser(@RequestParam("serialNumber") String serialNumber,
-                                        @RequestParam("password") String password,
-                                        @RequestParam("userName") String userName,
-                                       @RequestParam("salary")double salary)
+                                       @RequestParam("password") String password,
+                                       @RequestParam("userName") String userName,
+                                       @RequestParam("salary") double salary)
             throws NullPointerException, PropertyValueException, DataAccessException {
 
         String column = "name";
@@ -153,14 +171,15 @@ public class UserController {
                 .build();
 
         Object result = userService.registered(user);
-        logger.info(" 管理员添加了用户"+result);
+        logger.info(" 管理员添加了用户" + result);
         return new ResultMap().resultSuccess().send();
     }
 
 
-
     /**
      * 显示用户的个人信息
+     * <p>
+     * 管理员接口
      *
      * @param session 用户进程
      * @return 返回用户个人信息
@@ -185,6 +204,8 @@ public class UserController {
 
     /**
      * 获取用户的加班信息条数
+     * <p>
+     * 管理员接口
      *
      * @param limit       每页多少条
      * @param currentPage 当前页
@@ -193,7 +214,7 @@ public class UserController {
      * @throws AuthorizationException 身份过期
      */
     @RequestMapping(value = "/personalOvertime", method = RequestMethod.POST)
-    @ValidatePermission
+    @AuthPassport
     @ResponseBody
     public Map<String, Object> personalOvertime(
             @RequestParam("limit") int limit,
@@ -217,14 +238,16 @@ public class UserController {
 
     /**
      * 查询用户列表
+     * <p>
+     * 管理员接口
+     *
      * @param limit
      * @param currentPage
      * @param session
      * @return
      */
     @RequestMapping(value = "/userList", method = RequestMethod.POST)
-    @ValidatePermission
-    @ResponseBody
+    @AuthPassport
     public Map<String, Object> userList(@RequestParam("limit") int limit,
                                         @RequestParam("currentPage") int currentPage,
                                         HttpSession session) {
@@ -255,12 +278,13 @@ public class UserController {
 
     /**
      * 查看用户详细信息
+     * <p>
+     * 管理员、用户接口
      *
      * @return
      */
     @RequestMapping(value = "/userDetail", method = RequestMethod.POST)
-    @ValidatePermission
-    @ResponseBody
+    @AuthPassport
     public Map<String, Object> userDetail(@RequestParam("userId") int userId) {
 
 
@@ -283,6 +307,8 @@ public class UserController {
 
     /**
      * 管理员更新用户基础信息
+     * <p>
+     * 管理员接口
      *
      * @param userId       需要修改用户的id
      * @param name         用户更新的姓名
@@ -293,8 +319,7 @@ public class UserController {
      * @return 更新结果
      */
     @RequestMapping(value = "/updateUser", method = RequestMethod.POST)
-    @ValidatePermission
-    @ResponseBody
+    @AuthPassport
     public Map<String, Object> updateUser(@RequestParam("userId") int userId,
                                           @RequestParam("name") String name,
                                           @RequestParam("serialNumber") String serialNumber,
@@ -342,13 +367,14 @@ public class UserController {
 
     /**
      * 用户注销
+     * <p>
+     * 管理员接口
      *
      * @param userId 用户id
      * @return 操作结果
      */
     @RequestMapping(value = "/deleteUser", method = RequestMethod.POST)
     @AuthPassport
-    @ResponseBody
     public Map<String, Object> deleteUser(@RequestParam("userId") int userId) {
 
         User user = userService.findById(userId);
@@ -363,11 +389,15 @@ public class UserController {
     }
 
     /**
-     * 获取所有URL
+     * 获取所有URL并查看
+     * <p>
+     * 管理员接口
+     *
      * @param request
      * @return
      */
-    @RequestMapping(value = "/getAllUrl" , method = RequestMethod.POST)
+    @RequestMapping(value = "/getAllUrl", method = RequestMethod.POST)
+    @AuthPassport
     public Set<String> getAllUrl(HttpServletRequest request) {
         Set<String> result = new HashSet<String>();
         WebApplicationContext wc = (WebApplicationContext) request.getAttribute(DispatcherServlet.WEB_APPLICATION_CONTEXT_ATTRIBUTE);
@@ -379,10 +409,25 @@ public class UserController {
             result.addAll(pSet);
         }
 
-        resourcesService.batchSaveResources(result);
-
         return result;
     }
 
+    /**
+     * 将路径添加进入数据库
+     * <p>
+     * 管理员接口
+     *
+     * @param request
+     * @return
+     */
+    @RequestMapping(value = "/saveAllUrl", method = RequestMethod.POST)
+    @AuthPassport
+    public Map<String, Object> saveAllUrl(HttpServletRequest request) {
+
+
+        resourcesService.batchSaveResources(getAllUrl(request));
+
+        return new ResultMap().resultSuccess().send();
+    }
 
 }

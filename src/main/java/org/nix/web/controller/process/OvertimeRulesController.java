@@ -1,6 +1,7 @@
 package org.nix.web.controller.process;
 
 import org.apache.log4j.Logger;
+import org.nix.annotation.AuthPassport;
 import org.nix.annotation.ValidatePermission;
 import org.nix.dao.service.OvertimeRulesService;
 import org.nix.domain.entity.OvertimeRules;
@@ -24,6 +25,8 @@ public class OvertimeRulesController {
 
     /**
      * 添加计费模块
+     * <p>
+     * 管理员接口
      *
      * @param name         计费名称
      * @param description  计费时间段
@@ -32,8 +35,7 @@ public class OvertimeRulesController {
      * @return 操作结果
      */
     @RequestMapping(value = "/addOvertimeRules", method = RequestMethod.POST)
-    @ValidatePermission
-    @ResponseBody
+    @AuthPassport
     public Map<String, Object> addOvertimeRules(@RequestParam("name") String name,
                                                 @RequestParam("description") String description,
                                                 @RequestParam("payMultiples") double payMultiples,
@@ -63,16 +65,17 @@ public class OvertimeRulesController {
 
     /**
      * 查看工资标准列表
-     * @param limit 每页多少行
+     * <p>
+     * 管理员接口
+     *
+     * @param limit       每页多少行
      * @param currentPage 当前页
      * @return 操作结果
      */
-    @RequestMapping(value = "/wageScale" , method = RequestMethod.POST)
-    public
-    Map<String, Object> wageScale( @RequestParam("limit") int limit,
-                                   @RequestParam("currentPage") int currentPage)  {
-
-
+    @RequestMapping(value = "/wageScale", method = RequestMethod.POST)
+    @AuthPassport
+    public Map<String, Object> wageScale(@RequestParam("limit") int limit,
+                                         @RequestParam("currentPage") int currentPage) {
 
 
         return new ResultMap()

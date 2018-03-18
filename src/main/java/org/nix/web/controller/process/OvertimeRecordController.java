@@ -1,6 +1,7 @@
 package org.nix.web.controller.process;
 
 import org.apache.log4j.Logger;
+import org.nix.annotation.AuthPassport;
 import org.nix.annotation.ValidatePermission;
 import org.nix.dao.service.OvertimeRecordService;
 import org.nix.dao.service.OvertimeRulesService;
@@ -68,7 +69,8 @@ public class OvertimeRecordController {
 
     /**
      * 添加用户加班记录
-     * 1521115646577
+     * <p>
+     * 管理员接口
      *
      * @param serialNumber 警号
      * @param startTime    开始加班时间
@@ -76,8 +78,7 @@ public class OvertimeRecordController {
      * @return 添加结果
      */
     @RequestMapping(value = "/addOvertime", method = RequestMethod.POST)
-    @ValidatePermission
-    @ResponseBody
+    @AuthPassport
     public Map<String, Object> addOvertime(@RequestParam("serialNumber") String serialNumber,
                                            @RequestParam("startTime") long startTime,
                                            @RequestParam("stopTime") long stopTime) {
@@ -118,12 +119,13 @@ public class OvertimeRecordController {
 
     /**
      * 显示用户每月加班信息汇总
+     * <p>
+     * 管理员接口 、 用户接口
      *
      * @return 统计出来的每个月的信息
      */
     @RequestMapping(value = "/personalMonthOvertime", method = RequestMethod.POST)
-    @ValidatePermission
-    @ResponseBody
+    @AuthPassport
     public Map<String, Object> personalMonthOvertime(@RequestParam("limit") int limit,
                                                      @RequestParam("currentPage") int currentPage,
                                                      HttpSession session) {
@@ -143,14 +145,15 @@ public class OvertimeRecordController {
 
     /**
      * 管理员查询所有用户的月统计信息
+     * <p>
+     * 管理员接口
      *
      * @param limit
      * @param currentPage
      * @return
      */
     @RequestMapping(value = "/overtimeMonthList", method = RequestMethod.POST)
-    @ValidatePermission
-    @ResponseBody
+    @AuthPassport
     public Map<String, Object> overtimeMonthList(@RequestParam("limit") int limit,
                                                  @RequestParam("currentPage") int currentPage) {
 
@@ -168,20 +171,21 @@ public class OvertimeRecordController {
 
     /**
      * 查询所有用户的加班记录
+     * <p>
+     * 管理员接口
      *
      * @param limit
      * @param currentPage
      * @return
      */
     @RequestMapping(value = "/recordList", method = RequestMethod.POST)
-    @ValidatePermission
-    @ResponseBody
+    @AuthPassport
     public Map<String, Object> recordList(@RequestParam("limit") int limit,
                                           @RequestParam("currentPage") int currentPage,
-                                          @RequestParam("select")String select) {
+                                          @RequestParam("select") String select) {
 
 
-        if (select.length() !=0 && !Validator.isNumeric(select)){
+        if (select.length() != 0 && !Validator.isNumeric(select)) {
             throw new IllegalArgumentException();
         }
 
@@ -200,13 +204,14 @@ public class OvertimeRecordController {
 
     /**
      * 加班信息详情
+     * <p>
+     * 管理员 、 用户接口
      *
      * @param recordsId
      * @return
      */
     @RequestMapping(value = "/recordDetail", method = RequestMethod.POST)
-    @ValidatePermission
-    @ResponseBody
+    @AuthPassport
     public Map<String, Object> recordDetail(@RequestParam("recordsId") int recordsId) {
 
         ResultDto resultDto = recordDetailDTO.resultDto(recordsId);
@@ -219,18 +224,17 @@ public class OvertimeRecordController {
 
     /**
      * 有问题，不能确定加班信息，需要一个加班信息id
+     * <p>
+     * 管理员接口
      *
-     * @param serialNumber
      * @param startTime
      * @param stopTime
      * @return
      */
     @RequestMapping(value = "/updateRecord", method = RequestMethod.POST)
-    @ValidatePermission
-    @ResponseBody
+    @AuthPassport
     public Map<String, Object> updateRecord(
             @RequestParam("recordId") int recordId,
-            @RequestParam("serialNumber") String serialNumber,//警号不需要
             @RequestParam("startTime") long startTime,
             @RequestParam("stopTime") long stopTime) {
 
@@ -266,12 +270,17 @@ public class OvertimeRecordController {
                 .send();
     }
 
-
-    @RequestMapping(value = "/deleteRecord" , method = RequestMethod.POST)
-    @ValidatePermission
-    @ResponseBody
-    public
-    Map<String, Object> deleteRecord(@RequestParam("recordId")int recordId )  {
+    /**
+     * 删除加班记录
+     * <p>
+     * 管理员接口
+     *
+     * @param recordId
+     * @return
+     */
+    @RequestMapping(value = "/deleteRecord", method = RequestMethod.POST)
+    @AuthPassport
+    public Map<String, Object> deleteRecord(@RequestParam("recordId") int recordId) {
 
         overtimeRecordService.delete(recordId);
 
@@ -279,7 +288,6 @@ public class OvertimeRecordController {
 
         return new ResultMap().resultSuccess().send();
     }
-
 
 
 }
