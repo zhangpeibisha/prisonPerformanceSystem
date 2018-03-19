@@ -223,7 +223,6 @@ public class OvertimeRecordController {
     }
 
     /**
-     * 有问题，不能确定加班信息，需要一个加班信息id
      * <p>
      * 管理员接口
      *

@@ -238,7 +238,7 @@
 14. 加班信息添加模块
 * 说明:显示一条加班信息的详情
 * HTTP方法: POST
-* URL:addRecord.do
+* URL:addOvertime.do
 * 请求参数{
     serialNumber: 警号,
     startTime：加班开始时间,
@@ -266,7 +266,7 @@
 * HTTP方法: POST
 * URL:deleteRecord.do
 * 请求参数{
-    recordsId: 加班记录id
+    recordId: 加班记录id
 }
 * 返回参数{
     result:返回列表

@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -36,5 +37,10 @@ public class TestController {
     Map<String, Object> model()  {
 
         return new ResultMap().resultSuccess().send();
+    }
+
+
+    public static void main(String[] args) {
+        System.out.println(new Date().getTime());
     }
 }

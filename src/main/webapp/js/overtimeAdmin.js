@@ -1,5 +1,7 @@
 $(document).ready(function () {
     var recordListUrl = "http://localhost:8080/recordList.do";
+    var recordDelUrl = "http://localhost:8080/deleteRecord.do";
+
     var pageLimit = 10;
     var currentPage = 1;
 
@@ -15,6 +17,8 @@ $(document).ready(function () {
             success: function (data) {
                 console.log(data);
                 if(data.result==="0"&&data.data.total!==0){
+                    console.log("111");
+
                     var listData = data.data.records;
 
                     var total = data.data.total;
@@ -55,7 +59,9 @@ $(document).ready(function () {
                                     else if(data.data==="0"&&data.total===0){
                                         noData();
                                     }
-
+                                    else {
+                                        alert(err(data.result));
+                                    }
                                 }
                             });
                         }
@@ -63,6 +69,9 @@ $(document).ready(function () {
                 }
                 else if(data.data==="0"&&data.total===0){
                     noData();
+                }
+                else{
+                    alert(err(data.result));
                 }
             },
             dataType: "json"
@@ -108,6 +117,27 @@ $(document).ready(function () {
 
         $('#list').html(temp.join(''));
     }
+
+    $(document).on("click", "#del", function() {
+        $.ajax({
+            type: 'POST',
+            url: recordDelUrl,
+            data: {
+                recordId:$(this).attr("name")
+            },
+            success: function (data) {
+                console.info(data);
+                if(data.result==="0"){
+                    alert("删除成功！");
+                    location.reload();
+                }
+                else{
+                    alert(err(data.result));
+                }
+            },
+            dataType: "json"
+        });
+    });
 
     init();
 });
