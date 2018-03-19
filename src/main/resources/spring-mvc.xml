@@ -89,45 +89,45 @@
         <property name="exceptionMappings">
             <props>
                 <!--权限异常-->
-                <prop key="org.nix.exception.AuthorizationException">forward:/exception/system/accessDenied.do</prop>
+                <!--<prop key="org.nix.exception.AuthorizationException">forward:/exception/system/accessDenied.do</prop>-->
 
                 <!--用户业务逻辑错误-->
                 <!--<prop key="java.lang.NullPointerException">forward:/exception/system/parameterNullException.do</prop>-->
-                <prop key="org.nix.exception.AccountNumberException">forward:/exception/user/accountNumberException.do
-                </prop>
-                <prop key="org.nix.exception.IdentityOverdueException">
-                    forward:/exception/user/identityOverdueException.do
-                </prop>
-                <prop key="org.nix.exception.SelectException">
-                    forward:/exception/user/slectException.do
-                </prop>
+                <!--<prop key="org.nix.exception.AccountNumberException">forward:/exception/user/accountNumberException.do-->
+                <!--</prop>-->
+                <!--<prop key="org.nix.exception.IdentityOverdueException">-->
+                    <!--forward:/exception/user/identityOverdueException.do-->
+                <!--</prop>-->
+                <!--<prop key="org.nix.exception.SelectException">-->
+                    <!--forward:/exception/user/slectException.do-->
+                <!--</prop>-->
 
 
                 <!--处理数据库异常-->
-                <prop key="org.springframework.dao.DataIntegrityViolationException">
-                    forward:/exception/system/dataIntegrityViolationException.do
-                </prop>
-                <prop key="org.springframework.dao.DataRetrievalFailureException">
-                    forward:/exception/system/dataRetrievalFailureException.do
-                </prop>
-                <prop key="org.springframework.dao.UncategorizedDataAccessException">
-                    forward:/exception/system/uncategorizedDataAccessException.do
-                </prop>
-                <prop key="javax.validation.ConstraintViolationException">
-                    forward:/exception/system/constraintViolationException.do
-                </prop>
+                <!--<prop key="org.springframework.dao.DataIntegrityViolationException">-->
+                    <!--forward:/exception/system/dataIntegrityViolationException.do-->
+                <!--</prop>-->
+                <!--<prop key="org.springframework.dao.DataRetrievalFailureException">-->
+                    <!--forward:/exception/system/dataRetrievalFailureException.do-->
+                <!--</prop>-->
+                <!--<prop key="org.springframework.dao.UncategorizedDataAccessException">-->
+                    <!--forward:/exception/system/uncategorizedDataAccessException.do-->
+                <!--</prop>-->
+                <!--<prop key="javax.validation.ConstraintViolationException">-->
+                    <!--forward:/exception/system/constraintViolationException.do-->
+                <!--</prop>-->
 
 
                 <!--系统参数异常-->
-                <prop key="java.lang.IllegalArgumentException">
-                    forward:/exception/system/illegalArgumentException.do
-                </prop>
-                <prop key="org.springframework.web.method.annotation.MethodArgumentTypeMismatchException">
-                    forward:/exception/system/methodArgumentTypeMismatchException.do
-                </prop>
-                <prop key="org.springframework.web.bind.MissingServletRequestParameterException">
-                    forward:/exception/system/missingServletRequestParameterException.do
-                </prop>
+                <!--<prop key="java.lang.IllegalArgumentException">-->
+                    <!--forward:/exception/system/illegalArgumentException.do-->
+                <!--</prop>-->
+                <!--<prop key="org.springframework.web.method.annotation.MethodArgumentTypeMismatchException">-->
+                    <!--forward:/exception/system/methodArgumentTypeMismatchException.do-->
+                <!--</prop>-->
+                <!--<prop key="org.springframework.web.bind.MissingServletRequestParameterException">-->
+                    <!--forward:/exception/system/missingServletRequestParameterException.do-->
+                <!--</prop>-->
 
             </props>
         </property>
