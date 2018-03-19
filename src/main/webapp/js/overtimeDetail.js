@@ -22,7 +22,6 @@ $(document).ready(function(){
                 console.info(data);
                 if(data.result==="0"){
 
-
                     data.data.overtimeRecord.overtimeStart = new Date(data.data.overtimeRecord.overtimeStart).toLocaleString();
                     data.data.overtimeRecord.overtimeEnd = new Date(data.data.overtimeRecord.overtimeEnd).toLocaleString();
 

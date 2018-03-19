@@ -43,7 +43,7 @@ $(document).ready(function () {
             },
             success: function (data) {
                 console.info(data);
-                if(data.result=="0"){
+                if(data.result==="0"){
                     alert("注册成功");
                     $(location).attr('href', 'login.html');
                 }

@@ -64,7 +64,7 @@ $(document).ready(function () {
                     noData();
                 }
                 else {
-                    alert(err(data.result));
+                    console.log(err(data.result));
                 }
             },
             dataType: "json"

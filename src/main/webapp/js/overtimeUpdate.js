@@ -34,7 +34,6 @@ $(document).ready(function(){
                     $("#duration").val(data.data.overtimeRecord.overtimeLength+"小时");
                     $("#overtimeSalary").val(data.data.overtimeRecord.overtimeMoney+"元");
                     $("#createTime").val(data.data.overtimeRecord.overtimeStart);
-
                 }
                 else {
                     alert(err(data.result));
@@ -48,8 +47,6 @@ $(document).ready(function(){
     $("#sure").click(function(){
         var startTime =  Date.parse($("#startTime").val());
         var stopTime =  Date.parse($("#stopTime").val());
-
-
 
         if (startTime == null || stopTime == null || startTime == "" || stopTime == "" ) {
             alert("输入不能为空");

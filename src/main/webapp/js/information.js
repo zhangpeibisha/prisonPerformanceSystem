@@ -10,7 +10,7 @@ $(document).ready(function () {
             },
             success: function (data) {
                 console.log(data);
-                if(data.result=="0"){
+                if(data.result==="0"){
                     info(data.data);
                 }
                 else {
