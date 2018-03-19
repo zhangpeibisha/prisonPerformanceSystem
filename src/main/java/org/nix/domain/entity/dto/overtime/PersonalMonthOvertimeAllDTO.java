@@ -3,7 +3,9 @@ package org.nix.domain.entity.dto.overtime;
 import org.apache.log4j.Logger;
 import org.nix.dao.service.PersonalMonthOvertimeService;
 import org.nix.domain.entity.PersonalMonthOvertime;
+import org.nix.domain.entity.User;
 import org.nix.domain.entity.dto.ResultDto;
+import org.nix.domain.entity.entitybuild.UserBuild;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -62,7 +64,15 @@ public class PersonalMonthOvertimeAllDTO implements ResultDto {
      */
     public void setParmaterNull(){
         for (int i = 0; i <personalMonthOvertimes.size() ; i++) {
-            personalMonthOvertimes.get(i).setUser(null);
+
+            User user = personalMonthOvertimes.get(i).getUser();
+
+            user = new UserBuild()
+                    .setName(user.getName())
+                    .setSerialNumber(user.getSerialNumber())
+                    .build();
+
+            personalMonthOvertimes.get(i).setUser(user);
         }
     }
 
