@@ -127,7 +127,7 @@ $(document).ready(function () {
                     location.reload();
                 }
                 else{
-                    alert(data.message);
+                    alert(err(data.result));
                 }
             },
             dataType: "json"
