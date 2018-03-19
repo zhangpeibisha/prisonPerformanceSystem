@@ -49,7 +49,7 @@ $(document).ready(function () {
                                         var listData = data.data.personalMonthOvertimes;
                                         showData(listData);
                                     }
-                                    else if(data.data==="0"&&data.data.total===0){
+                                    else if(data.result==="0"&&data.data.total===0){
                                         noData();
                                     }
                                     else {

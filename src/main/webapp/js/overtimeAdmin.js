@@ -17,7 +17,6 @@ $(document).ready(function () {
             success: function (data) {
                 console.log(data);
                 if(data.result==="0"&&data.data.total!==0){
-                    console.log("111");
 
                     var listData = data.data.records;
 
@@ -67,7 +66,7 @@ $(document).ready(function () {
                         }
                     });
                 }
-                else if(data.data==="0"&&data.total===0){
+                else if(data.result==="0"&&data.data.total===0){
                     noData();
                 }
                 else{
