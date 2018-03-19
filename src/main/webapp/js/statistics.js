@@ -9,7 +9,8 @@ $(document).ready(function () {
             url: overtimeAdminMonthUrl,
             data: {
                 limit: pageLimit,
-                currentPage: currentPage
+                currentPage: currentPage,
+                select:""
             },
             success: function (data) {
                 console.log(data);
@@ -40,7 +41,8 @@ $(document).ready(function () {
                                 type: 'POST',
                                 data: {
                                     limit: pageLimit,
-                                    currentPage: page
+                                    currentPage: page,
+                                    select:""
                                 },
                                 dataType: 'json',
                                 success: function (data) {
@@ -53,7 +55,7 @@ $(document).ready(function () {
                                         noData();
                                     }
                                     else {
-                                        alert("error！");
+                                        alert(err(data.result));
                                     }
 
                                 }
@@ -64,8 +66,8 @@ $(document).ready(function () {
                 else if(data.data==="0"&&data.data.total===0){
                     noData();
                 }
-                else{
-                    alert(data.message);
+                else {
+                    alert(err(data.result));
                 }
             },
             dataType: "json"
@@ -80,8 +82,8 @@ $(document).ready(function () {
             '<th>加班时长</th><th>加班工资</th></tr><tbody>');
         for (var i = 0; i < showNum; i++) {
             temp.push("<tr><td>" + listData[i].year + "</td><td>" + listData[i].month + "</td><td>" + listData[i].id + "</td><td>"
-                + listData[i].serialNumber+ "</td><td>" + listData[i].name+ "</td><td>"
-                + listData[i].duration+ "小时</td><td>" + listData[i].overtimeSalary + "</td>");
+                + listData[i].user.serialNumber+ "</td><td>" + listData[i].user.name+ "</td><td>"
+                + listData[i].duration+ "小时</td><td>" + listData[i].overtimeSalary + "元</td>");
         }
         temp.push('</tbody></table>');
 

@@ -48,7 +48,7 @@ $(document).ready(function () {
                     $(location).attr('href', 'login.html');
                 }
                 else {
-                    alert(data.message);
+                    alert(err(data.result));
                 }
             },
             dataType: "json"

@@ -59,6 +59,9 @@ $(document).ready(function () {
                                     else if(data.data==="0"&&data.total===0){
                                         noData();
                                     }
+                                    else {
+                                        alert(err(data.result));
+                                    }
                                 }
                             });
                         }
@@ -66,6 +69,9 @@ $(document).ready(function () {
                 }
                 else if(data.data==="0"&&data.total===0){
                     noData();
+                }
+                else {
+                    alert(err(data.result));
                 }
             },
             dataType: "json"

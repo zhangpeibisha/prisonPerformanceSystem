@@ -48,7 +48,7 @@ $(document).ready(function(){
                     $(location).attr("href","../html/userDetail.html?id="+id);
                 }
                 else{
-                    alert(data.message);
+                    alert(err(data.result));
                 }
             },
             dataType: "json"
@@ -70,7 +70,7 @@ $(document).ready(function(){
                     $("#wage").val(data.data.basicWage);
                 }
                 else{
-                    alert(data.message);
+                    alert(err(data.result));
                 }
             },
             dataType: "json"

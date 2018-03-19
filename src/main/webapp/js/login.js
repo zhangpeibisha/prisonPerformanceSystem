@@ -26,8 +26,8 @@ $(document).ready(function(){
                     else if(data.role===1)
                         $(location).attr('href','welcomeAdmin.html');
                 }
-                else{
-                    alert(data.message);
+                else {
+                    alert(err(data.result));
                 }
             },
             dataType: "json"

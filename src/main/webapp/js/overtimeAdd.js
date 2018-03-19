@@ -30,8 +30,8 @@ $(document).ready(function(){
                     alert("添加成功！");
                     $(location).attr("href","overtimeAdmin.html");
                 }
-                else{
-                    alert(data.message);
+                else {
+                    alert(err(data.result));
                 }
             },
             dataType: "json"

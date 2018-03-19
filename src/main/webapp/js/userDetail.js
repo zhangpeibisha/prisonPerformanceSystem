@@ -25,8 +25,8 @@ $(document).ready(function(){
                     $("#name").val(data.data.name);
                     $("#wage").val(data.data.basicWage);
                 }
-                else{
-                    alert(data.message);
+                else {
+                    alert(err(data.result));
                 }
             },
             dataType: "json"

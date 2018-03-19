@@ -36,8 +36,8 @@ $(document).ready(function(){
                     $("#createTime").val(data.data.overtimeRecord.overtimeStart);
 
                 }
-                else{
-                    alert(data.message);
+                else {
+                    alert(err(data.result));
                 }
             },
             dataType: "json"
@@ -70,8 +70,8 @@ $(document).ready(function(){
                     alert("修改成功！");
                     $(location).attr("href","overtimeAdmin.html");
                 }
-                else{
-                    alert(data.message);
+                else {
+                    alert(err(data.result));
                 }
             },
             dataType: "json"

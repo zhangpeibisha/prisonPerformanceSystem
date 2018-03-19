@@ -38,7 +38,7 @@ $(document).ready(function(){
                     $(location).attr("href","userList.html");
                 }
                 else{
-                    alert(data.message);
+                    alert(err(data.result));
                 }
             },
             dataType: "json"

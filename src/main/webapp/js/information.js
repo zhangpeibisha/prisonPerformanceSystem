@@ -13,8 +13,8 @@ $(document).ready(function () {
                 if(data.result=="0"){
                     info(data.data);
                 }
-                else{
-                    alert(data.message);
+                else {
+                    alert(err(data.result));
                 }
 
             },
