@@ -27,8 +27,8 @@ $(document).ready(function () {
         temp.push('<div class="col-md-12"><p class="col-md-6">警号:</p><span>'+ data.serialNumber +'</span></div>');
         temp.push('<div class="col-md-12"><p class="col-md-6">姓名:</p><span>'+ data.name +'</span></div>');
         temp.push('<div class="col-md-12"><p class="col-md-6">基础工资:</p><span>'+ data.basicWage +'元</span></div>');
-        temp.push('<div class="col-md-12"><p class="col-md-6">历史加班总时长:</p><span>'+ data.overtimeAllLenth + '</span></div>');
-        temp.push('<div class="col-md-12"><p class="col-md-6">历史加班总工资:</p><span>'+ data.overtimeAllmoney +'</span></div>');
+        temp.push('<div class="col-md-12"><p class="col-md-6">历史加班总时长:</p><span>'+ data.overtimeAllLenth + '小时</span></div>');
+        temp.push('<div class="col-md-12"><p class="col-md-6">历史加班总工资:</p><span>'+ data.overtimeAllmoney +'元</span></div>');
         $('#info').html(temp.join(''));
     }
     

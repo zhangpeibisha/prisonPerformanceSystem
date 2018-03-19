@@ -79,10 +79,8 @@ $(document).ready(function () {
             '<th>加班总工资</th></tr><tbody>');
         for (var i = 0; i < showNum; i++) {
 
-            listData[i].duration = MillisecondToDate(listData[i].duration);
-
             temp.push("<tr><td>" + listData[i].year + "</td><td>" + listData[i].month + "</td><td>" + listData[i].id + "</td><td>"
-                + listData[i].duration+ "</td><td>" + listData[i].overtimeSalary + "元</td>");
+                + listData[i].duration+ "小时</td><td>" + listData[i].overtimeSalary + "元</td>");
         }
         temp.push('</tbody></table>');
 

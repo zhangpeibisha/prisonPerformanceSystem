@@ -83,11 +83,9 @@ $(document).ready(function () {
 
             listData[i].overtimeStart = new Date(listData[i].overtimeStart).toLocaleString();
             listData[i].overtimeEnd = new Date(listData[i].overtimeEnd).toLocaleString();
-            listData[i].overtimeLength = MillisecondToDate(listData[i].overtimeLength);
-
 
             temp.push("<tr><td>" + listData[i].id + "</td><td>" + listData[i].overtimeStart + "</td><td>"
-                + listData[i].overtimeEnd+ "</td><td>" + listData[i].overtimeLength + "</td><td>"
+                + listData[i].overtimeEnd+ "</td><td>" + listData[i].overtimeLength + "小时</td><td>"
                 + listData[i].overtimeMoney + "元</td>");
         }
         temp.push('</tbody></table>');
