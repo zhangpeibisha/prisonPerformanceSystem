@@ -17,14 +17,14 @@
 
     <mvc:interceptors>
 
-        <!--<mvc:interceptor>-->
-            <!--<mvc:mapping path="/**"/> &lt;!&ndash;拦截所有请求&ndash;&gt;-->
-            <!--<mvc:exclude-mapping path="/login.*"/> &lt;!&ndash;登陆页不拦截&ndash;&gt;-->
-            <!--&lt;!&ndash;修改密码不拦截&ndash;&gt;-->
-            <!--<mvc:exclude-mapping path="/register.*"/> &lt;!&ndash;注册页不拦截&ndash;&gt;-->
-            <!--<mvc:exclude-mapping path="/exception/**/*.*"/> &lt;!&ndash;异常处理不拦截&ndash;&gt;-->
-            <!--<bean class="org.nix.web.interceptor.SecurityInterceptor"/>-->
-        <!--</mvc:interceptor>-->
+        <mvc:interceptor>
+            <mvc:mapping path="/**"/> <!--拦截所有请求-->
+            <mvc:exclude-mapping path="/login.*"/> <!--登陆页不拦截-->
+            <!--修改密码不拦截-->
+            <mvc:exclude-mapping path="/register.*"/> <!--注册页不拦截-->
+            <mvc:exclude-mapping path="/exception/**/*.*"/> <!--异常处理不拦截-->
+            <bean class="org.nix.web.interceptor.SecurityInterceptor"/>
+        </mvc:interceptor>
 
         <!--拦截所有请求为日志文件加入用户id-->
         <mvc:interceptor>
@@ -35,14 +35,14 @@
         <!-- 国际化操作拦截器 如果采用基于（请求/Session/Cookie）则必需配置 -->
         <bean class="org.springframework.web.servlet.i18n.LocaleChangeInterceptor"/>
 
-        <!--<mvc:interceptor>-->
-            <!--<mvc:mapping path="/**"/> &lt;!&ndash;拦截所有请求&ndash;&gt;-->
-            <!--<mvc:exclude-mapping path="/login.*"/> &lt;!&ndash;登陆页不拦截&ndash;&gt;-->
-            <!--&lt;!&ndash;修改密码不拦截&ndash;&gt;-->
-            <!--<mvc:exclude-mapping path="/register.*"/> &lt;!&ndash;注册页不拦截&ndash;&gt;-->
-            <!--<mvc:exclude-mapping path="/exception/**/*.*"/> &lt;!&ndash;异常处理不拦截&ndash;&gt;-->
-            <!--<bean class="org.nix.web.interceptor.AuthInterceptor"/>-->
-        <!--</mvc:interceptor>-->
+        <mvc:interceptor>
+            <mvc:mapping path="/**"/> <!--拦截所有请求-->
+            <mvc:exclude-mapping path="/login.*"/> <!--登陆页不拦截-->
+            <!--修改密码不拦截-->
+            <mvc:exclude-mapping path="/register.*"/> <!--注册页不拦截-->
+            <mvc:exclude-mapping path="/exception/**/*.*"/> <!--异常处理不拦截-->
+            <bean class="org.nix.web.interceptor.AuthInterceptor"/>
+        </mvc:interceptor>
 
     </mvc:interceptors>
 
@@ -89,45 +89,45 @@
         <property name="exceptionMappings">
             <props>
                 <!--权限异常-->
-                <!--<prop key="org.nix.exception.AuthorizationException">forward:/exception/system/accessDenied.do</prop>-->
+                <prop key="org.nix.exception.AuthorizationException">forward:/exception/system/accessDenied.do</prop>
 
                 <!--用户业务逻辑错误-->
-                <!--<prop key="java.lang.NullPointerException">forward:/exception/system/parameterNullException.do</prop>-->
-                <!--<prop key="org.nix.exception.AccountNumberException">forward:/exception/user/accountNumberException.do-->
-                <!--</prop>-->
-                <!--<prop key="org.nix.exception.IdentityOverdueException">-->
-                    <!--forward:/exception/user/identityOverdueException.do-->
-                <!--</prop>-->
-                <!--<prop key="org.nix.exception.SelectException">-->
-                    <!--forward:/exception/user/slectException.do-->
-                <!--</prop>-->
+                <prop key="java.lang.NullPointerException">forward:/exception/system/parameterNullException.do</prop>
+                <prop key="org.nix.exception.AccountNumberException">forward:/exception/user/accountNumberException.do
+                </prop>
+                <prop key="org.nix.exception.IdentityOverdueException">
+                    forward:/exception/user/identityOverdueException.do
+                </prop>
+                <prop key="org.nix.exception.SelectException">
+                    forward:/exception/user/slectException.do
+                </prop>
 
 
                 <!--处理数据库异常-->
-                <!--<prop key="org.springframework.dao.DataIntegrityViolationException">-->
-                    <!--forward:/exception/system/dataIntegrityViolationException.do-->
-                <!--</prop>-->
-                <!--<prop key="org.springframework.dao.DataRetrievalFailureException">-->
-                    <!--forward:/exception/system/dataRetrievalFailureException.do-->
-                <!--</prop>-->
-                <!--<prop key="org.springframework.dao.UncategorizedDataAccessException">-->
-                    <!--forward:/exception/system/uncategorizedDataAccessException.do-->
-                <!--</prop>-->
-                <!--<prop key="javax.validation.ConstraintViolationException">-->
-                    <!--forward:/exception/system/constraintViolationException.do-->
-                <!--</prop>-->
+                <prop key="org.springframework.dao.DataIntegrityViolationException">
+                    forward:/exception/system/dataIntegrityViolationException.do
+                </prop>
+                <prop key="org.springframework.dao.DataRetrievalFailureException">
+                    forward:/exception/system/dataRetrievalFailureException.do
+                </prop>
+                <prop key="org.springframework.dao.UncategorizedDataAccessException">
+                    forward:/exception/system/uncategorizedDataAccessException.do
+                </prop>
+                <prop key="javax.validation.ConstraintViolationException">
+                    forward:/exception/system/constraintViolationException.do
+                </prop>
 
 
                 <!--系统参数异常-->
-                <!--<prop key="java.lang.IllegalArgumentException">-->
-                    <!--forward:/exception/system/illegalArgumentException.do-->
-                <!--</prop>-->
-                <!--<prop key="org.springframework.web.method.annotation.MethodArgumentTypeMismatchException">-->
-                    <!--forward:/exception/system/methodArgumentTypeMismatchException.do-->
-                <!--</prop>-->
-                <!--<prop key="org.springframework.web.bind.MissingServletRequestParameterException">-->
-                    <!--forward:/exception/system/missingServletRequestParameterException.do-->
-                <!--</prop>-->
+                <prop key="java.lang.IllegalArgumentException">
+                    forward:/exception/system/illegalArgumentException.do
+                </prop>
+                <prop key="org.springframework.web.method.annotation.MethodArgumentTypeMismatchException">
+                    forward:/exception/system/methodArgumentTypeMismatchException.do
+                </prop>
+                <prop key="org.springframework.web.bind.MissingServletRequestParameterException">
+                    forward:/exception/system/missingServletRequestParameterException.do
+                </prop>
 
             </props>
         </property>
