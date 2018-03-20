@@ -175,7 +175,8 @@ public class PersonalMonthOvertimeService extends SupperBaseDAOImp<PersonalMonth
         String sql = "DELETE FROM personalmonthovertime \n" +
                 "WHERE \n" +
                 "YEAR(personalmonthovertime.createTime) = YEAR(NOW()) " +
-                "AND MONTH(personalmonthovertime.createTime) = MONTH(NOW())";
+                "AND MONTH(personalmonthovertime.createTime) = MONTH(NOW())"+
+                "and DAY(NOW()) != DAY(personalmonthovertime.createTime)";
 
         SQLQuery query = sessionFactory.getCurrentSession().createSQLQuery(sql);
 

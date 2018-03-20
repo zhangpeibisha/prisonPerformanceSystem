@@ -73,7 +73,6 @@ public class PersonalMonthOvertimeAllDTO implements ResultDto {
                     .build();
 
             personalMonthOvertimes.get(i).setUser(user);
-//            personalMonthOvertimes.get(i).setUser(null);
         }
     }
 
