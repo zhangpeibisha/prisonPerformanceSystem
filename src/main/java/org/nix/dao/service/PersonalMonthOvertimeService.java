@@ -178,13 +178,16 @@ public class PersonalMonthOvertimeService extends SupperBaseDAOImp<PersonalMonth
                 "AND MONTH(personalmonthovertime.createTime) = MONTH(NOW())"+
                 "and DAY(NOW()) != DAY(personalmonthovertime.createTime)";
 
+        List<PersonalMonthOvertime> personalMonthOvertimes = findAll();
+
         SQLQuery query = sessionFactory.getCurrentSession().createSQLQuery(sql);
 
         int result =  query.executeUpdate();
 
        logger.info("删除了所有用户"+result+"条加班统计信息");
 
-       if (result != 0){
+
+       if (personalMonthOvertimes.size() ==0 || result != 0){
            return true;
        }
        return false;
