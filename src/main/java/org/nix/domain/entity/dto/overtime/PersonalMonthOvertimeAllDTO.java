@@ -46,11 +46,13 @@ public class PersonalMonthOvertimeAllDTO implements ResultDto {
     @Override
     public ResultDto resultDto(Object... objects) {
 
-        personalMonthOvertimeService.deletePersonalNowMonthOvertimeAll();
+        boolean isupdata = personalMonthOvertimeService.deletePersonalNowMonthOvertimeAll();
 
-        personalMonthOvertimeService.calculationOvertimeNowMonthAllAndSave();
+        if (isupdata){
+            personalMonthOvertimeService.calculationOvertimeNowMonthAllAndSave();
+        }
 
-        personalMonthOvertimes = personalMonthOvertimeService.findAllPage(limit,currentPage);
+        personalMonthOvertimes = personalMonthOvertimeService.findAllPage(limit, currentPage);
 
         total = personalMonthOvertimeService.findAllCount();
 
@@ -62,8 +64,8 @@ public class PersonalMonthOvertimeAllDTO implements ResultDto {
     /**
      * 清理不需要的数据
      */
-    public void setParmaterNull(){
-        for (int i = 0; i <personalMonthOvertimes.size() ; i++) {
+    public void setParmaterNull() {
+        for (int i = 0; i < personalMonthOvertimes.size(); i++) {
 
             User user = personalMonthOvertimes.get(i).getUser();
 

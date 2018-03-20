@@ -170,7 +170,7 @@ public class PersonalMonthOvertimeService extends SupperBaseDAOImp<PersonalMonth
     /**
      * 删除当前月、年的用户的加班统计
      */
-    public void deletePersonalNowMonthOvertimeAll(){
+    public boolean deletePersonalNowMonthOvertimeAll(){
 
         String sql = "DELETE FROM personalmonthovertime \n" +
                 "WHERE \n" +
@@ -183,6 +183,11 @@ public class PersonalMonthOvertimeService extends SupperBaseDAOImp<PersonalMonth
         int result =  query.executeUpdate();
 
        logger.info("删除了所有用户"+result+"条加班统计信息");
+
+       if (result != 0){
+           return true;
+       }
+       return false;
 
     }
 
