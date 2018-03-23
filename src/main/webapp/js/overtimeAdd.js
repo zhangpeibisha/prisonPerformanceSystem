@@ -11,6 +11,11 @@ $(document).ready(function(){
             alert("输入不能为空");
             return;
         }
+        var num = /^[0-9]*$/;//警号必须是数字
+        if(!num.test(serialNumber)){
+            alert("请输入正确的警号！");
+            return;
+        }
         if(serialNumber.length!==7){
             alert("警号必须为7位！");
             return;
